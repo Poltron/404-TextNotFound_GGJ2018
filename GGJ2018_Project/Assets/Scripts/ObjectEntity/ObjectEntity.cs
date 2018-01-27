@@ -52,7 +52,7 @@ public class ObjectEntity : MonoBehaviour
 	{
 		foreach (KeyValuePair<string, string> pair in values)
 		{
-			string keyName = pair.Key.Substring(0, key.Length);
+			string keyName = pair.Key.Substring(0, pair.Key.Length);
 			if (string.Equals(keyName, key, System.StringComparison.InvariantCultureIgnoreCase))
 				return true;
 		}

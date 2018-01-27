@@ -47,7 +47,7 @@ public class MapColumn : MonoBehaviour
 			if (i == nbrColumn - 1)
 			{
 				int childs = textObj.transform.childCount;
-				for (int j = childs - 1 ; j > 0 ; --j)
+				for (int j = childs - 1 ; j >= 0 ; --j)
 				{
 					Destroy(textObj.transform.GetChild(j).gameObject);
 				}

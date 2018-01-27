@@ -18,6 +18,7 @@ public class ObjectCommand : MonoBehaviour
 		console.AddOnSendCommand(Add);
 		console.AddOnSendCommand(Remove);
 		console.AddOnSendCommand(Set);
+		console.AddOnSendCommand(SendCorrectCommand);
 		console.AddOnErrorCommand(ErrorCommand);
 	}
 
@@ -101,6 +102,12 @@ public class ObjectCommand : MonoBehaviour
 		}
 		if (!isSet)
 			console.InvokeOnErrorCommand(cmd);
+	}
+
+	private void SendCorrectCommand(string cmd, string[] args)
+	{
+		if (cmd != "ADD" && cmd != "REMOVE" && cmd != "SET")
+			ErrorCommand("ADD");
 	}
 
 	private void ErrorCommand(string cmd)
