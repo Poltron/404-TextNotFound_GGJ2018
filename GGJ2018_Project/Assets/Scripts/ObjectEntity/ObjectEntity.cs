@@ -22,19 +22,15 @@ public class ObjectEntity : MonoBehaviour
 
 	private void Awake()
 	{
+		objCommand = FindObjectOfType<ObjectCommand>();
+		if (objCommand == null)
+			Destroy(gameObject);
 		values = new Dictionary<string, string>();
 
 		foreach (SValues v in inspectorValues)
 		{
 			values.Add(v.key + (keyId++), v.value);
 		}
-	}
-
-	private void Start()
-	{
-		objCommand = FindObjectOfType<ObjectCommand>();
-		if (objCommand == null)
-			Destroy(gameObject);
 	}
 
 	private void OnBecameVisible()
@@ -56,7 +52,8 @@ public class ObjectEntity : MonoBehaviour
 	{
 		foreach (KeyValuePair<string, string> pair in values)
 		{
-			if (string.Equals(pair.Key, key, System.StringComparison.InvariantCultureIgnoreCase))
+			string keyName = pair.Key.Substring(0, key.Length);
+			if (string.Equals(keyName, key, System.StringComparison.InvariantCultureIgnoreCase))
 				return true;
 		}
 		return false;
@@ -66,6 +63,8 @@ public class ObjectEntity : MonoBehaviour
 	{
 		foreach (KeyValuePair<string, string> pair in values)
 		{
+			if (key.Length > pair.Key.Length)
+				continue;
 			string keyName = pair.Key.Substring(0, key.Length);
 			if (string.Equals(keyName, key, System.StringComparison.InvariantCultureIgnoreCase))
 				return pair.Key;
@@ -77,6 +76,8 @@ public class ObjectEntity : MonoBehaviour
 	{
 		foreach (KeyValuePair<string, string> pair in values)
 		{
+			if (key.Length > pair.Key.Length)
+				continue;
 			string keyName = pair.Key.Substring(0, key.Length);
 			if (string.Equals(keyName, key, System.StringComparison.InvariantCultureIgnoreCase))
 				return pair.Value;
@@ -86,13 +87,12 @@ public class ObjectEntity : MonoBehaviour
 
 	public bool SetValue(string key, string value)
 	{
-		foreach (KeyValuePair<string, string> pair in values)
+		if (HasKey(key))
 		{
-			if (!string.Equals(pair.Key, key, System.StringComparison.InvariantCultureIgnoreCase))
-				continue;
-			values[pair.Key] = value;
+			values[GetTrueKey(key)] = value;
 			return true;
 		}
+
 		return false;
 	}
 }
