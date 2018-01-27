@@ -27,11 +27,11 @@ public class UiGameHud : MonoBehaviour
 
 	public void UpdateScore(int score)
 	{
-		txtScore.text = "Score : " + score.ToString();
+		txtScore.text = "SCORE : " + score.ToString();
 	}
 
 	public void UpdateTimer(int seconde, int minute)
 	{
-		txtTimer.text = minute.ToString("D2") + ":" + seconde.ToString("D2");
+		txtTimer.text = "TIMER : " + minute.ToString("D2") + ":" + seconde.ToString("D2");
 	}
 }
