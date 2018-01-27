@@ -88,12 +88,16 @@ public class PlayerController : MonoBehaviour
 	private void Update()
 	{
 		KeyUpdate();
-		Gravity();
-		Move();
-		Jump();
 		Attack();
 		Animation();
 	}
+
+    private void FixedUpdate()
+    {
+        Gravity();
+        Move();
+        Jump();
+    }
 
 	public void KeyUpdate()
 	{
@@ -233,6 +237,9 @@ public class PlayerController : MonoBehaviour
 
 	private void Animation()
 	{
+        if (!isInputEnabled)
+            return;
+
 		if(Input.GetKeyDown(keyJump))
 		{
 			myAnimator.SetTrigger("Jump");

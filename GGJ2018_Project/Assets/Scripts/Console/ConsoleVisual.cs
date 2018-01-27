@@ -10,9 +10,41 @@ public class ConsoleVisual : MonoBehaviour
 
 	[SerializeField]
 	private Text consoleText;
+	[SerializeField]
+	private Text historyText;
+	[SerializeField]
+	private ConsoleWriter console;
+	[SerializeField]
+	private Image carret;
+	private string[] codes;
+	private string[] colors;
+
+	[SerializeField]
+	private float timeFlash;
+	private float currentTime;
+
+	private void Awake()
+	{
+		AddOnEndEdit(SaveHistory);
+		codes = new string[] { "", "", "" };
+		colors = new string[] { "1111111", "1111111", "1111111" };
+		SaveHistory("");
+	}
+
+	private void Start()
+	{
+		console.AddOnErrorCommand(SetErrorColor);
+	}
 
 	private void OnGUI()
 	{
+		currentTime -= Time.deltaTime;
+		if (currentTime <= 0.0f)
+		{
+			currentTime = timeFlash;
+			carret.enabled = !carret.enabled;
+		}
+
 		if (!Input.anyKeyDown)
 			return;
 
@@ -72,6 +104,33 @@ public class ConsoleVisual : MonoBehaviour
 	private void OnEnable()
 	{
 		consoleText.text = "";
+		currentTime = timeFlash;
+	}
+
+	private void SetErrorColor(string cmd)
+	{
+		colors[2] = "ff0000";
+
+		historyText.text = ">\t<color=#" + colors[0] + ">" + codes[0] + "</color>\n";
+		historyText.text += ">\t<color=#" + colors[1] + ">" + codes[1] + "</color>\n";
+		historyText.text += ">\t<color=#" + colors[2] + ">" + codes[2] + "</color>";
+	}
+
+	private void SaveHistory(string text)
+	{
+		if (text == "")
+			return;
+		codes[0] = codes[1];
+		codes[1] = codes[2];
+		codes[2] = text;
+
+		colors[0] = colors[1];
+		colors[1] = colors[2];
+		colors[2] = "1111111";
+
+		historyText.text = ">\t<color=#" + colors[0] + ">" + codes[0] + "</color>\n";
+		historyText.text += ">\t<color=#" + colors[1] + ">" + codes[1] + "</color>\n";
+		historyText.text += ">\t<color=#" + colors[2] + ">" + codes[2] + "</color>";
 	}
 
 	#region Events
