@@ -71,8 +71,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4476531877396574}
   - component: {fileID: 114821978040152342}
-  - component: {fileID: 95470604821219758}
   - component: {fileID: 212422666912309718}
+  - component: {fileID: 95119159146102060}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
@@ -160,7 +160,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1696885730421258}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.42, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4671183865612054}
@@ -281,6 +281,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.64, y: 0.64}
   m_EdgeRadius: 0
+--- !u!95 &95119159146102060
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1696885730421258}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: eb795f9282b38e846a4bda26ba34f3c4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!95 &95339966984184942
 Animator:
   serializedVersion: 3
@@ -291,23 +308,6 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 0a1823e365a349947902088f423ba6a5, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
---- !u!95 &95470604821219758
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1696885730421258}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: eb795f9282b38e846a4bda26ba34f3c4, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -364,15 +364,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 352edff5359e97c42bc1c457c0b0b399, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  key: 
   Weapons:
   - name: Fist
     trigger: SwitchToFist
     damage: 1
-    code: 18
+    code: 0
   - name: Sword
     trigger: SwitchToSword
     damage: 10
-    code: 435
+    code: 1
+  - name: Mace
+    trigger: SwitchToMace
+    damage: 15
+    code: 2
+  - name: ShotGun
+    trigger: SwitchToShotgun
+    damage: 50
+    code: 3
 --- !u!114 &114902294745322396
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -421,7 +430,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 32
   m_Sprite: {fileID: 21300000, guid: 2ed59df9245529e499e79f5bbfd2082f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -430,7 +439,7 @@ SpriteRenderer:
   m_Size: {x: 0.64, y: 0.64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
 --- !u!212 &212458179586775122
 SpriteRenderer:
