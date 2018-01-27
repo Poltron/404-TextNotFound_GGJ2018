@@ -54,6 +54,7 @@ GameObject:
   - component: {fileID: 61851540356912624}
   - component: {fileID: 114774440915901664}
   - component: {fileID: 95339966984184942}
+  - component: {fileID: 114564554564239710}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -109,7 +110,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1641779361798518}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.922, y: -0.924, z: 0.0011100313}
+  m_LocalPosition: {x: -0.31, y: -0.96, z: 0.0011100313}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children:
   - {fileID: 4674867464886352}
@@ -193,6 +194,21 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114564554564239710
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1641779361798518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aec7a0b1daf5d084492d10595e79f366, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objName: Player
+  inspectorValues:
+  - key: IsAlive
+    value: false
 --- !u!114 &114774440915901664
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -208,8 +224,8 @@ MonoBehaviour:
   keyLeft: 276
   keyJump: 273
   keyAttack: 305
-  jumpHeight: 5
-  jumpTime: 2
+  jumpHeight: 3
+  jumpTime: 1
   feets:
   - {fileID: 4584647396123690}
   - {fileID: 4125728109518944}
@@ -250,7 +266,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: b2caa1fb927d1c5458f670eff7260047, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

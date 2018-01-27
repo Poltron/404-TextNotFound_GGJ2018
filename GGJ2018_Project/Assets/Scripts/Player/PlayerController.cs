@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour
 
 	private void Update()
 	{
-		Debug.Log("JUSTGROUNDED = " + justGrounded);
+		//Debug.Log("JUSTGROUNDED = " + justGrounded);
 		KeyUpdate();
 		Gravity();
 		Move();
