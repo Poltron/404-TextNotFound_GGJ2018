@@ -1,14 +1,21 @@
 fileFormatVersion: 2
-guid: 2ed59df9245529e499e79f5bbfd2082f
-timeCreated: 1517039374
+guid: 2c150454dafba9d46af8c06e9b4861e2
+timeCreated: 1517053420
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: CH_SPRT_SHT_0
-    21300002: CH_SPRT_SHT_1
-    21300004: CH_SPRT_SHT_2
-    21300006: CH_SPRT_SHT_3
-    21300008: CH_SPRT_SHT_4
+    21300000: SPRT_SHT_WEAPONS_0
+    21300002: SPRT_SHT_WEAPONS_1
+    21300004: SPRT_SHT_WEAPONS_2
+    21300006: SPRT_SHT_WEAPONS_3
+    21300008: SPRT_SHT_WEAPONS_4
+    21300010: SPRT_SHT_WEAPONS_5
+    21300012: SPRT_SHT_WEAPONS_6
+    21300014: SPRT_SHT_WEAPONS_7
+    21300016: SPRT_SHT_WEAPONS_8
+    21300018: SPRT_SHT_WEAPONS_9
+    21300020: SPRT_SHT_WEAPONS_10
+    21300022: SPRT_SHT_WEAPONS_11
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -95,7 +102,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CH_SPRT_SHT_0
+      name: SPRT_SHT_WEAPONS_0
       rect:
         serializedVersion: 2
         x: 0
@@ -103,13 +110,13 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: CH_SPRT_SHT_1
+      name: SPRT_SHT_WEAPONS_1
       rect:
         serializedVersion: 2
         x: 64
@@ -117,27 +124,55 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: CH_SPRT_SHT_2
+      name: SPRT_SHT_WEAPONS_2
       rect:
         serializedVersion: 2
-        x: 0
-        y: 385
+        x: 128
+        y: 448
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: CH_SPRT_SHT_3
+      name: SPRT_SHT_WEAPONS_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 448
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SPRT_SHT_WEAPONS_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SPRT_SHT_WEAPONS_5
       rect:
         serializedVersion: 2
         x: 64
@@ -145,13 +180,41 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: CH_SPRT_SHT_4
+      name: SPRT_SHT_WEAPONS_6
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 384
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SPRT_SHT_WEAPONS_7
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 384
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SPRT_SHT_WEAPONS_8
       rect:
         serializedVersion: 2
         x: 0
@@ -159,7 +222,49 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SPRT_SHT_WEAPONS_9
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 320
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SPRT_SHT_WEAPONS_10
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 320
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SPRT_SHT_WEAPONS_11
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 320
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

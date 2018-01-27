@@ -50,11 +50,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4671183865612054}
   - component: {fileID: 212458179586775122}
-  - component: {fileID: 95339966984184942}
   - component: {fileID: 50233963047662056}
   - component: {fileID: 61851540356912624}
   - component: {fileID: 114774440915901664}
-  - component: {fileID: 114364009547234434}
+  - component: {fileID: 95339966984184942}
+  - component: {fileID: 114902294745322396}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -103,11 +103,7 @@ GameObject:
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 224624330825044168}
-  - component: {fileID: 222446797945272240}
-  - component: {fileID: 114511298178331324}
-  - component: {fileID: 114417894912376430}
-  - component: {fileID: 114515205945607596}
+  - component: {fileID: 224004272696876894}
   - component: {fileID: 114012576597362930}
   m_Layer: 0
   m_Name: ViewIsAlive
@@ -194,7 +190,7 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4674867464886352}
-  - {fileID: 224624330825044168}
+  - {fileID: 224004272696876894}
   - {fileID: 4288862353682952}
   - {fileID: 4476531877396574}
   m_Father: {fileID: 0}
@@ -334,85 +330,6 @@ MonoBehaviour:
   - ISALIVE
   textValue: {fileID: 114166316911148372, guid: 8127582bb17957b45b0da000f7b3742b,
     type: 2}
---- !u!114 &114364009547234434
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1641779361798518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aec7a0b1daf5d084492d10595e79f366, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objName: HERO
-  inspectorValues:
-  - key: ISALIVE
-    value: FALSE
-  - key: WEAPOIN
-    value: 0
---- !u!114 &114417894912376430
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1876218614185472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1297475563, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 5
-    m_Right: 5
-    m_Top: 5
-    m_Bottom: 5
-  m_ChildAlignment: 0
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
---- !u!114 &114511298178331324
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1876218614185472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
---- !u!114 &114515205945607596
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1876218614185472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1741964061, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
-  m_VerticalFit: 2
 --- !u!114 &114774440915901664
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -447,16 +364,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 352edff5359e97c42bc1c457c0b0b399, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: WEAPON
   Weapons:
   - name: Fist
     trigger: SwitchToFist
     damage: 1
-    code: 0
+    code: 18
   - name: Sword
     trigger: SwitchToSword
     damage: 10
-    code: 1
+    code: 435
+--- !u!114 &114902294745322396
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1641779361798518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aec7a0b1daf5d084492d10595e79f366, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objName: HERO
+  inspectorValues:
+  - key: ISALIVE
+    value: FALSE
 --- !u!212 &212422666912309718
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -490,7 +421,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 31
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 2ed59df9245529e499e79f5bbfd2082f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -545,13 +476,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
---- !u!222 &222446797945272240
-CanvasRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1876218614185472}
---- !u!224 &224624330825044168
+--- !u!224 &224004272696876894
 RectTransform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -567,5 +492,5 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
