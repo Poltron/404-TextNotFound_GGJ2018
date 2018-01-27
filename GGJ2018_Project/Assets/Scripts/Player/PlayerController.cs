@@ -65,6 +65,9 @@ public class PlayerController : MonoBehaviour
 	[SerializeField]
 	private GameObject weapon;
 
+	public GameObject cameraPointRight;
+	public GameObject cameraPointLeft;
+
 	private float defaulGravity = 9.81f;
 	private Transform myTransform;
 	private Rigidbody2D myRigidBody;
@@ -142,6 +145,10 @@ public class PlayerController : MonoBehaviour
 			moveDirection.x = 1.0f * speed * 100f * Time.deltaTime;
 
 			myRigidBody.velocity = moveDirection;
+
+			cameraPointRight.SetActive(true);
+			cameraPointLeft.SetActive(false);
+
 			return;
 		}
 		else if (isMovingLeft)
@@ -151,11 +158,17 @@ public class PlayerController : MonoBehaviour
 			moveDirection.x = -1.0f * speed * 100f * Time.deltaTime;
 
 			myRigidBody.velocity = moveDirection;
+
+			cameraPointRight.SetActive(false);
+			cameraPointLeft.SetActive(true);
+
 			return;
 		}
 		else
 		{
 			myRigidBody.velocity = new Vector2(0.0f, myRigidBody.velocity.y);
+			cameraPointRight.SetActive(false);
+			cameraPointLeft.SetActive(false);
 		}
 	}
 
@@ -200,7 +213,7 @@ public class PlayerController : MonoBehaviour
 	{
 		foreach (var trans in feets)
 		{
-			RaycastHit2D[] ray = Physics2D.RaycastAll(trans.position, -Vector2.up, 0.1f);
+			RaycastHit2D[] ray = Physics2D.RaycastAll(trans.position, -Vector2.up, 0.2f);
 
 			foreach (RaycastHit2D r in ray)
 			{
@@ -249,7 +262,7 @@ public class PlayerController : MonoBehaviour
 		{
 			myAnimator.SetTrigger("Idle");
 		}
-		if((Input.GetKeyDown(keyRight) || Input.GetKeyDown(keyLeft)) && IsOnGround() && (isMovingLeft || isMovingRight)
+		if(((Input.GetKeyDown(keyRight) || Input.GetKeyDown(keyLeft)) && IsOnGround() && (isMovingLeft || isMovingRight))
 			|| justGrounded && (isMovingLeft || isMovingRight))
 		{
 			myAnimator.SetTrigger("Run");
