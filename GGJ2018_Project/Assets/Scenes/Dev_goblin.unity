@@ -194,11 +194,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &277351261 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1654945985480732, guid: 9c311f5844fec1144b7629ec9f6f1634,
-    type: 2}
-  m_PrefabInternal: {fileID: 469453722}
 --- !u!1001 &321244371
 Prefab:
   m_ObjectHideFlags: 0
@@ -254,11 +249,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4513101814272672, guid: 9c311f5844fec1144b7629ec9f6f1634, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -8.11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4513101814272672, guid: 9c311f5844fec1144b7629ec9f6f1634, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -1.23
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4513101814272672, guid: 9c311f5844fec1144b7629ec9f6f1634, type: 2}
       propertyPath: m_LocalPosition.z
@@ -284,48 +279,27 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 114614820785421112, guid: 9c311f5844fec1144b7629ec9f6f1634,
-        type: 2}
-      propertyPath: distanceFollow
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 114614820785421112, guid: 9c311f5844fec1144b7629ec9f6f1634,
-        type: 2}
-      propertyPath: distanceAttack
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1654945985480732, guid: 9c311f5844fec1144b7629ec9f6f1634, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114614820785421112, guid: 9c311f5844fec1144b7629ec9f6f1634,
-        type: 2}
-      propertyPath: attackCollider
-      value: 
-      objectReference: {fileID: 883589900}
-    - target: {fileID: 114614820785421112, guid: 9c311f5844fec1144b7629ec9f6f1634,
-        type: 2}
-      propertyPath: weapon
-      value: 
-      objectReference: {fileID: 277351261}
-    - target: {fileID: 114614820785421112, guid: 9c311f5844fec1144b7629ec9f6f1634,
-        type: 2}
-      propertyPath: cooldownAttack
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 50009085785996314, guid: 9c311f5844fec1144b7629ec9f6f1634,
-        type: 2}
-      propertyPath: m_Mass
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9c311f5844fec1144b7629ec9f6f1634, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &883589900 stripped
+--- !u!1 &469453723 stripped
 GameObject:
-  m_PrefabParentObject: {fileID: 1935499459191268, guid: 9c311f5844fec1144b7629ec9f6f1634,
+  m_PrefabParentObject: {fileID: 1744335238375050, guid: 9c311f5844fec1144b7629ec9f6f1634,
     type: 2}
   m_PrefabInternal: {fileID: 469453722}
+--- !u!114 &469453724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 469453723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aec7a0b1daf5d084492d10595e79f366, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objName: GOBLIN
+  inspectorValues: []
 --- !u!1001 &1684865772
 Prefab:
   m_ObjectHideFlags: 0
@@ -374,6 +348,16 @@ Prefab:
         type: 2}
       propertyPath: m_Mass
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224624330825044168, guid: af5d3a991d1499048a03f91be2892bb2,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 224624330825044168, guid: af5d3a991d1499048a03f91be2892bb2,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: af5d3a991d1499048a03f91be2892bb2, type: 2}

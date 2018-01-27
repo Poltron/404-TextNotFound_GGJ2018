@@ -16,6 +16,7 @@ public class ViewObjectKey : MonoBehaviour
 	[SerializeField]
 	private Text textValue;
 	private List<Viewer> allViewer;
+	private Viewer nameEntity;
 
 	private ObjectEntity parentEntity;
 	private RectTransform trans;
@@ -36,9 +37,16 @@ public class ViewObjectKey : MonoBehaviour
 		trans.anchorMax = new Vector2(0.5f, 1.0f);
 		trans.localScale = Vector3.one;
 
+		Viewer newViewer = new Viewer();
+		nameEntity = newViewer;
+		nameEntity.textContent = Instantiate(textValue);
+		nameEntity.textContent.transform.SetParent(transform);
+		nameEntity.textContent.transform.localScale = Vector3.one;
+		nameEntity.textContent.text = parentEntity.GetName();
+
 		foreach (string key in viewKey)
 		{
-			Viewer newViewer = new Viewer();
+			newViewer = new Viewer();
 			newViewer.key = parentEntity.GetTrueKey(key);
 			if (string.IsNullOrEmpty(newViewer.key))
 				continue;
@@ -66,11 +74,10 @@ public class ViewObjectKey : MonoBehaviour
 		foreach (Viewer v in allViewer)
 		{
 			v.textContent.gameObject.SetActive(parentEntity.gameObject.activeSelf);
-
 		}
+		nameEntity.textContent.text = parentEntity.GetName();
 
 		Vector3 newPos = Camera.main.WorldToScreenPoint(parentEntity.transform.position - Vector3.up);
-		;
 		transform.position = newPos;
 
 		//trans.offsetMin = new Vector2(trans.offsetMin.x, 0.0f);

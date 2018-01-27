@@ -69,18 +69,25 @@ public class GoblinController : MonoBehaviour
 	private float distanceAttack;
 	[SerializeField]
 	private int distanceFollow;
-	[SerializeField]
 	private bool isFollowing;
-	[SerializeField]
 	private bool isAttack;
 	[SerializeField]
 	private float cooldownAttack;
-	[SerializeField]
 	private float timerCooldown;
+
+	[SerializeField]
+	private float gapAtkCol;
+
+	[SerializeField]
+	private int life;
+	[SerializeField]
+	private bool isDead;
 
 	private bool isInputEnabled = true;
 
-    private void Start()
+	private ConsoleWriter console;
+
+	private void Start()
 	{
 		myTransform = transform;
 		myRigidBody = gameObject.GetComponent<Rigidbody2D>();
@@ -88,12 +95,26 @@ public class GoblinController : MonoBehaviour
 		mySpriteRenderer = GetComponent<SpriteRenderer>();
 		gravity = defaulGravity;
 		myAnimator.SetTrigger("Idle");
+
+		ObjectEntity entity = FindObjectOfType<ObjectEntity>();
+		NameSelector selector = FindObjectOfType<NameSelector>();
+		entity.SetName(selector.GetRandom("GOBLIN"));
+
+		console = FindObjectOfType<ConsoleWriter>();
+		console.AddOnSendCommand(SetAlive);
+	}
+
+	private void OnDestroy()
+	{
+		console.RemoveOnSendCommand(SetAlive);
 	}
 
 	private void Update()
 	{
-		if (!isFollowing)
-			CheckFollowing();
+		CheckFollowing();
+
+		if (isDead)
+			return;
 
 		if (!isFollowing)
 			return;
@@ -136,6 +157,7 @@ public class GoblinController : MonoBehaviour
 			isMovingRight = true;
 			mySpriteRenderer.flipX = false;
 			weapon.GetComponent<SpriteRenderer>().flipX = false;
+			attackCollider.transform.localPosition = new Vector3(gapAtkCol, 0, 0);
 
 		}
 		else
@@ -144,6 +166,7 @@ public class GoblinController : MonoBehaviour
 			isMovingRight = false;
 			mySpriteRenderer.flipX = true;
 			weapon.GetComponent<SpriteRenderer>().flipX = true;
+			attackCollider.transform.localPosition = new Vector3(-gapAtkCol, 0, 0);
 		}
 
 		if (isAttack)
@@ -178,7 +201,7 @@ public class GoblinController : MonoBehaviour
 
 	public void CheckFollowing()
 	{
-		if(GameManager.Instance.Player == null)
+		if (GameManager.Instance.Player == null)
 			return;
 
 		isFollowing = Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position) <= distanceFollow;
@@ -243,5 +266,36 @@ public class GoblinController : MonoBehaviour
 		}
 		isOnGround = false;
 		return false;
+	}
+
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		if (collision.gameObject.tag == "Attack")
+			--life;
+
+		if (life <= 0)
+		{
+			isDead = true;
+			myAnimator.SetTrigger("Dead");
+			GetComponent<ObjectEntity>().SetValue("ISAALIVE", "FALSE");
+			GetComponent<Collider2D>().enabled = false;
+		}
+	}
+
+	public void SetAlive(string cmd, string[] args)
+	{
+		if (cmd != "SET")
+			return;
+		if (args[0] == "ISALIVE" && args[1] == "TRUE")
+		{
+			if (isFollowing)
+			{
+				Debug.Log(gameObject.name + " revive");
+				isDead = false;
+				life = 3;
+				myAnimator.SetTrigger("Idle");
+				GetComponent<Collider2D>().enabled = true;
+			}
+		}
 	}
 }
