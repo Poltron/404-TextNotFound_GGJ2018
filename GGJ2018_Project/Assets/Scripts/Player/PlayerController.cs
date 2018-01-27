@@ -74,6 +74,9 @@ public class PlayerController : MonoBehaviour
 	private bool justGrounded = false;
 	private bool isOnGround;
 
+	public GameObject cameraPointRight;
+	public GameObject cameraPointLeft;
+
 	private ConsoleWriter console;
 
 	[SerializeField]
@@ -173,6 +176,10 @@ public class PlayerController : MonoBehaviour
 			moveDirection.x = 1.0f * speed * 100f * Time.deltaTime;
 
 			myRigidBody.velocity = moveDirection;
+
+			cameraPointRight.SetActive(true);
+			cameraPointLeft.SetActive(false);
+
 			return;
 		}
 		else if (isMovingLeft)
@@ -182,11 +189,17 @@ public class PlayerController : MonoBehaviour
 			moveDirection.x = -1.0f * speed * 100f * Time.deltaTime;
 
 			myRigidBody.velocity = moveDirection;
+
+			cameraPointRight.SetActive(false);
+			cameraPointLeft.SetActive(true);
+
 			return;
 		}
 		else
 		{
 			myRigidBody.velocity = new Vector2(0.0f, myRigidBody.velocity.y);
+			cameraPointRight.SetActive(false);
+			cameraPointLeft.SetActive(false);
 		}
 	}
 
@@ -280,7 +293,7 @@ public class PlayerController : MonoBehaviour
 		{
 			myAnimator.SetTrigger("Idle");
 		}
-		if((Input.GetKeyDown(keyRight) || Input.GetKeyDown(keyLeft)) && IsOnGround() && (isMovingLeft || isMovingRight)
+		if(((Input.GetKeyDown(keyRight) || Input.GetKeyDown(keyLeft)) && IsOnGround() && (isMovingLeft || isMovingRight))
 			|| justGrounded && (isMovingLeft || isMovingRight))
 		{
 			myAnimator.SetTrigger("Run");
