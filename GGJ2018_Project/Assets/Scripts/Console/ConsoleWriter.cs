@@ -14,21 +14,28 @@ public class ConsoleWriter : MonoBehaviour
 	[SerializeField]
 	private GameObject console;
 	[SerializeField]
-	private InputField writer;
+	private ConsoleVisual writer;
+	[SerializeField]
+	private bool debugCmd;
+
+	private bool justeChange;
 
 	void Start()
 	{
-		writer.onEndEdit.AddListener(SendConsole);
-		AddOnSendCommand(DebugCommand);
+		writer.AddOnEndEdit(SendConsole);
+		if (debugCmd)
+			AddOnSendCommand(DebugCommand);
 		ShowConsole(false);
 	}
 
 	private void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Return))
+		if (!justeChange && Input.GetKeyDown(KeyCode.Return))
 		{
 			ShowConsole(true);
 		}
+		if (justeChange)
+			justeChange = false;
 	}
 
 	private void SendConsole(string cmdLine)
@@ -56,9 +63,8 @@ public class ConsoleWriter : MonoBehaviour
 	private void ShowConsole(bool b)
 	{
 		console.SetActive(b);
-		writer.text = "";
 		enabled = !console.activeSelf;
-		writer.Select();
+		justeChange = true;
 	}
 
 	private void DebugCommand(string cmd, string[] args)

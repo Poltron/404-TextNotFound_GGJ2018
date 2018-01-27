@@ -50,13 +50,21 @@ public class ObjectEntity : MonoBehaviour
 
 	public bool HasKey(string key)
 	{
-		return values.ContainsKey(key);
+		foreach (KeyValuePair<string, string> pair in values)
+		{
+			string keyName = pair.Key.Substring(0, key.Length);
+			if (string.Equals(keyName, key, System.StringComparison.InvariantCultureIgnoreCase))
+				return true;
+		}
+		return false;
 	}
 
 	public string GetTrueKey(string key)
 	{
 		foreach (KeyValuePair<string, string> pair in values)
 		{
+			if (key.Length > pair.Key.Length)
+				continue;
 			string keyName = pair.Key.Substring(0, key.Length);
 			if (string.Equals(keyName, key, System.StringComparison.InvariantCultureIgnoreCase))
 				return pair.Key;
@@ -68,6 +76,8 @@ public class ObjectEntity : MonoBehaviour
 	{
 		foreach (KeyValuePair<string, string> pair in values)
 		{
+			if (key.Length > pair.Key.Length)
+				continue;
 			string keyName = pair.Key.Substring(0, key.Length);
 			if (string.Equals(keyName, key, System.StringComparison.InvariantCultureIgnoreCase))
 				return pair.Value;
@@ -77,9 +87,12 @@ public class ObjectEntity : MonoBehaviour
 
 	public bool SetValue(string key, string value)
 	{
-		if (!values.ContainsKey(key))
-			return false;
-		values[key] = value;
-		return true;
+		if (HasKey(key))
+		{
+			values[GetTrueKey(key)] = value;
+			return true;
+		}
+
+		return false;
 	}
 }
