@@ -124,7 +124,7 @@ public class ObjectCommand : MonoBehaviour
 
 		foreach (ObjectEntity obj in allObject)
 		{
-			if (obj == null || !string.Equals(obj.GetName(), "Cube", System.StringComparison.InvariantCultureIgnoreCase))
+			if (obj == null || !string.Equals(obj.GetName(), "GOBLIN", System.StringComparison.InvariantCultureIgnoreCase))
 				continue;
 			Vector3 position = mapColumn.PositionColumn(0);
 			position.x = GameObject.FindGameObjectWithTag("Player").transform.position.x;
