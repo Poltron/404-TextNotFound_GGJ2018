@@ -15,10 +15,17 @@ public class MapColumn : MonoBehaviour
 	private int nbrColumn;
 	[SerializeField]
 	private List<Transform> columns;
+	[SerializeField]
+	private Transform player;
 
 	private void Awake()
 	{
 		DivideScreen();
+	}
+
+	private void Start()
+	{
+		player = GameObject.FindGameObjectWithTag("Player").transform;
 	}
 
 	private void DivideScreen()
@@ -47,7 +54,7 @@ public class MapColumn : MonoBehaviour
 			if (i == nbrColumn - 1)
 			{
 				int childs = textObj.transform.childCount;
-				for (int j = childs - 1 ; j > 0 ; --j)
+				for (int j = childs - 1 ; j >= 0 ; --j)
 				{
 					Destroy(textObj.transform.GetChild(j).gameObject);
 				}
@@ -62,5 +69,21 @@ public class MapColumn : MonoBehaviour
 		if (col < 0 || col >= nbrColumn)
 			return Vector3.forward;
 		return columns[col].position;
+	}
+
+	public Vector3 GetColumnPlayer()
+	{
+		float distance = float.MaxValue;
+		Vector3 pos = PositionColumn(0);
+
+		foreach (Transform trans in columns)
+		{
+			float dist = Vector3.Distance(trans.position, player.position);
+			if (dist > distance)
+				continue;
+			distance = dist;
+			pos = trans.position;
+		}
+		return pos;
 	}
 }

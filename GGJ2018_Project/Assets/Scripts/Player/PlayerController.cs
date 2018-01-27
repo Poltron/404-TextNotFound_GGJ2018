@@ -62,6 +62,8 @@ public class PlayerController : MonoBehaviour
 	private float speed;
 	[SerializeField]
 	private GameObject attackCollider;
+	[SerializeField]
+	private GameObject weapon;
 
 	private float defaulGravity = 9.81f;
 	private Transform myTransform;
@@ -177,6 +179,8 @@ public class PlayerController : MonoBehaviour
 		{
 			attackCollider.SetActive(true);
 			StartCoroutine(WaitForFrame());
+
+			weapon.GetComponent<Animator>().SetTrigger("Attack");
 		}
 	}
 
@@ -254,10 +258,12 @@ public class PlayerController : MonoBehaviour
 		if(isMovingLeft)
 		{
 			mySpriteRenderer.flipX = true;
+			weapon.GetComponent<SpriteRenderer>().flipX = true;
 		}
 		else if(isMovingRight)
 		{
 			mySpriteRenderer.flipX = false;
+			weapon.GetComponent<SpriteRenderer>().flipX = false;
 		}
 	}
 }

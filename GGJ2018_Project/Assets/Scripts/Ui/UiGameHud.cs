@@ -10,19 +10,28 @@ public class UiGameHud : MonoBehaviour
 
 	[SerializeField]
 	private Text txtScore;
+	[SerializeField]
+	private Text txtTimer;
 
 	private void OnEnable()
 	{
-		scoreManager.AddOnScoreEvent(UpdateScore);
+		//scoreManager.AddOnScoreEvent(UpdateScore);
+		scoreManager.AddOnTimerEvent(UpdateTimer);
 	}
 
 	private void OnDestroy()
 	{
-		scoreManager.RemoveOnScoreEvent(UpdateScore);
+		//scoreManager.RemoveOnScoreEvent(UpdateScore);
+		scoreManager.RemoveOnTimerEvent(UpdateTimer);
 	}
 
 	public void UpdateScore(int score)
 	{
-		txtScore.text = "Score : " + score.ToString();
+		txtScore.text = "SCORE : " + score.ToString();
+	}
+
+	public void UpdateTimer(int seconde, int minute)
+	{
+		txtTimer.text = "TIMER : " + minute.ToString("D2") + ":" + seconde.ToString("D2");
 	}
 }

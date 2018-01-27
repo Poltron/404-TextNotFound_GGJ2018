@@ -34,12 +34,12 @@ public class ViewObjectKey : MonoBehaviour
 		trans = gameObject.GetComponent<RectTransform>();
 		trans.anchorMin = new Vector2(0.5f, 0.0f);
 		trans.anchorMax = new Vector2(0.5f, 1.0f);
+		trans.localScale = Vector3.one;
 
 		foreach (string key in viewKey)
 		{
 			Viewer newViewer = new Viewer();
 			newViewer.key = parentEntity.GetTrueKey(key);
-			Debug.Log("keuy : " + newViewer.key);
 			if (string.IsNullOrEmpty(newViewer.key))
 				continue;
 			newViewer.textContent = Instantiate(textValue);
@@ -57,11 +57,23 @@ public class ViewObjectKey : MonoBehaviour
 
 	private void Update()
 	{
-		Vector3 newPos = Camera.main.WorldToScreenPoint(parentEntity.transform.position);
+		if (parentEntity == null)
+		{
+			Destroy(gameObject);
+			return;
+		}
+		foreach (Viewer v in allViewer)
+		{
+			v.textContent.gameObject.SetActive(parentEntity.gameObject.activeSelf);
+
+		}
+
+		Vector3 newPos = Camera.main.WorldToScreenPoint(parentEntity.transform.position - Vector3.up);
+		;
 		transform.position = newPos;
 
-		trans.offsetMin = new Vector2(trans.offsetMin.x, 0.0f);
-		trans.offsetMax = new Vector2(trans.offsetMax.x, 0.0f);
+		//trans.offsetMin = new Vector2(trans.offsetMin.x, 0.0f);
+		//trans.offsetMax = new Vector2(trans.offsetMax.x, 0.0f);
 
 		foreach (Viewer v in allViewer)
 		{
