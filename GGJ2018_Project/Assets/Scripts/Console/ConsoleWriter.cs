@@ -116,7 +116,6 @@ public class ConsoleWriter : MonoBehaviour
 			OnErrorCommand(cmd);
 	}
 	#endregion
-
 	#endregion
 
 }

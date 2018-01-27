@@ -17,6 +17,7 @@ public class ObjectEntity : MonoBehaviour
 	private List<SValues> inspectorValues;
 	private Dictionary<string, string> values;
 
+	private static int keyId;
 	private ObjectCommand objCommand;
 
 	private void Awake()
@@ -25,13 +26,10 @@ public class ObjectEntity : MonoBehaviour
 		if (objCommand == null)
 			Destroy(gameObject);
 		values = new Dictionary<string, string>();
-	}
 
-	private void Start()
-	{
 		foreach (SValues v in inspectorValues)
 		{
-			values.Add(v.key, v.value);
+			values.Add(v.key + (keyId++), v.value);
 		}
 	}
 
@@ -55,11 +53,26 @@ public class ObjectEntity : MonoBehaviour
 		return values.ContainsKey(key);
 	}
 
+	public string GetTrueKey(string key)
+	{
+		foreach (KeyValuePair<string, string> pair in values)
+		{
+			string keyName = pair.Key.Substring(0, key.Length);
+			if (string.Equals(keyName, key, System.StringComparison.InvariantCultureIgnoreCase))
+				return pair.Key;
+		}
+		return null;
+	}
+
 	public string GetValue(string key)
 	{
-		if (!values.ContainsKey(key))
-			return null;
-		return values[key];
+		foreach (KeyValuePair<string, string> pair in values)
+		{
+			string keyName = pair.Key.Substring(0, key.Length);
+			if (string.Equals(keyName, key, System.StringComparison.InvariantCultureIgnoreCase))
+				return pair.Value;
+		}
+		return null;
 	}
 
 	public bool SetValue(string key, string value)
