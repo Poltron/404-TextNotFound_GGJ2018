@@ -14,14 +14,20 @@ public class ConsoleVisual : MonoBehaviour
 	private Text historyText;
 	[SerializeField]
 	private ConsoleWriter console;
+	[SerializeField]
+	private Image carret;
 	private string[] codes;
 	private string[] colors;
+
+	[SerializeField]
+	private float timeFlash;
+	private float currentTime;
 
 	private void Awake()
 	{
 		AddOnEndEdit(SaveHistory);
 		codes = new string[] { "", "", "" };
-		colors = new string[] { "00ff00", "00ff00", "00ff00" };
+		colors = new string[] { "1111111", "1111111", "1111111" };
 		SaveHistory("");
 	}
 
@@ -32,6 +38,13 @@ public class ConsoleVisual : MonoBehaviour
 
 	private void OnGUI()
 	{
+		currentTime -= Time.deltaTime;
+		if (currentTime <= 0.0f)
+		{
+			currentTime = timeFlash;
+			carret.enabled = !carret.enabled;
+		}
+
 		if (!Input.anyKeyDown)
 			return;
 
@@ -91,15 +104,16 @@ public class ConsoleVisual : MonoBehaviour
 	private void OnEnable()
 	{
 		consoleText.text = "";
+		currentTime = timeFlash;
 	}
 
 	private void SetErrorColor(string cmd)
 	{
 		colors[2] = "ff0000";
 
-		historyText.text = "3>\t<color=#" + colors[0] + ">" + codes[0] + "</color>\n";
-		historyText.text += "2>\t<color=#" + colors[1] + ">" + codes[1] + "</color>\n";
-		historyText.text += "1>\t<color=#" + colors[2] + ">" + codes[2] + "</color>";
+		historyText.text = ">\t<color=#" + colors[0] + ">" + codes[0] + "</color>\n";
+		historyText.text += ">\t<color=#" + colors[1] + ">" + codes[1] + "</color>\n";
+		historyText.text += ">\t<color=#" + colors[2] + ">" + codes[2] + "</color>";
 	}
 
 	private void SaveHistory(string text)
@@ -112,11 +126,11 @@ public class ConsoleVisual : MonoBehaviour
 
 		colors[0] = colors[1];
 		colors[1] = colors[2];
-		colors[2] = "00ff00";
+		colors[2] = "1111111";
 
-		historyText.text = "3>\t<color=#" + colors[0] + ">" + codes[0] + "</color>\n";
-		historyText.text += "2>\t<color=#" + colors[1] + ">" + codes[1] + "</color>\n";
-		historyText.text += "1>\t<color=#" + colors[2] + ">" + codes[2] + "</color>";
+		historyText.text = ">\t<color=#" + colors[0] + ">" + codes[0] + "</color>\n";
+		historyText.text += ">\t<color=#" + colors[1] + ">" + codes[1] + "</color>\n";
+		historyText.text += ">\t<color=#" + colors[2] + ">" + codes[2] + "</color>";
 	}
 
 	#region Events
