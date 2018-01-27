@@ -16,8 +16,10 @@ public class Level1Step2 : LevelStep
 
     public override void UpdateStep()
     {
-        if (GameManager.Instance.Player.GetComponent<ObjectEntity>().GetValue("IsAlive") == "true")
+        string isalivekey = GameManager.Instance.Player.GetComponent<ObjectEntity>().GetTrueKey("IsAlive");
+        if (GameManager.Instance.Player.GetComponent<ObjectEntity>().GetValue(isalivekey) == "TRUE")
         {
+            Debug.Log("");
             EndLevelStep();
         }
     }
