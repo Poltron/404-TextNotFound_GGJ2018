@@ -19,13 +19,19 @@ public class CameraFocusZone : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        CameraBehaviour camBehaviour = Camera.main.GetComponent<CameraBehaviour>();
-        camBehaviour.EnableFocus(positionToHold);
+        if (col.name == "Player")
+        {
+            CameraBehaviour camBehaviour = Camera.main.GetComponent<CameraBehaviour>();
+            camBehaviour.EnableFocus(positionToHold);
+        }
     }
 
     void OnTriggerExit2D(Collider2D col)
     {
-        CameraBehaviour camBehaviour = Camera.main.GetComponent<CameraBehaviour>();
-        camBehaviour.DisableFocus();
+        if (col.name == "Player")
+        {
+            CameraBehaviour camBehaviour = Camera.main.GetComponent<CameraBehaviour>();
+            camBehaviour.DisableFocus();
+        }
     }
 }

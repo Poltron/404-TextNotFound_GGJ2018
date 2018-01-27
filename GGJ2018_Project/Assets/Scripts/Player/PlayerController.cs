@@ -74,35 +74,54 @@ public class PlayerController : MonoBehaviour
 	private bool justGrounded = false;
 	private bool isOnGround;
 
-    private bool isInputEnabled = true;
+	private ConsoleWriter console;
 
-    private void Start()
+	[SerializeField]
+	private float gapAtkCol;
+	[SerializeField]
+	private int life;
+	private bool isDead;
+
+	private bool isInputEnabled = true;
+
+	private void Start()
 	{
 		myTransform = transform;
 		myRigidBody = gameObject.GetComponent<Rigidbody2D>();
 		myAnimator = GetComponent<Animator>();
 		mySpriteRenderer = GetComponent<SpriteRenderer>();
 		gravity = defaulGravity;
+
+		console = FindObjectOfType<ConsoleWriter>();
+		console.AddOnSendCommand(SetAlive);
+	}
+
+	private void OnDestroy()
+	{
+		console.RemoveOnSendCommand(SetAlive);
 	}
 
 	private void Update()
 	{
+		if (isDead)
+			return;
+
 		KeyUpdate();
 		Attack();
 		Animation();
 	}
 
-    private void FixedUpdate()
-    {
-        Gravity();
-        Move();
-        Jump();
-    }
+	private void FixedUpdate()
+	{
+		Gravity();
+		Move();
+		Jump();
+	}
 
 	public void KeyUpdate()
 	{
-        if (!isInputEnabled)
-            return;
+		if (!isInputEnabled)
+			return;
 
 		if (Input.GetKey(keyRight))
 			isMovingRight = true;
@@ -175,7 +194,7 @@ public class PlayerController : MonoBehaviour
 
 	public void Attack()
 	{
-		if(isKeyAttack)
+		if (isKeyAttack)
 		{
 			attackCollider.SetActive(true);
 			StartCoroutine(WaitForFrame());
@@ -224,46 +243,74 @@ public class PlayerController : MonoBehaviour
 		return (8.0f * height) / (time * time);
 	}
 
-    public void EnableInput()
-    {
-        isInputEnabled = true;
-        Debug.Log("Player Input Enabled");
-    }
+	public void EnableInput()
+	{
+		isInputEnabled = true;
+		Debug.Log("Player Input Enabled");
+	}
 
-    public void DisableInput()
-    {
-        isInputEnabled = false;
-    }
+	public void DisableInput()
+	{
+		isInputEnabled = false;
+	}
 
 	private void Animation()
 	{
-        if (!isInputEnabled)
-            return;
+		if (!isInputEnabled)
+			return;
 
-		if(Input.GetKeyDown(keyJump))
+		if (Input.GetKeyDown(keyJump))
 		{
 			myAnimator.SetTrigger("Jump");
 		}
-		if(((Input.GetKeyUp(keyRight) || Input.GetKeyUp(keyLeft)) && IsOnGround() && !isMovingLeft && !isMovingRight)
+		if (((Input.GetKeyUp(keyRight) || Input.GetKeyUp(keyLeft)) && IsOnGround() && !isMovingLeft && !isMovingRight)
 			|| justGrounded && (!isMovingLeft && !isMovingRight))
 		{
 			myAnimator.SetTrigger("Idle");
 		}
-		if((Input.GetKeyDown(keyRight) || Input.GetKeyDown(keyLeft)) && IsOnGround() && (isMovingLeft || isMovingRight)
+		if ((Input.GetKeyDown(keyRight) || Input.GetKeyDown(keyLeft)) && IsOnGround() && (isMovingLeft || isMovingRight)
 			|| justGrounded && (isMovingLeft || isMovingRight))
 		{
 			myAnimator.SetTrigger("Run");
 		}
 
-		if(isMovingLeft)
+		if (isMovingLeft)
 		{
 			mySpriteRenderer.flipX = true;
 			weapon.GetComponent<SpriteRenderer>().flipX = true;
+			attackCollider.transform.localPosition = new Vector3(-gapAtkCol, 0, 0);
 		}
-		else if(isMovingRight)
+		else if (isMovingRight)
 		{
 			mySpriteRenderer.flipX = false;
 			weapon.GetComponent<SpriteRenderer>().flipX = false;
+			attackCollider.transform.localPosition = new Vector3(gapAtkCol, 0, 0);
+		}
+	}
+
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		if (collision.gameObject.tag == "Attack")
+			--life;
+
+		if (life <= 0)
+		{
+			isDead = true;
+			myAnimator.SetTrigger("Dead");
+			GetComponent<ObjectEntity>().SetValue("ISALIVE", "FALSE");
+		}
+	}
+
+	public void SetAlive(string cmd, string[] args)
+	{
+		if (cmd != "SET")
+			return;
+		if (args[0] == "ISALIVE" && args[1] == "TRUE")
+		{
+			Debug.Log("hero revive");
+			isDead = false;
+			life = 5;
+			myAnimator.SetTrigger("Idle");
 		}
 	}
 }
