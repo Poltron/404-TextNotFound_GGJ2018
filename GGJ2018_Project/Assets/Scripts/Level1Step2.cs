@@ -16,7 +16,7 @@ public class Level1Step2 : LevelStep
 
     public override void UpdateStep()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (GameManager.Instance.Player.GetComponent<ObjectEntity>().GetValue("IsAlive") == "true")
         {
             EndLevelStep();
         }

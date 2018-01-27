@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
 	private bool justGrounded = false;
 	private bool isOnGround;
 
-    private bool isInputEnabled;
+    private bool isInputEnabled = true;
 
     private void Start()
 	{
@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour
 
 	private void Update()
 	{
-		Debug.Log("JUSTGROUNDED = " + justGrounded);
+		//Debug.Log("JUSTGROUNDED = " + justGrounded);
 		KeyUpdate();
 		Gravity();
 		Move();
@@ -211,6 +211,7 @@ public class PlayerController : MonoBehaviour
     public void EnableInput()
     {
         isInputEnabled = true;
+        Debug.Log("Player Input Enabled");
     }
 
     public void DisableInput()
