@@ -30,12 +30,12 @@ public class ObjectEntity : MonoBehaviour
 		}
 	}
 
-    private void Start()
-    {
-        objCommand = FindObjectOfType<ObjectCommand>();
-        if (objCommand == null)
-            Destroy(gameObject);
-    }
+	private void Start()
+	{
+		objCommand = FindObjectOfType<ObjectCommand>();
+		if (objCommand == null)
+			Destroy(gameObject);
+	}
 
 	private void OnBecameVisible()
 	{
@@ -54,7 +54,12 @@ public class ObjectEntity : MonoBehaviour
 
 	public bool HasKey(string key)
 	{
-		return values.ContainsKey(key);
+		foreach (KeyValuePair<string, string> pair in values)
+		{
+			if (string.Equals(pair.Key, key, System.StringComparison.InvariantCultureIgnoreCase))
+				return true;
+		}
+		return false;
 	}
 
 	public string GetTrueKey(string key)
@@ -81,9 +86,13 @@ public class ObjectEntity : MonoBehaviour
 
 	public bool SetValue(string key, string value)
 	{
-		if (!values.ContainsKey(key))
-			return false;
-		values[key] = value;
-		return true;
+		foreach (KeyValuePair<string, string> pair in values)
+		{
+			if (!string.Equals(pair.Key, key, System.StringComparison.InvariantCultureIgnoreCase))
+				continue;
+			values[pair.Key] = value;
+			return true;
+		}
+		return false;
 	}
 }

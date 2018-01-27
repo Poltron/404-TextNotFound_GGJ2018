@@ -6,5 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SceneJerem.unity
-    guid: 2b180a3017e5ac948ab4ccf80ee034d5
+    path: Assets/Scenes/Scene_Jeanweb.unity
+    guid: fd8abb5a63739f34fa6b0d8349a767bb
+  - enabled: 1
+    path: Assets/Scenes/scene_eti.unity
+    guid: 30bee766e7cbd5a498fa89c101f06621

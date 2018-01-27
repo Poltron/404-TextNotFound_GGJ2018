@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UiMainMenu : MonoBehaviour
@@ -25,7 +26,7 @@ public class UiMainMenu : MonoBehaviour
 
 	private void ClickPlay()
 	{
-		Debug.Log("Play");
+        SceneManager.LoadScene("scene_eti");
 	}
 
 	private void ClickHightscore()

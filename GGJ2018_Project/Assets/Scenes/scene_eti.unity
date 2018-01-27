@@ -898,30 +898,20 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 114564554564239710, guid: af5d3a991d1499048a03f91be2892bb2, type: 2}
+    - target: {fileID: 114774440915901664, guid: af5d3a991d1499048a03f91be2892bb2,
+        type: 2}
+      propertyPath: jumpHeight
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: af5d3a991d1499048a03f91be2892bb2, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1880365454 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1641779361798518, guid: af5d3a991d1499048a03f91be2892bb2,
+--- !u!114 &1880365455 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114395891728165070, guid: af5d3a991d1499048a03f91be2892bb2,
     type: 2}
   m_PrefabInternal: {fileID: 1880365453}
---- !u!114 &1880365455
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1880365454}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aec7a0b1daf5d084492d10595e79f366, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objName: player
-  inspectorValues:
-  - key: IsAlive
-    value: false
 --- !u!1 &2051650107
 GameObject:
   m_ObjectHideFlags: 0
