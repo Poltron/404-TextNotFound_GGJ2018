@@ -75,6 +75,8 @@ public class ViewObjectKey : MonoBehaviour
 		{
 			v.textContent.gameObject.SetActive(parentEntity.gameObject.activeSelf);
 		}
+		nameEntity.textContent.gameObject.SetActive(parentEntity.gameObject.activeSelf);
+
 		nameEntity.textContent.text = parentEntity.GetName();
 
 		Vector3 newPos = Camera.main.WorldToScreenPoint(parentEntity.transform.position - Vector3.up);

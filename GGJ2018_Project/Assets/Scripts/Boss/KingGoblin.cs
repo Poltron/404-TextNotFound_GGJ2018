@@ -5,9 +5,9 @@ using UnityEngine;
 public class KingGoblin : MonoBehaviour
 {
 	[SerializeField]
-	private ObjectCommand command;
-	[SerializeField]
 	private ObjectEntity entity;
+	[SerializeField]
+	private GameObject toSpawn;
 	[SerializeField]
 	private float intervalSpawn;
 	private Rigidbody2D myRigidBody;
@@ -20,7 +20,6 @@ public class KingGoblin : MonoBehaviour
 	private void Start()
 	{
 		map = FindObjectOfType<MapColumn>();
-		command = FindObjectOfType<ObjectCommand>();
 		myRigidBody = GetComponent<Rigidbody2D>();
 		NameSelector nameSelector = FindObjectOfType<NameSelector>();
 		entity.SetName(nameSelector.GetRandom("BOSS"));
@@ -31,6 +30,7 @@ public class KingGoblin : MonoBehaviour
 		pos.x = map.transform.position.x;
 		transform.position = pos;
 		JumpTo(map.GetNbrColumn() - 1);
+		currentTime = intervalSpawn;
 	}
 
 	private void Update()
@@ -41,6 +41,9 @@ public class KingGoblin : MonoBehaviour
 			currentTime = intervalSpawn;
 			SpawnGoblin();
 		}
+		if (Input.GetKeyDown(KeyCode.Backspace))
+			JumpTo(column == 0 ? map.GetNbrColumn() - 1 : 0);
+
 		Gravity();
 	}
 
@@ -76,6 +79,8 @@ public class KingGoblin : MonoBehaviour
 	public void SpawnGoblin()
 	{
 		int columnSpawn = column == 0 ? 4 : 7;
-		command.Add("ADD", new string[] { "GOBLIN", columnSpawn.ToString() });
+		Vector3 direction = GameObject.FindGameObjectWithTag("Player").transform.position - transform.position;
+
+		Instantiate(toSpawn, transform.position + direction.normalized * 2.0f, Quaternion.identity);
 	}
 }

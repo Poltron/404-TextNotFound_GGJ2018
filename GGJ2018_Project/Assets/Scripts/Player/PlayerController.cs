@@ -317,7 +317,6 @@ public class PlayerController : MonoBehaviour
 	{
 		if (args[0] == "ISALIVE" && args[1] == "TRUE")
 		{
-			Debug.Log("hero revive");
 			isDead = false;
 			life = 5;
 			myAnimator.SetTrigger("Idle");
