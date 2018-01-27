@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 95339966984184942}
   - component: {fileID: 114395891728165070}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Player_etiversionbackup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

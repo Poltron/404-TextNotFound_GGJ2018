@@ -18,7 +18,7 @@ public class ViewObjectKey : MonoBehaviour
 		obj = gameObject.GetComponentInParent<ObjectEntity>();
 
 
-		Canvas canvas = FindObjectOfType<Canvas>();
+        Canvas canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
 		textValue.transform.SetParent(canvas.transform);
 		textValue.gameObject.name = "view key : " + viewKey;
 	}
@@ -31,7 +31,8 @@ public class ViewObjectKey : MonoBehaviour
 
 	private void OnDestroy()
 	{
-		Destroy(textValue.gameObject);
+        if (textValue)
+		    Destroy(textValue.gameObject);
 	}
 
 	private void Update()
