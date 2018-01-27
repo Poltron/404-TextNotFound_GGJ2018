@@ -104,6 +104,7 @@ public class GoblinController : MonoBehaviour
 		player = FindObjectOfType<PlayerController>();
 
 		attackCollider.tag = "Attack"; 
+
 	}
 
 	private void OnDestroy()

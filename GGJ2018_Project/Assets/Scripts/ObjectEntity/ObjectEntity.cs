@@ -48,6 +48,11 @@ public class ObjectEntity : MonoBehaviour
 		return objName;
 	}
 
+	public void SetName(string newName)
+	{
+		objName = newName;
+	}
+
 	public bool HasKey(string key)
 	{
 		foreach (KeyValuePair<string, string> pair in values)
