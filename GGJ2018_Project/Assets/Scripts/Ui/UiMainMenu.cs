@@ -31,12 +31,11 @@ public class UiMainMenu : MonoBehaviour
 
 	private void ClickHightscore()
 	{
-		Debug.Log("Hightscores");
+
 	}
 
 	private void ClickQuit()
 	{
-		Debug.Log("Quit");
-		//Application.Quit();
+		Application.Quit();
 	}
 }

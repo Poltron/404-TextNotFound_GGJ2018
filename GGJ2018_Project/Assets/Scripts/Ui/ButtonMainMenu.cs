@@ -20,7 +20,6 @@ public class ButtonMainMenu : Button
 
 	public override void OnSelect(BaseEventData eventData)
 	{
-		Debug.Log(name);
 		background.color = colors.highlightedColor;
 		label.color = colors.highlightedColor;
 		background.enabled = true;
