@@ -2234,52 +2234,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.84, y: 1.3}
   m_EdgeRadius: 0
---- !u!1 &1198911088
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1876218614185472, guid: af5d3a991d1499048a03f91be2892bb2,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1198911089}
-  - component: {fileID: 1198911090}
-  m_Layer: 0
-  m_Name: ViewIsAlive
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1198911089
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4670230306389222, guid: af5d3a991d1499048a03f91be2892bb2,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1198911088}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1638443153}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1198911090
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114012576597362930, guid: af5d3a991d1499048a03f91be2892bb2,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1198911088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 615553e4cfd12dc40b4da338c561b4d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  viewKey:
-  - isalive
-  textValue: {fileID: 0}
 --- !u!1 &1311425660 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1096802669071858, guid: 20554b8aec3cac94eb7a951c74215588,
@@ -2479,6 +2433,13 @@ MonoBehaviour:
   feets: []
   speed: 0
   attackCollider: {fileID: 0}
+  weapon: {fileID: 0}
+  cameraPointRight: {fileID: 0}
+  cameraPointLeft: {fileID: 0}
+  gapAtkCol: 0
+  life: 0
+  isDead: 0
+  cooldownAttack: 0
 --- !u!50 &1363050598
 Rigidbody2D:
   serializedVersion: 4
@@ -2985,7 +2946,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1638443146}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6da81d4fae0fd3648b9e96401eac3619, type: 3}
   m_Name: 
@@ -3001,6 +2962,13 @@ MonoBehaviour:
   - {fileID: 1868378597}
   speed: 3
   attackCollider: {fileID: 0}
+  weapon: {fileID: 0}
+  cameraPointRight: {fileID: 0}
+  cameraPointLeft: {fileID: 0}
+  gapAtkCol: 0
+  life: 0
+  isDead: 0
+  cooldownAttack: 0
 --- !u!61 &1638443150
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3105,7 +3073,6 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 73476700}
-  - {fileID: 1198911089}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
