@@ -54,7 +54,7 @@ GameObject:
   - component: {fileID: 61851540356912624}
   - component: {fileID: 114774440915901664}
   - component: {fileID: 95339966984184942}
-  - component: {fileID: 114564554564239710}
+  - component: {fileID: 114395891728165070}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -158,7 +158,7 @@ Transform:
   m_GameObject: {fileID: 1641779361798518}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.31, y: -0.96, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4674867464886352}
   - {fileID: 4670230306389222}
@@ -255,7 +255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   viewKey: IsAlive
   textValue: {fileID: 114835857283414828}
---- !u!114 &114564554564239710
+--- !u!114 &114395891728165070
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -266,7 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aec7a0b1daf5d084492d10595e79f366, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objName: 
+  objName: player
   inspectorValues:
   - key: IsAlive
     value: false
@@ -281,14 +281,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6da81d4fae0fd3648b9e96401eac3619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyRight: 0
-  keyLeft: 0
-  keyJump: 0
-  keyAttack: 0
-  jumpHeight: 0
-  jumpTime: 0
-  feets: []
-  speed: 0
+  keyRight: 275
+  keyLeft: 276
+  keyJump: 273
+  keyAttack: 305
+  jumpHeight: 2
+  jumpTime: 1
+  feets:
+  - {fileID: 4584647396123690}
+  - {fileID: 4125728109518944}
+  speed: 3
   defaulGravity: 9.81
   SpriteJump: {fileID: 0}
   SpriteDead: {fileID: 0}
