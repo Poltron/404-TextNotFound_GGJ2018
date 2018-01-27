@@ -4,8 +4,8 @@ using UnityEngine;
 
 abstract public class Level : MonoBehaviour {
 
-    [SerializeField]
-    protected List<Transform> gameObjects;
+    /*[SerializeField]
+    protected List<Transform> gameObjects;*/
 
     [SerializeField]
     protected List<LevelStep> steps;
