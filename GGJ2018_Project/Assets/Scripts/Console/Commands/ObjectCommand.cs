@@ -133,8 +133,6 @@ public class ObjectCommand : MonoBehaviour
 		}
 	}
 
-
-	#region ListObject
 	private void Jeremie(string cmd, string[] args)
 	{
 		if (cmd != "JEREMIE")
@@ -148,6 +146,7 @@ public class ObjectCommand : MonoBehaviour
 		}
 	}
 
+	#region ListObject
 	public void AddObject(ObjectEntity obj)
 	{
 		if (!visibleObjects.Contains(obj))
