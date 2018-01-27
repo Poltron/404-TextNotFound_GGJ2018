@@ -21,27 +21,37 @@ public class TriggerStep4 : MonoBehaviour
         {
             hasBeenUsed = true;
             Begin();
+			foreach (GameObject goblin in goblins)
+			{
+				goblin.GetComponent<GoblinController>().AddOnGoblinDie(CheckAllDie);
+			}
         }
     }
 
+	public void CheckAllDie()
+	{
+		bool isEnd = true;
+		foreach (GameObject goblin in goblins)
+		{
+			if (!goblin.GetComponent<GoblinController>().isDead)
+				isEnd = false;
+		}
+
+		if (isEnd)
+			SoundEndFight();
+	}
+
     public void Begin()
     {
+		Debug.Log("Begin");
         GameManager.Instance.DialogAudioSource.clip = fightBegin;
         GameManager.Instance.DialogAudioSource.Play();
     }
 
-    public void Update()
-    {
-        if (false) // all goblins are dead
-        {
-            // si tous les goblins sont tués
-            SoundEndFight();
-        }
-    }
-
     public void SoundEndFight()
     {
-        GameManager.Instance.DialogAudioSource.clip = fightEnd;
+		Debug.Log("SoundEndFight");
+		GameManager.Instance.DialogAudioSource.clip = fightEnd;
         GameManager.Instance.DialogAudioSource.Play();
     }
 }

@@ -38,7 +38,7 @@ public class ConsoleWriter : MonoBehaviour
 			justeChange = false;
 	}
 
-	private void SendConsole(string cmdLine)
+	public void SendConsole(string cmdLine)
 	{
 		string[] parseCommand = cmdLine.Split(' ');
 
@@ -88,7 +88,7 @@ public class ConsoleWriter : MonoBehaviour
 		OnSendCommand -= func;
 	}
 
-	private void ResetOnSendCommand(SendCommand func)
+	private void ResetOnSendCommand()
 	{
 		OnSendCommand = null;
 	}
@@ -111,7 +111,7 @@ public class ConsoleWriter : MonoBehaviour
 		OnErrorCommand -= func;
 	}
 
-	private void ResetOnErrorCommand(ErrorCommand func)
+	private void ResetOnErrorCommand()
 	{
 		OnErrorCommand = null;
 	}

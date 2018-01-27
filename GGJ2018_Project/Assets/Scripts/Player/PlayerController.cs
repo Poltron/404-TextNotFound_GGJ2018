@@ -80,20 +80,29 @@ public class PlayerController : MonoBehaviour
 	private float gapAtkCol;
 	[SerializeField]
 	private int life;
-	private bool isDead;
+	public bool isDead;
+
+	[SerializeField]
+	private float cooldownAttack;
+	private float timerCooldown;
 
 	private bool isInputEnabled = true;
 
-    private void Start()
+    private void Awake()
 	{
 		myTransform = transform;
 		myRigidBody = gameObject.GetComponent<Rigidbody2D>();
 		myAnimator = GetComponent<Animator>();
 		mySpriteRenderer = GetComponent<SpriteRenderer>();
 		gravity = defaulGravity;
+	}
 
+	private void Start()
+	{
 		console = FindObjectOfType<ConsoleWriter>();
 		console.AddOnSendCommand(SetAlive);
+
+		attackCollider.tag = "Attack";
 	}
 
 	private void OnDestroy()
@@ -103,6 +112,9 @@ public class PlayerController : MonoBehaviour
 
 	private void Update()
 	{
+		if (timerCooldown > 0)
+			timerCooldown -= Time.deltaTime;
+
 		if (isDead)
 			return;
 
@@ -194,11 +206,11 @@ public class PlayerController : MonoBehaviour
 
 	public void Attack()
 	{
-		if(isKeyAttack)
+		if(isKeyAttack && timerCooldown <= 0)
 		{
 			attackCollider.SetActive(true);
 			StartCoroutine(WaitForFrame());
-
+			timerCooldown = cooldownAttack;
 			weapon.GetComponent<Animator>().SetTrigger("Attack");
 		}
 	}
