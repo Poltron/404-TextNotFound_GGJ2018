@@ -71,8 +71,10 @@ public class ObjectCommand : MonoBehaviour
 			if (!string.Equals(obj.GetName(), args[0], System.StringComparison.InvariantCultureIgnoreCase))
 				continue;
 
-			Destroy(obj.gameObject);
-			destroyed = true;
+            //Destroy(obj.gameObject);
+
+            obj.gameObject.SetActive(false);
+            destroyed = true;
 		}
 		if (!destroyed)
 			console.InvokeOnErrorCommand(cmd);
