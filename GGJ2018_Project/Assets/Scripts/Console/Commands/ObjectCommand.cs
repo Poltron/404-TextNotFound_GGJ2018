@@ -25,7 +25,7 @@ public class ObjectCommand : MonoBehaviour
 		console.AddOnErrorCommand(ErrorCommand);
 	}
 
-	private void Add(string cmd, string[] args)
+	public void Add(string cmd, string[] args)
 	{
 		if (!string.Equals(cmd, "ADD", System.StringComparison.InvariantCultureIgnoreCase))
 			return;
@@ -58,7 +58,7 @@ public class ObjectCommand : MonoBehaviour
 		return;
 	}
 
-	private void Remove(string cmd, string[] args)
+	public void Remove(string cmd, string[] args)
 	{
 		if (!string.Equals(cmd, "REMOVE", System.StringComparison.InvariantCultureIgnoreCase))
 			return;
@@ -75,15 +75,15 @@ public class ObjectCommand : MonoBehaviour
 			if (!string.Equals(obj.GetName(), args[0], System.StringComparison.InvariantCultureIgnoreCase))
 				continue;
 
-            obj.gameObject.SetActive(false);
-            destroyed = true;
+			obj.gameObject.SetActive(false);
+			destroyed = true;
 		}
 		if (!destroyed)
 			console.InvokeOnErrorCommand(cmd);
 		return;
 	}
 
-	private void Set(string cmd, string[] args)
+	public void Set(string cmd, string[] args)
 	{
 		if (!string.Equals(cmd, "SET", System.StringComparison.InvariantCultureIgnoreCase))
 			return;

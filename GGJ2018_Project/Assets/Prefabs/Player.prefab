@@ -349,7 +349,7 @@ MonoBehaviour:
   inspectorValues:
   - key: ISALIVE
     value: FALSE
-  - key: WEAPOIN
+  - key: WEAPON
     value: 0
 --- !u!114 &114417894912376430
 MonoBehaviour:
@@ -449,11 +449,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: WEAPON
   Weapons:
-  - name: Fist
+  - name: FIST
     trigger: SwitchToFist
     damage: 1
     code: 0
-  - name: Sword
+  - name: SWORD
+    trigger: SwitchToSword
+    damage: 10
+    code: 1
+  - name: MACE
+    trigger: SwitchToSword
+    damage: 10
+    code: 1
+  - name: SHOTGUN
     trigger: SwitchToSword
     damage: 10
     code: 1
