@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class Level1Step3 : LevelStep
 {
     [SerializeField]
@@ -20,6 +20,8 @@ public class Level1Step3 : LevelStep
         GameManager.Instance.DialogAudioSource.clip = alive;
         GameManager.Instance.DialogAudioSource.Play();
 
+        GameManager.Instance.Player.GetComponent<Animator>().SetTrigger("Idle");
+
         StartCoroutine(FadeBlackScreen());
     }
 
@@ -35,18 +37,21 @@ public class Level1Step3 : LevelStep
 
     private IEnumerator FadeBlackScreen()
     {
-        GameObject blackscreen = GameObject.Find("BlackScreen");
-        SpriteRenderer spriteRenderer = blackscreen.GetComponent<SpriteRenderer>();
+        GameObject blackscreen = GameObject.Find("InitialGameOverScreen");
+        Image image = blackscreen.GetComponentInChildren<Image>();
+        Text text = blackscreen.GetComponentInChildren<Text>();
 
         yield return new WaitForSeconds(timeBeforeFadeFromBlack);
 
         for (float f = timeForBlackScreenFade; f >0 ; f -= Time.deltaTime)
         {
-            spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, f);
+            image.color = new Color(image.color.r, image.color.g, image.color.b, f);
+            text.color = new Color(text.color.r, text.color.g, text.color.b, f);
             yield return new WaitForEndOfFrame();
         }
 
-        spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 0);
+        image.color = new Color(image.color.r, image.color.g, image.color.b, 0);
+        text.color = new Color(text.color.r, text.color.g, text.color.b, 0);
 
         GameManager.Instance.Player.EnableInput();
     }

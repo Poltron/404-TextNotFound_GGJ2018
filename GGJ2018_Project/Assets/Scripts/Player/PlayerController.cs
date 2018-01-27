@@ -36,7 +36,6 @@ public class PlayerController : MonoBehaviour
 		return isKeyAttack;
 	}
 	#endregion
-
 	#region Key
 	[Header("Keys")]
 	[SerializeField]
@@ -48,7 +47,6 @@ public class PlayerController : MonoBehaviour
 	[SerializeField]
 	private KeyCode keyAttack;
 	#endregion
-
 	#region Jump
 	[Header("Jump")]
 	[SerializeField]
@@ -63,14 +61,9 @@ public class PlayerController : MonoBehaviour
 	[SerializeField]
 	private float speed;
 	[SerializeField]
+	private GameObject attackCollider;
+
 	private float defaulGravity = 9.81f;
-
-	[Header("SpritesAnim")]
-	[SerializeField]
-	private Sprite SpriteJump;
-	[SerializeField]
-	private Sprite SpriteDead;
-
 	private Transform myTransform;
 	private Rigidbody2D myRigidBody;
 	private Animator myAnimator;
@@ -92,11 +85,11 @@ public class PlayerController : MonoBehaviour
 
 	private void Update()
 	{
-		//Debug.Log("JUSTGROUNDED = " + justGrounded);
 		KeyUpdate();
 		Gravity();
 		Move();
 		Jump();
+		Attack();
 		Animation();
 	}
 
@@ -119,6 +112,11 @@ public class PlayerController : MonoBehaviour
 			isKeyJump = true;
 		else
 			isKeyJump = false;
+
+		if (Input.GetKeyDown(keyAttack))
+			isKeyAttack = true;
+		else
+			isKeyAttack = false;
 	}
 
 	public void Gravity()
@@ -171,7 +169,17 @@ public class PlayerController : MonoBehaviour
 
 	public void Attack()
 	{
+		if(isKeyAttack)
+		{
+			attackCollider.SetActive(true);
+			StartCoroutine(WaitForFrame());
+		}
+	}
 
+	IEnumerator WaitForFrame()
+	{
+		yield return null;
+		attackCollider.SetActive(false);
 	}
 
 	public float JumpForce(float height, float time)
@@ -230,7 +238,8 @@ public class PlayerController : MonoBehaviour
 		{
 			myAnimator.SetTrigger("Idle");
 		}
-		if((Input.GetKeyDown(keyRight) || Input.GetKeyDown(keyLeft)) && IsOnGround() && (isMovingLeft || isMovingRight))
+		if((Input.GetKeyDown(keyRight) || Input.GetKeyDown(keyLeft)) && IsOnGround() && (isMovingLeft || isMovingRight)
+			|| justGrounded && (isMovingLeft || isMovingRight))
 		{
 			myAnimator.SetTrigger("Run");
 		}
