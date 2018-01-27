@@ -62,11 +62,18 @@ public class ViewObjectKey : MonoBehaviour
 			Destroy(gameObject);
 			return;
 		}
-		Vector3 newPos = Camera.main.WorldToScreenPoint(parentEntity.transform.position);
+		foreach (Viewer v in allViewer)
+		{
+			v.textContent.gameObject.SetActive(parentEntity.gameObject.activeSelf);
+
+		}
+
+		Vector3 newPos = Camera.main.WorldToScreenPoint(parentEntity.transform.position - Vector3.up);
+		;
 		transform.position = newPos;
 
-		trans.offsetMin = new Vector2(trans.offsetMin.x, 0.0f);
-		trans.offsetMax = new Vector2(trans.offsetMax.x, 0.0f);
+		//trans.offsetMin = new Vector2(trans.offsetMin.x, 0.0f);
+		//trans.offsetMax = new Vector2(trans.offsetMax.x, 0.0f);
 
 		foreach (Viewer v in allViewer)
 		{

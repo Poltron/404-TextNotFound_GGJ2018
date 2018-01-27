@@ -29,7 +29,7 @@ public class ObjectEntity : MonoBehaviour
 
 		foreach (SValues v in inspectorValues)
 		{
-			values.Add(v.key + (keyId++), v.value);
+			values.Add(v.key /*+ (keyId++)*/, v.value);
 		}
 	}
 
@@ -94,5 +94,20 @@ public class ObjectEntity : MonoBehaviour
 		}
 
 		return false;
+	}
+
+	public void SetAll(string value)
+	{
+		List<string> allKeys = new List<string>();
+
+		foreach (var pair in values)
+		{
+			allKeys.Add(pair.Key);
+		}
+
+		foreach (string k in allKeys)
+		{
+			values[k] = value;
+		}
 	}
 }

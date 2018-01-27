@@ -9,6 +9,8 @@ public class ObjectCommand : MonoBehaviour
 	[SerializeField]
 	private MapColumn mapColumn;
 	[SerializeField]
+	private string[] cmdPrefix;
+	[SerializeField]
 	private ObjectEntity[] allObject;
 	[SerializeField]
 	private List<ObjectEntity> visibleObjects;
@@ -19,6 +21,7 @@ public class ObjectCommand : MonoBehaviour
 		console.AddOnSendCommand(Remove);
 		console.AddOnSendCommand(Set);
 		console.AddOnSendCommand(SendCorrectCommand);
+		console.AddOnSendCommand(Jeremie);
 		console.AddOnErrorCommand(ErrorCommand);
 	}
 
@@ -72,7 +75,7 @@ public class ObjectCommand : MonoBehaviour
 			if (!string.Equals(obj.GetName(), args[0], System.StringComparison.InvariantCultureIgnoreCase))
 				continue;
 
-			Destroy(obj.gameObject);
+			obj.gameObject.SetActive(false);
 			destroyed = true;
 		}
 		if (!destroyed)
@@ -106,8 +109,12 @@ public class ObjectCommand : MonoBehaviour
 
 	private void SendCorrectCommand(string cmd, string[] args)
 	{
-		if (cmd != "ADD" && cmd != "REMOVE" && cmd != "SET")
-			ErrorCommand("ADD");
+		foreach (string s in cmdPrefix)
+		{
+			if (s == cmd)
+				return;
+		}
+		console.InvokeOnErrorCommand(cmd);
 	}
 
 	private void ErrorCommand(string cmd)
@@ -119,15 +126,28 @@ public class ObjectCommand : MonoBehaviour
 		{
 			if (!string.Equals(obj.GetName(), "Cube", System.StringComparison.InvariantCultureIgnoreCase))
 				continue;
-			int column = 0;
-
-			Vector3 position = mapColumn.PositionColumn(column);
+			Vector3 position = mapColumn.PositionColumn(0);
+			position.x = GameObject.FindGameObjectWithTag("Player").transform.position.x;
 			Instantiate(obj.gameObject, position, Quaternion.identity);
 			return;
 		}
 	}
 
+
 	#region ListObject
+	private void Jeremie(string cmd, string[] args)
+	{
+		if (cmd != "JEREMIE")
+			return;
+
+		ObjectEntity[] allEntity = FindObjectsOfType<ObjectEntity>();
+
+		foreach (ObjectEntity obj in allEntity)
+		{
+			obj.SetAll("ISSOU");
+		}
+	}
+
 	public void AddObject(ObjectEntity obj)
 	{
 		if (!visibleObjects.Contains(obj))
