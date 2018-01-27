@@ -126,8 +126,8 @@ public class ObjectCommand : MonoBehaviour
 		{
 			if (obj == null || !string.Equals(obj.GetName(), "GOBLIN", System.StringComparison.InvariantCultureIgnoreCase))
 				continue;
-			Vector3 position = mapColumn.PositionColumn(0);
-			position.x = GameObject.FindGameObjectWithTag("Player").transform.position.x;
+			int[] pos = new int[] { 0, 1, 2, 7, 8, 9 };
+			Vector3 position = mapColumn.PositionColumn(pos[Random.Range(0, pos.Length)]);
 			Instantiate(obj.gameObject, position, Quaternion.identity);
 			return;
 		}
