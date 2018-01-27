@@ -8,6 +8,9 @@ public class ConsoleWriter : MonoBehaviour
 	public delegate void SendCommand(string cmd, string[] args);
 	private event SendCommand OnSendCommand;
 
+	public delegate void ErrorCommand(string cmd);
+	private event ErrorCommand OnErrorCommand;
+
 	[SerializeField]
 	private GameObject console;
 	[SerializeField]
@@ -90,6 +93,30 @@ public class ConsoleWriter : MonoBehaviour
 			OnSendCommand(cmd, args);
 	}
 	#endregion
+
+	#region OnSendCommand
+	public void AddOnErrorCommand(ErrorCommand func)
+	{
+		OnErrorCommand += func;
+	}
+
+	public void RemoveOnErrorCommand(ErrorCommand func)
+	{
+		OnErrorCommand -= func;
+	}
+
+	private void ResetOnErrorCommand(ErrorCommand func)
+	{
+		OnErrorCommand = null;
+	}
+
+	public void InvokeOnErrorCommand(string cmd)
+	{
+		if (OnErrorCommand != null)
+			OnErrorCommand(cmd);
+	}
+	#endregion
+
 	#endregion
 
 }
