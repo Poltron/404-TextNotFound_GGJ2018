@@ -11,7 +11,7 @@ public class ButtonMainMenu : Button
 	[SerializeField]
 	private Text label;
 
-	protected override void Start()
+	protected override void Awake()
 	{
 		background = transform.Find("Image").GetComponent<Image>();
 		background.enabled = false;
@@ -20,6 +20,7 @@ public class ButtonMainMenu : Button
 
 	public override void OnSelect(BaseEventData eventData)
 	{
+		Debug.Log(name);
 		background.color = colors.highlightedColor;
 		label.color = colors.highlightedColor;
 		background.enabled = true;
