@@ -94,7 +94,7 @@ public class ObjectCommand : MonoBehaviour
 		{
 			if (!obj.HasKey(args[0]))
 				continue;
-			
+
 			isSet = obj.SetValue(args[0], args[1]);
 			if (!isSet)
 				break;
