@@ -74,7 +74,15 @@ public class PlayerController : MonoBehaviour
 	private bool justGrounded = false;
 	private bool isOnGround;
 
-    private bool isInputEnabled = true;
+	private ConsoleWriter console;
+
+	[SerializeField]
+	private float gapAtkCol;
+	[SerializeField]
+	private int life;
+	private bool isDead;
+
+	private bool isInputEnabled = true;
 
     private void Start()
 	{
@@ -83,10 +91,21 @@ public class PlayerController : MonoBehaviour
 		myAnimator = GetComponent<Animator>();
 		mySpriteRenderer = GetComponent<SpriteRenderer>();
 		gravity = defaulGravity;
+
+		console = FindObjectOfType<ConsoleWriter>();
+		console.AddOnSendCommand(SetAlive);
+	}
+
+	private void OnDestroy()
+	{
+		console.RemoveOnSendCommand(SetAlive);
 	}
 
 	private void Update()
 	{
+		if (isDead)
+			return;
+
 		KeyUpdate();
 		Attack();
 		Animation();
@@ -259,11 +278,37 @@ public class PlayerController : MonoBehaviour
 		{
 			mySpriteRenderer.flipX = true;
 			weapon.GetComponent<SpriteRenderer>().flipX = true;
+			attackCollider.transform.localPosition = new Vector3(-gapAtkCol, 0, 0);
 		}
 		else if(isMovingRight)
 		{
 			mySpriteRenderer.flipX = false;
 			weapon.GetComponent<SpriteRenderer>().flipX = false;
+			attackCollider.transform.localPosition = new Vector3(gapAtkCol, 0, 0);
+		}
+	}
+
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		if (collision.gameObject.tag == "Attack")
+			--life;
+
+		if (life <= 0)
+		{
+			isDead = true;
+			myAnimator.SetTrigger("Dead");
+			GetComponent<ObjectEntity>().SetValue("ISALIVE", "FALSE");
+		}
+	}
+
+	public void SetAlive(string cmd, string[] args)
+	{
+		if (args[0] == "ISALIVE" && args[1] == "TRUE")
+		{
+			Debug.Log("hero revive");
+			isDead = false;
+			life = 5;
+			myAnimator.SetTrigger("Idle");
 		}
 	}
 }
