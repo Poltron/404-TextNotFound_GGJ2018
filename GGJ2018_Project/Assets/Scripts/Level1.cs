@@ -4,33 +4,29 @@ using UnityEngine;
 
 public class Level1 : Level
 {
-    float t;
+    [SerializeField]
+    float timeBeforeBeginning;
+
+    float actualTimer;
+
     bool isFinished;
-
-    void Start ()
-    {
-		
-	}
-
+    
     public override void BeginLevel() 
     {
-        Debug.Log("BEGINNING");
+        Debug.Log("BEGINNING LEVEL 1");
+        actualTimer = 0.0f;
+        steps[0].IsActiveStep = true;
+        steps[0].BeginLevelStep();  
     }
 
     void Update()
     {
-        if (t > 5.0f && !isFinished)
-        {
-            Debug.Log("UPDATE");
-            EndLevel();
-        }
-
-        t += Time.deltaTime;
     }
 
     public override void EndLevel()
     {
         isFinished = true;
-        Debug.Log("END");
+        Debug.Log("END LEVEL 1");
+        GameManager.Instance.LevelManager.NextLevel();
     }
 }
