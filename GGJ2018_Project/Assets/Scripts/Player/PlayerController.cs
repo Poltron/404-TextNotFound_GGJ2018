@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
 	private bool justGrounded = false;
 	private bool isOnGround;
 
-    private bool isInputEnabled;
+    private bool isInputEnabled = true;
 
     private void Start()
 	{
