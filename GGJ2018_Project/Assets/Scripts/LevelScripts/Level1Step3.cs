@@ -38,7 +38,7 @@ public class Level1Step3 : LevelStep
     private IEnumerator FadeBlackScreen()
     {
         GameObject blackscreen = GameObject.Find("InitialGameOverScreen");
-        Image image = blackscreen.GetComponentInChildren<Image>();
+		Image image = blackscreen.transform.Find("Image").GetComponent<Image>();
         Text text = blackscreen.GetComponentInChildren<Text>();
 
         yield return new WaitForSeconds(timeBeforeFadeFromBlack);

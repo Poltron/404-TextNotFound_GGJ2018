@@ -54,6 +54,13 @@ public class PlayerController : MonoBehaviour
 	[SerializeField]
 	private float jumpTime;
 	#endregion
+	#region Parallax
+	[Header("Parallax")]
+	[SerializeField]
+	private List<RectTransform> backgroundRect;
+	[SerializeField]
+	private List<float> backgroundSpeed;
+	#endregion
 
 	[Header("Variables")]
 	[SerializeField]
@@ -180,6 +187,10 @@ public class PlayerController : MonoBehaviour
 			cameraPointRight.SetActive(true);
 			cameraPointLeft.SetActive(false);
 
+			backgroundRect[0].transform.Translate(new Vector2(-backgroundSpeed[0] * Time.deltaTime, 0));
+			backgroundRect[1].transform.Translate(new Vector2(-backgroundSpeed[1] * Time.deltaTime, 0));
+			backgroundRect[2].transform.Translate(new Vector2(-backgroundSpeed[2] * Time.deltaTime, 0)); 
+
 			return;
 		}
 		else if (isMovingLeft)
@@ -192,6 +203,10 @@ public class PlayerController : MonoBehaviour
 
 			cameraPointRight.SetActive(false);
 			cameraPointLeft.SetActive(true);
+
+			backgroundRect[0].transform.Translate(new Vector2(backgroundSpeed[0] * Time.deltaTime, 0));
+			backgroundRect[1].transform.Translate(new Vector2(backgroundSpeed[1] * Time.deltaTime, 0));
+			backgroundRect[2].transform.Translate(new Vector2(backgroundSpeed[2] * Time.deltaTime, 0));
 
 			return;
 		}
