@@ -31,7 +31,8 @@ public class ViewObjectKey : MonoBehaviour
 
 	private void OnDestroy()
 	{
-		Destroy(textValue.gameObject);
+		if (textValue)
+			Destroy(textValue.gameObject);
 	}
 
 	private void Update()

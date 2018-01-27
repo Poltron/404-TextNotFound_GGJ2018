@@ -94,12 +94,7 @@ public class ObjectCommand : MonoBehaviour
 		{
 			if (!obj.HasKey(args[0]))
 				continue;
-			int newValue = 0;
-			if (!int.TryParse(args[1], out newValue))
-			{
-				console.InvokeOnErrorCommand(cmd);
-				return;
-			}
+
 			isSet = obj.SetValue(args[0], args[1]);
 			if (!isSet)
 				break;
