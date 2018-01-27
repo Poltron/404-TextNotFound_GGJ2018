@@ -54,6 +54,13 @@ public class PlayerController : MonoBehaviour
 	[SerializeField]
 	private float jumpTime;
 	#endregion
+	#region Parallax
+	[Header("Parallax")]
+	[SerializeField]
+	private List<RectTransform> backgroundRect;
+	[SerializeField]
+	private List<float> backgroundSpeed;
+	#endregion
 
 	[Header("Variables")]
 	[SerializeField]
@@ -74,26 +81,38 @@ public class PlayerController : MonoBehaviour
 	private bool justGrounded = false;
 	private bool isOnGround;
 
+	public GameObject cameraPointRight;
+	public GameObject cameraPointLeft;
+
 	private ConsoleWriter console;
 
 	[SerializeField]
 	private float gapAtkCol;
 	[SerializeField]
 	private int life;
-	private bool isDead;
+	public bool isDead;
+
+	[SerializeField]
+	private float cooldownAttack;
+	private float timerCooldown;
 
 	private bool isInputEnabled = true;
 
-    private void Start()
+	private void Awake()
 	{
 		myTransform = transform;
 		myRigidBody = gameObject.GetComponent<Rigidbody2D>();
 		myAnimator = GetComponent<Animator>();
 		mySpriteRenderer = GetComponent<SpriteRenderer>();
 		gravity = defaulGravity;
+	}
 
+	private void Start()
+	{
 		console = FindObjectOfType<ConsoleWriter>();
 		console.AddOnSendCommand(SetAlive);
+
+		attackCollider.tag = "Attack";
 	}
 
 	private void OnDestroy()
@@ -103,6 +122,9 @@ public class PlayerController : MonoBehaviour
 
 	private void Update()
 	{
+		if (timerCooldown > 0)
+			timerCooldown -= Time.deltaTime;
+
 		if (isDead)
 			return;
 
@@ -111,17 +133,17 @@ public class PlayerController : MonoBehaviour
 		Animation();
 	}
 
-    private void FixedUpdate()
-    {
-        Gravity();
-        Move();
-        Jump();
-    }
+	private void FixedUpdate()
+	{
+		Gravity();
+		Move();
+		Jump();
+	}
 
 	public void KeyUpdate()
 	{
-        if (!isInputEnabled)
-            return;
+		if (!isInputEnabled)
+			return;
 
 		if (Input.GetKey(keyRight))
 			isMovingRight = true;
@@ -161,6 +183,14 @@ public class PlayerController : MonoBehaviour
 			moveDirection.x = 1.0f * speed * 100f * Time.deltaTime;
 
 			myRigidBody.velocity = moveDirection;
+
+			cameraPointRight.SetActive(true);
+			cameraPointLeft.SetActive(false);
+
+			backgroundRect[0].transform.Translate(new Vector2(-backgroundSpeed[0] * Time.deltaTime, 0));
+			backgroundRect[1].transform.Translate(new Vector2(-backgroundSpeed[1] * Time.deltaTime, 0));
+			backgroundRect[2].transform.Translate(new Vector2(-backgroundSpeed[2] * Time.deltaTime, 0)); 
+
 			return;
 		}
 		else if (isMovingLeft)
@@ -170,11 +200,21 @@ public class PlayerController : MonoBehaviour
 			moveDirection.x = -1.0f * speed * 100f * Time.deltaTime;
 
 			myRigidBody.velocity = moveDirection;
+
+			cameraPointRight.SetActive(false);
+			cameraPointLeft.SetActive(true);
+
+			backgroundRect[0].transform.Translate(new Vector2(backgroundSpeed[0] * Time.deltaTime, 0));
+			backgroundRect[1].transform.Translate(new Vector2(backgroundSpeed[1] * Time.deltaTime, 0));
+			backgroundRect[2].transform.Translate(new Vector2(backgroundSpeed[2] * Time.deltaTime, 0));
+
 			return;
 		}
 		else
 		{
 			myRigidBody.velocity = new Vector2(0.0f, myRigidBody.velocity.y);
+			cameraPointRight.SetActive(false);
+			cameraPointLeft.SetActive(false);
 		}
 	}
 
@@ -194,11 +234,11 @@ public class PlayerController : MonoBehaviour
 
 	public void Attack()
 	{
-		if(isKeyAttack)
+		if (isKeyAttack && timerCooldown <= 0)
 		{
 			attackCollider.SetActive(true);
 			StartCoroutine(WaitForFrame());
-
+			timerCooldown = cooldownAttack;
 			weapon.GetComponent<Animator>().SetTrigger("Attack");
 		}
 	}
@@ -243,44 +283,43 @@ public class PlayerController : MonoBehaviour
 		return (8.0f * height) / (time * time);
 	}
 
-    public void EnableInput()
-    {
-        isInputEnabled = true;
-        Debug.Log("Player Input Enabled");
-    }
+	public void EnableInput()
+	{
+		isInputEnabled = true;
+	}
 
-    public void DisableInput()
-    {
-        isInputEnabled = false;
-    }
+	public void DisableInput()
+	{
+		isInputEnabled = false;
+	}
 
 	private void Animation()
 	{
-        if (!isInputEnabled)
-            return;
+		if (!isInputEnabled)
+			return;
 
-		if(Input.GetKeyDown(keyJump))
+		if (Input.GetKeyDown(keyJump))
 		{
 			myAnimator.SetTrigger("Jump");
 		}
-		if(((Input.GetKeyUp(keyRight) || Input.GetKeyUp(keyLeft)) && IsOnGround() && !isMovingLeft && !isMovingRight)
+		if (((Input.GetKeyUp(keyRight) || Input.GetKeyUp(keyLeft)) && IsOnGround() && !isMovingLeft && !isMovingRight)
 			|| justGrounded && (!isMovingLeft && !isMovingRight))
 		{
 			myAnimator.SetTrigger("Idle");
 		}
-		if((Input.GetKeyDown(keyRight) || Input.GetKeyDown(keyLeft)) && IsOnGround() && (isMovingLeft || isMovingRight)
+		if (((Input.GetKeyDown(keyRight) || Input.GetKeyDown(keyLeft)) && IsOnGround() && (isMovingLeft || isMovingRight))
 			|| justGrounded && (isMovingLeft || isMovingRight))
 		{
 			myAnimator.SetTrigger("Run");
 		}
 
-		if(isMovingLeft)
+		if (isMovingLeft)
 		{
 			mySpriteRenderer.flipX = true;
 			weapon.GetComponent<SpriteRenderer>().flipX = true;
 			attackCollider.transform.localPosition = new Vector3(-gapAtkCol, 0, 0);
 		}
-		else if(isMovingRight)
+		else if (isMovingRight)
 		{
 			mySpriteRenderer.flipX = false;
 			weapon.GetComponent<SpriteRenderer>().flipX = false;
@@ -303,12 +342,22 @@ public class PlayerController : MonoBehaviour
 
 	public void SetAlive(string cmd, string[] args)
 	{
+		if (cmd != "SET" || args.Length != 2)
+			return;
 		if (args[0] == "ISALIVE" && args[1] == "TRUE")
 		{
-			Debug.Log("hero revive");
 			isDead = false;
 			life = 5;
 			myAnimator.SetTrigger("Idle");
+		}
+		else if (args[0] == "JUMP")
+		{
+			float h = 0.0f;
+			if (float.TryParse(args[1], out h))
+			{
+				jumpTime = jumpTime * h / jumpHeight;
+				jumpHeight = h;
+			}
 		}
 	}
 }

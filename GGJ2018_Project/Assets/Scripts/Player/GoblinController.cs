@@ -80,12 +80,14 @@ public class GoblinController : MonoBehaviour
 
 	[SerializeField]
 	private int life;
-	[SerializeField]
-	private bool isDead;
+
+	public bool isDead;
 
 	private bool isInputEnabled = true;
 
 	private ConsoleWriter console;
+
+	private PlayerController player;
 
 	private void Start()
 	{
@@ -98,15 +100,24 @@ public class GoblinController : MonoBehaviour
 
 		console = FindObjectOfType<ConsoleWriter>();
 		console.AddOnSendCommand(SetAlive);
+
+		player = FindObjectOfType<PlayerController>();
+
+		attackCollider.tag = "Attack";
+
 	}
 
 	private void OnDestroy()
 	{
 		console.RemoveOnSendCommand(SetAlive);
+		ResetOnGoblinDie();
 	}
 
 	private void Update()
 	{
+		if (player.isDead)
+			return;
+
 		CheckFollowing();
 
 		if (isDead)
@@ -273,13 +284,16 @@ public class GoblinController : MonoBehaviour
 		{
 			isDead = true;
 			myAnimator.SetTrigger("Dead");
-			GetComponent<ObjectEntity>().SetValue("ISAALIVE", "FALSE");
+			GetComponent<ObjectEntity>().SetValue("ISALIVE", "FALSE");
 			GetComponent<Collider2D>().enabled = false;
+			InvokeOnGoblinDie();
 		}
 	}
 
 	public void SetAlive(string cmd, string[] args)
 	{
+		if (cmd != "SET")
+			return;
 		if (args[0] == "ISALIVE" && args[1] == "TRUE")
 		{
 			if (isFollowing)
@@ -289,7 +303,35 @@ public class GoblinController : MonoBehaviour
 				life = 3;
 				myAnimator.SetTrigger("Idle");
 				GetComponent<Collider2D>().enabled = true;
+				;
 			}
 		}
 	}
+
+	#region Events
+	#region OnSendCommand
+	public delegate void GoblinDie();
+	private event GoblinDie OnGoblinDie;
+	public void AddOnGoblinDie(GoblinDie func)
+	{
+		OnGoblinDie += func;
+	}
+
+	public void RemoveOnGoblinDie(GoblinDie func)
+	{
+		OnGoblinDie -= func;
+	}
+
+	private void ResetOnGoblinDie()
+	{
+		OnGoblinDie = null;
+	}
+
+	public void InvokeOnGoblinDie()
+	{
+		if (OnGoblinDie != null)
+			OnGoblinDie();
+	}
+	#endregion
+	#endregion
 }

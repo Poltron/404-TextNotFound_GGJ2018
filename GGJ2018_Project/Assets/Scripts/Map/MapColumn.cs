@@ -86,4 +86,9 @@ public class MapColumn : MonoBehaviour
 		}
 		return pos;
 	}
+
+	public int GetNbrColumn()
+	{
+		return nbrColumn;
+	}
 }

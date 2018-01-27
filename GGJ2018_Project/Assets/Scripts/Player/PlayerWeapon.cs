@@ -23,8 +23,6 @@ public class PlayerWeapon : MonoBehaviour
 
 	private Animator myAnimator;
 
-	private string currentWeaponCode;
-
 	private void Start()
 	{
 		myAnimator = GetComponent<Animator>();
@@ -36,16 +34,16 @@ public class PlayerWeapon : MonoBehaviour
 	{
 		string value = entity.GetValue(key);
 
-		if (value == currentWeaponCode)
+		if (value == currentWeapon.name)
 			return;
 
-		if (value == "Fist")
+		if (value == "FIST")
 			SetWeapon(0);
-		else if (value == "Sword")
+		else if (value == "SWORD")
 			SetWeapon(1);
-		else if (value == "Mace")
+		else if (value == "MACE")
 			SetWeapon(2);
-		else if (value == "Shotgun")
+		else if (value == "SHOTGUN")
 			SetWeapon(3);
 	}
 

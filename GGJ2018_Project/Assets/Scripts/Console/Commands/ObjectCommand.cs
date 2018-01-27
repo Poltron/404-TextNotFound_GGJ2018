@@ -25,7 +25,7 @@ public class ObjectCommand : MonoBehaviour
 		console.AddOnErrorCommand(ErrorCommand);
 	}
 
-	private void Add(string cmd, string[] args)
+	public void Add(string cmd, string[] args)
 	{
 		if (!string.Equals(cmd, "ADD", System.StringComparison.InvariantCultureIgnoreCase))
 			return;
@@ -58,7 +58,7 @@ public class ObjectCommand : MonoBehaviour
 		return;
 	}
 
-	private void Remove(string cmd, string[] args)
+	public void Remove(string cmd, string[] args)
 	{
 		if (!string.Equals(cmd, "REMOVE", System.StringComparison.InvariantCultureIgnoreCase))
 			return;
@@ -75,15 +75,15 @@ public class ObjectCommand : MonoBehaviour
 			if (!string.Equals(obj.GetName(), args[0], System.StringComparison.InvariantCultureIgnoreCase))
 				continue;
 
-            obj.gameObject.SetActive(false);
-            destroyed = true;
+			obj.gameObject.SetActive(false);
+			destroyed = true;
 		}
 		if (!destroyed)
 			console.InvokeOnErrorCommand(cmd);
 		return;
 	}
 
-	private void Set(string cmd, string[] args)
+	public void Set(string cmd, string[] args)
 	{
 		if (!string.Equals(cmd, "SET", System.StringComparison.InvariantCultureIgnoreCase))
 			return;
@@ -124,10 +124,10 @@ public class ObjectCommand : MonoBehaviour
 
 		foreach (ObjectEntity obj in allObject)
 		{
-			if (!string.Equals(obj.GetName(), "Cube", System.StringComparison.InvariantCultureIgnoreCase))
+			if (obj == null || !string.Equals(obj.GetName(), "GOBLIN", System.StringComparison.InvariantCultureIgnoreCase))
 				continue;
-			Vector3 position = mapColumn.PositionColumn(0);
-			position.x = GameObject.FindGameObjectWithTag("Player").transform.position.x;
+			int[] pos = new int[] { 0, 1, 2, 7, 8, 9 };
+			Vector3 position = mapColumn.PositionColumn(pos[Random.Range(0, pos.Length)]);
 			Instantiate(obj.gameObject, position, Quaternion.identity);
 			return;
 		}
