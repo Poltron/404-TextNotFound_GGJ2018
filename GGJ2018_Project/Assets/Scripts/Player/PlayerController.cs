@@ -28,6 +28,14 @@ public class PlayerController : MonoBehaviour
 		return isKeyJump;
 	}
 	#endregion
+	#region isAttacking
+	private bool isKeyAttack = false;
+
+	public bool GetIsAttacking()
+	{
+		return isKeyAttack;
+	}
+	#endregion
 
 	#region Key
 	[Header("Keys")]
@@ -37,6 +45,8 @@ public class PlayerController : MonoBehaviour
 	private KeyCode keyLeft;
 	[SerializeField]
 	private KeyCode keyJump;
+	[SerializeField]
+	private KeyCode keyAttack;
 	#endregion
 
 	#region Jump
@@ -55,23 +65,37 @@ public class PlayerController : MonoBehaviour
 	[SerializeField]
 	private float defaulGravity = 9.81f;
 
+	[Header("SpritesAnim")]
+	[SerializeField]
+	private Sprite SpriteJump;
+	[SerializeField]
+	private Sprite SpriteDead;
+
 	private Transform myTransform;
 	private Rigidbody2D myRigidBody;
+	private Animator myAnimator;
+	private SpriteRenderer mySpriteRenderer;
 	private float gravity;
+	private bool justGrounded = false;
+	private bool isOnGround;
 
 	private void Start()
 	{
 		myTransform = transform;
 		myRigidBody = gameObject.GetComponent<Rigidbody2D>();
+		myAnimator = GetComponent<Animator>();
+		mySpriteRenderer = GetComponent<SpriteRenderer>();
 		gravity = defaulGravity;
 	}
 
 	private void Update()
 	{
+		Debug.Log("JUSTGROUNDED = " + justGrounded);
 		KeyUpdate();
 		Gravity();
 		Move();
 		Jump();
+		Animation();
 	}
 
 	public void KeyUpdate()
@@ -86,7 +110,7 @@ public class PlayerController : MonoBehaviour
 		else
 			isMovingLeft = false;
 
-		if (Input.GetKey(keyJump))
+		if (Input.GetKeyDown(keyJump))
 			isKeyJump = true;
 		else
 			isKeyJump = false;
@@ -140,6 +164,11 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	public void Attack()
+	{
+
+	}
+
 	public float JumpForce(float height, float time)
 	{
 		gravity = CalculeGravity(height, time);
@@ -156,15 +185,47 @@ public class PlayerController : MonoBehaviour
 			{
 				if (r.transform.tag == "Platform")
 				{
+					if (justGrounded == false && isOnGround == false)
+						justGrounded = true;
+					else
+						justGrounded = false;
+					isOnGround = true;
 					return true;
 				}
 			}
 		}
+		isOnGround = false;
 		return false;
 	}
 
 	private float CalculeGravity(float height, float time)
 	{
 		return (8.0f * height) / (time * time);
+	}
+
+	private void Animation()
+	{
+		if(Input.GetKeyDown(keyJump))
+		{
+			myAnimator.SetTrigger("Jump");
+		}
+		if(((Input.GetKeyUp(keyRight) || Input.GetKeyUp(keyLeft)) && IsOnGround() && !isMovingLeft && !isMovingRight)
+			|| justGrounded && (!isMovingLeft && !isMovingRight))
+		{
+			myAnimator.SetTrigger("Idle");
+		}
+		if((Input.GetKeyDown(keyRight) || Input.GetKeyDown(keyLeft)) && IsOnGround() && (isMovingLeft || isMovingRight))
+		{
+			myAnimator.SetTrigger("Run");
+		}
+
+		if(isMovingLeft)
+		{
+			mySpriteRenderer.flipX = true;
+		}
+		else if(isMovingRight)
+		{
+			mySpriteRenderer.flipX = false;
+		}
 	}
 }
