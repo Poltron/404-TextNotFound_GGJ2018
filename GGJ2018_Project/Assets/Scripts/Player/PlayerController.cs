@@ -59,7 +59,9 @@ public class PlayerController : MonoBehaviour
 	private Rigidbody2D myRigidBody;
 	private float gravity;
 
-	private void Start()
+    private bool isInputEnabled;
+
+    private void Start()
 	{
 		myTransform = transform;
 		myRigidBody = gameObject.GetComponent<Rigidbody2D>();
@@ -76,6 +78,9 @@ public class PlayerController : MonoBehaviour
 
 	public void KeyUpdate()
 	{
+        if (!isInputEnabled)
+            return;
+
 		if (Input.GetKey(keyRight))
 			isMovingRight = true;
 		else
@@ -167,4 +172,15 @@ public class PlayerController : MonoBehaviour
 	{
 		return (8.0f * height) / (time * time);
 	}
+
+    public void EnableInput()
+    {
+        isInputEnabled = true;
+    }
+
+    public void DisableInput()
+    {
+        isInputEnabled = false;
+    }
+
 }

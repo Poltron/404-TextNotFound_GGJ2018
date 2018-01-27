@@ -2,15 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelStep : MonoBehaviour {
+abstract public class LevelStep : MonoBehaviour {
 
-	void Start()
+    [HideInInspector]
+    public bool IsActiveStep;
+
+    abstract public void BeginLevelStep();
+    abstract public void EndLevelStep();
+
+    private void Update()
     {
-		
-	}
-	
-	void Update()
-    {
-		
-	}
+        if (IsActiveStep)
+        {
+            UpdateStep();
+        }
+    }
+
+    abstract public void UpdateStep();
+
 }
