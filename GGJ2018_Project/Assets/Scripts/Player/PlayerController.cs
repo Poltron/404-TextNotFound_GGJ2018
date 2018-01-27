@@ -65,12 +65,6 @@ public class PlayerController : MonoBehaviour
 	[SerializeField]
 	private float defaulGravity = 9.81f;
 
-	[Header("SpritesAnim")]
-	[SerializeField]
-	private Sprite SpriteJump;
-	[SerializeField]
-	private Sprite SpriteDead;
-
 	private Transform myTransform;
 	private Rigidbody2D myRigidBody;
 	private Animator myAnimator;
