@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class GoblinController : MonoBehaviour
 {
 	#region isMovingRight
+	[SerializeField]
 	private bool isMovingRight = false;
 
 	public bool GetIsMovingRight()
@@ -13,6 +14,7 @@ public class PlayerController : MonoBehaviour
 	}
 	#endregion
 	#region isMovingLeft
+	[SerializeField]
 	private bool isMovingLeft = false;
 
 	public bool GetIsMovingLeft()
@@ -35,17 +37,6 @@ public class PlayerController : MonoBehaviour
 	{
 		return isKeyAttack;
 	}
-	#endregion
-	#region Key
-	[Header("Keys")]
-	[SerializeField]
-	private KeyCode keyRight;
-	[SerializeField]
-	private KeyCode keyLeft;
-	[SerializeField]
-	private KeyCode keyJump;
-	[SerializeField]
-	private KeyCode keyAttack;
 	#endregion
 	#region Jump
 	[Header("Jump")]
@@ -74,7 +65,20 @@ public class PlayerController : MonoBehaviour
 	private bool justGrounded = false;
 	private bool isOnGround;
 
-    private bool isInputEnabled = true;
+	[SerializeField]
+	private float distanceAttack;
+	[SerializeField]
+	private int distanceFollow;
+	[SerializeField]
+	private bool isFollowing;
+	[SerializeField]
+	private bool isAttack;
+	[SerializeField]
+	private float cooldownAttack;
+	[SerializeField]
+	private float timerCooldown;
+
+	private bool isInputEnabled = true;
 
     private void Start()
 	{
@@ -83,58 +87,71 @@ public class PlayerController : MonoBehaviour
 		myAnimator = GetComponent<Animator>();
 		mySpriteRenderer = GetComponent<SpriteRenderer>();
 		gravity = defaulGravity;
+		myAnimator.SetTrigger("Idle");
 	}
 
 	private void Update()
 	{
-		KeyUpdate();
+		if (!isFollowing)
+			CheckFollowing();
+
+		if (!isFollowing)
+			return;
+		else
+			myAnimator.SetTrigger("Run");
+
+		if (timerCooldown > 0)
+			timerCooldown -= Time.deltaTime;
+
+		Gravity();
+		Jump();
+		Move();
+		CheckAttack();
 		Attack();
-		Animation();
 	}
 
-    private void FixedUpdate()
-    {
-        Gravity();
-        Move();
-        Jump();
-    }
-
-	public void KeyUpdate()
+	public void Attack()
 	{
-        if (!isInputEnabled)
-            return;
-
-		if (Input.GetKey(keyRight))
-			isMovingRight = true;
-		else
-			isMovingRight = false;
-
-		if (Input.GetKey(keyLeft))
-			isMovingLeft = true;
-		else
-			isMovingLeft = false;
-
-		if (Input.GetKeyDown(keyJump))
-			isKeyJump = true;
-		else
-			isKeyJump = false;
-
-		if (Input.GetKeyDown(keyAttack))
-			isKeyAttack = true;
-		else
-			isKeyAttack = false;
+		if (isAttack && timerCooldown <= 0)
+		{
+			attackCollider.SetActive(true);
+			StartCoroutine(WaitForFrame());
+			weapon.GetComponent<Animator>().SetTrigger("Attack");
+			isAttack = false;
+			timerCooldown = cooldownAttack;
+		}
 	}
 
-	public void Gravity()
+	IEnumerator WaitForFrame()
 	{
-		Vector3 moveDirection = myRigidBody.velocity;
-
-		moveDirection.y -= gravity * Time.deltaTime;
-		myRigidBody.velocity = moveDirection;
+		yield return null;
+		attackCollider.SetActive(false);
 	}
 
 	public void Move()
 	{
+		if (GameManager.Instance.Player.transform.position.x > transform.position.x)
+		{
+			isMovingLeft = false;
+			isMovingRight = true;
+			mySpriteRenderer.flipX = false;
+			weapon.GetComponent<SpriteRenderer>().flipX = false;
+
+		}
+		else
+		{
+			isMovingLeft = true;
+			isMovingRight = false;
+			mySpriteRenderer.flipX = true;
+			weapon.GetComponent<SpriteRenderer>().flipX = true;
+		}
+
+		if (isAttack)
+		{
+			isMovingRight = false;
+			isMovingLeft = false;
+		}
+
 		if (isMovingRight)
 		{
 			Vector3 moveDirection = myRigidBody.velocity;
@@ -159,6 +176,27 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	public void CheckFollowing()
+	{
+		if(GameManager.Instance.Player == null)
+			return;
+
+		isFollowing = Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position) <= distanceFollow;
+	}
+
+	public void CheckAttack()
+	{
+		isAttack = Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position) <= distanceAttack;
+	}
+
+	public void Gravity()
+	{
+		Vector3 moveDirection = myRigidBody.velocity;
+
+		moveDirection.y -= gravity * Time.deltaTime;
+		myRigidBody.velocity = moveDirection;
+	}
+
 	public void Jump()
 	{
 		if (IsOnGround())
@@ -173,27 +211,15 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	public void Attack()
-	{
-		if(isKeyAttack)
-		{
-			attackCollider.SetActive(true);
-			StartCoroutine(WaitForFrame());
-
-			weapon.GetComponent<Animator>().SetTrigger("Attack");
-		}
-	}
-
-	IEnumerator WaitForFrame()
-	{
-		yield return null;
-		attackCollider.SetActive(false);
-	}
-
 	public float JumpForce(float height, float time)
 	{
 		gravity = CalculeGravity(height, time);
 		return (4.0f * height) / time;
+	}
+
+	private float CalculeGravity(float height, float time)
+	{
+		return (8.0f * height) / (time * time);
 	}
 
 	public bool IsOnGround()
@@ -217,53 +243,5 @@ public class PlayerController : MonoBehaviour
 		}
 		isOnGround = false;
 		return false;
-	}
-
-	private float CalculeGravity(float height, float time)
-	{
-		return (8.0f * height) / (time * time);
-	}
-
-    public void EnableInput()
-    {
-        isInputEnabled = true;
-        Debug.Log("Player Input Enabled");
-    }
-
-    public void DisableInput()
-    {
-        isInputEnabled = false;
-    }
-
-	private void Animation()
-	{
-        if (!isInputEnabled)
-            return;
-
-		if(Input.GetKeyDown(keyJump))
-		{
-			myAnimator.SetTrigger("Jump");
-		}
-		if(((Input.GetKeyUp(keyRight) || Input.GetKeyUp(keyLeft)) && IsOnGround() && !isMovingLeft && !isMovingRight)
-			|| justGrounded && (!isMovingLeft && !isMovingRight))
-		{
-			myAnimator.SetTrigger("Idle");
-		}
-		if((Input.GetKeyDown(keyRight) || Input.GetKeyDown(keyLeft)) && IsOnGround() && (isMovingLeft || isMovingRight)
-			|| justGrounded && (isMovingLeft || isMovingRight))
-		{
-			myAnimator.SetTrigger("Run");
-		}
-
-		if(isMovingLeft)
-		{
-			mySpriteRenderer.flipX = true;
-			weapon.GetComponent<SpriteRenderer>().flipX = true;
-		}
-		else if(isMovingRight)
-		{
-			mySpriteRenderer.flipX = false;
-			weapon.GetComponent<SpriteRenderer>().flipX = false;
-		}
 	}
 }

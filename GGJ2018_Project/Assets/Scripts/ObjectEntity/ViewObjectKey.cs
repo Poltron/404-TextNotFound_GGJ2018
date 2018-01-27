@@ -44,6 +44,7 @@ public class ViewObjectKey : MonoBehaviour
 				continue;
 			newViewer.textContent = Instantiate(textValue);
 			newViewer.textContent.transform.SetParent(transform);
+			newViewer.textContent.transform.localScale = Vector3.one;
 
 			allViewer.Add(newViewer);
 		}

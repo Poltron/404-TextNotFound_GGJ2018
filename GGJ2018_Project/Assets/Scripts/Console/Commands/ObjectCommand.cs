@@ -75,8 +75,8 @@ public class ObjectCommand : MonoBehaviour
 			if (!string.Equals(obj.GetName(), args[0], System.StringComparison.InvariantCultureIgnoreCase))
 				continue;
 
-			obj.gameObject.SetActive(false);
-			destroyed = true;
+            obj.gameObject.SetActive(false);
+            destroyed = true;
 		}
 		if (!destroyed)
 			console.InvokeOnErrorCommand(cmd);
@@ -133,8 +133,6 @@ public class ObjectCommand : MonoBehaviour
 		}
 	}
 
-
-	#region ListObject
 	private void Jeremie(string cmd, string[] args)
 	{
 		if (cmd != "JEREMIE")
@@ -148,6 +146,7 @@ public class ObjectCommand : MonoBehaviour
 		}
 	}
 
+	#region ListObject
 	public void AddObject(ObjectEntity obj)
 	{
 		if (!visibleObjects.Contains(obj))

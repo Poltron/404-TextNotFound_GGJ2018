@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Level1 : Level
 {
-    [SerializeField]
-    float timeBeforeBeginning;
-
     float actualTimer;
 
     bool isFinished;
