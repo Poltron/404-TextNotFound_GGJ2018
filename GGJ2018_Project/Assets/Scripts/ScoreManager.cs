@@ -11,6 +11,8 @@ public class ScoreManager : MonoBehaviour
 	private float timer = 0.0f;
 	[SerializeField]
 	private int seconde = 0;
+	[SerializeField]
+	private int minute = 0;
 
 	public void ResetScore()
 	{
@@ -30,11 +32,18 @@ public class ScoreManager : MonoBehaviour
 
 	private void Update()
 	{
-		++timer;
-		if (timer == 60)
+		timer += Time.deltaTime;
+		if (timer >= 1)
 		{
 			timer = 0;
 			++seconde;
+			OnTimerEvent(seconde, minute);
+		}
+
+		if (seconde >= 60)
+		{
+			seconde = 0;
+			++minute;
 		}
 	}
 
@@ -62,6 +71,31 @@ public class ScoreManager : MonoBehaviour
 	{
 		if (OnScoreEvent != null)
 			OnScoreEvent(score);
+	}
+	#endregion
+	#region OnTimerEvent
+	public delegate void TimerEvent(int seconde, int minute);
+	private event TimerEvent OnTimerEvent;
+
+	public void AddOnTimerEvent(TimerEvent func)
+	{
+		OnTimerEvent += func;
+	}
+
+	public void RemoveOnTimerEvent(TimerEvent func)
+	{
+		OnTimerEvent -= func;
+	}
+
+	private void ResetOnTimerEvent()
+	{
+		OnTimerEvent = null;
+	}
+
+	private void InvokeOnTimerEvent(int seconde, int minute)
+	{
+		if (OnTimerEvent != null)
+			OnTimerEvent(seconde, minute);
 	}
 	#endregion
 	#endregion
