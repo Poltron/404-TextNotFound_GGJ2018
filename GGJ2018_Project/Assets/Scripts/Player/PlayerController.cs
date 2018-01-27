@@ -211,10 +211,7 @@ public class PlayerController : MonoBehaviour
     public void EnableInput()
     {
         isInputEnabled = true;
-        Debug.Log("player input enabled!!!!");
-        Debug.Log("player input enabled!!!!");
-        Debug.Log("player input enabled!!!!");
-        Debug.Log("player input enabled!!!!");
+        Debug.Log("Player Input Enabled");
     }
 
     public void DisableInput()
