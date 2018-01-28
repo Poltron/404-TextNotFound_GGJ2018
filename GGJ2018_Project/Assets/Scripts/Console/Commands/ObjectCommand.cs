@@ -23,6 +23,7 @@ public class ObjectCommand : MonoBehaviour
 		console.AddOnSendCommand(SendCorrectCommand);
 		console.AddOnSendCommand(Jeremie);
 		console.AddOnSendCommand(Kiss);
+		console.AddOnSendCommand(MoveTo);
 		console.AddOnErrorCommand(ErrorCommand);
 	}
 
@@ -140,6 +141,24 @@ public class ObjectCommand : MonoBehaviour
 		}
 	}
 
+	public void MoveTo(string cmd, string[] args)
+	{
+		if (!string.Equals(cmd, "MOVETO", System.StringComparison.InvariantCultureIgnoreCase))
+			return;
+
+		foreach (Transform t in FindObjectsOfType<Transform>())
+		{
+			if (!string.Equals(t.name, args[0], System.StringComparison.InvariantCultureIgnoreCase))
+				continue;
+			Vector3 pos = t.position;
+			GameManager.Instance.Player.transform.position = t.position;
+			pos.z = -10.0f;
+			Camera.main.transform.position = pos;
+			return;
+		}
+
+	}
+
 	private void SendCorrectCommand(string cmd, string[] args)
 	{
 		foreach (string s in cmdPrefix)
@@ -154,6 +173,8 @@ public class ObjectCommand : MonoBehaviour
 	{
 		//if (!string.Equals(cmd, "ADD", System.StringComparison.InvariantCultureIgnoreCase))
 		//	return;
+		if (GameObject.FindGameObjectWithTag("Player").GetComponent<ObjectEntity>().GetValue("ISALIVE") == "FALSE")
+			return;
 
 		foreach (ObjectEntity obj in allObject)
 		{

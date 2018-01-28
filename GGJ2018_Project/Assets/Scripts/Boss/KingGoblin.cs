@@ -10,6 +10,8 @@ public class KingGoblin : MonoBehaviour
 	private GameObject toSpawn;
 	[SerializeField]
 	private float intervalSpawn;
+	[SerializeField]
+	private Animator myAnimator;
 	private Rigidbody2D myRigidBody;
 	private float gravity;
 	private MapColumn map;
@@ -59,7 +61,7 @@ public class KingGoblin : MonoBehaviour
 			entity.SetValue("LIFE", l.ToString());
 			if (l < 1)
 			{
-				GetComponent<Animator>().SetTrigger("Dead");
+				myAnimator.SetTrigger("Dead");
 				enabled = false;
 			}
 		}
@@ -78,8 +80,10 @@ public class KingGoblin : MonoBehaviour
 	private void JumpTo(int column)
 	{
 		Vector3 pos = map.PositionColumn(column);
+		pos.y = GameManager.Instance.Player.transform.position.y;
 		transform.position = pos;
 		this.column = column;
+		myAnimator.SetTrigger("Jump");
 	}
 
 	public void SpawnGoblin()
@@ -88,5 +92,6 @@ public class KingGoblin : MonoBehaviour
 		Vector3 direction = GameObject.FindGameObjectWithTag("Player").transform.position - transform.position;
 
 		Instantiate(toSpawn, transform.position + direction.normalized * 2.0f, Quaternion.identity);
+		myAnimator.SetTrigger("Spawn");
 	}
 }

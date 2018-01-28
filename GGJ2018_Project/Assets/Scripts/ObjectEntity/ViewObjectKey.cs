@@ -37,6 +37,7 @@ public class ViewObjectKey : MonoBehaviour
 		trans.anchorMax = new Vector2(0.5f, 1.0f);
 		trans.localScale = Vector3.one;
 		trans.pivot = new Vector2(0.5f, 1.0f);
+		trans.rotation = Quaternion.identity;
 
 		Viewer newViewer = new Viewer();
 		nameEntity = newViewer;
@@ -44,6 +45,7 @@ public class ViewObjectKey : MonoBehaviour
 		nameEntity.textContent.transform.SetParent(transform);
 		nameEntity.textContent.transform.localScale = Vector3.one;
 		nameEntity.textContent.text = parentEntity.GetName();
+		nameEntity.textContent.transform.rotation = Quaternion.identity;
 
 		foreach (string key in viewKey)
 		{
@@ -82,6 +84,7 @@ public class ViewObjectKey : MonoBehaviour
 
 		Vector3 newPos = Camera.main.WorldToScreenPoint(parentEntity.transform.position - Vector3.up);
 		transform.position = newPos;
+		transform.rotation = Quaternion.identity;
 
 		//trans.offsetMin = new Vector2(trans.offsetMin.x, 0.0f);
 		//trans.offsetMax = new Vector2(trans.offsetMax.x, 0.0f);
@@ -89,6 +92,7 @@ public class ViewObjectKey : MonoBehaviour
 		foreach (Viewer v in allViewer)
 		{
 			v.textContent.text = v.key + " : " + parentEntity.GetValue(v.key);
+			v.textContent.transform.rotation = Quaternion.identity;
 		}
 	}
 }
