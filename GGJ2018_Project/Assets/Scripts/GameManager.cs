@@ -33,6 +33,8 @@ public class GameManager : MonoBehaviour/*Singleton<GameManager>*/
 
 		dialogAudioSource = GameObject.Find("DialogAudioSource").GetComponent<AudioSource>();
 
+		SceneManager.LoadSceneAsync("Scene_HUD", LoadSceneMode.Additive);
+
 		levelManager.StartGame();
 	}
 }
