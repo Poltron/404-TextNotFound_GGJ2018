@@ -185,20 +185,18 @@ public class ObjectCommand : MonoBehaviour
 		if (!string.Equals(cmd, "QUIT", System.StringComparison.InvariantCultureIgnoreCase))
 			return;
 
-		if (args.Length != 0)
+		if (args.Length != 1)
 		{
 			console.InvokeOnErrorCommand(cmd);
 			return;
 		}
 
-		GameObject princess = GameObject.FindGameObjectWithTag("Princess");
-		if (princess == null)
+		if (args[0] == "MENU")
 		{
 			UnityEngine.SceneManagement.SceneManager.LoadScene("Scene_Jeanweb");
-			return;
 		}
-		EndGame end = princess.GetComponent<EndGame>();
-		end.Finish();
+		else if (args[0] == "GAME")
+			Application.Quit();
 	}
 
 
