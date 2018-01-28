@@ -21324,7 +21324,7 @@ Prefab:
     - target: {fileID: 212223654621337194, guid: f5b9c5bf041fe444faa050abd138e99d,
         type: 2}
       propertyPath: m_SortingOrder
-      value: 30
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 95518448455393022, guid: f5b9c5bf041fe444faa050abd138e99d,
         type: 2}
@@ -62312,6 +62312,14 @@ Prefab:
         type: 2}
       propertyPath: cooldownAttack
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584647396123690, guid: af5d3a991d1499048a03f91be2892bb2, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -0.3203
+      objectReference: {fileID: 0}
+    - target: {fileID: 4125728109518944, guid: af5d3a991d1499048a03f91be2892bb2, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -0.3207
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: af5d3a991d1499048a03f91be2892bb2, type: 2}

@@ -55,6 +55,8 @@ public class GoblinController : MonoBehaviour
 	private GameObject attackCollider;
 	[SerializeField]
 	private GameObject weapon;
+	[SerializeField]
+	private List<GameObject> hearts;
 
 	private float defaulGravity = 9.81f;
 	private Transform myTransform;
@@ -287,7 +289,23 @@ public class GoblinController : MonoBehaviour
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (collision.gameObject.tag == "Attack")
-			--life;
+		{
+			life -= collision.transform.parent.GetComponent<PlayerController>().GetComponentInChildren<PlayerWeapon>().GetCurrentWeapon().damage;
+
+			int i = 0;
+			foreach (GameObject heart in hearts)
+			{
+				if (i < life)
+				{
+					heart.SetActive(true);
+				}
+				else
+				{
+					heart.SetActive(false);
+				}
+				i++;
+			}
+		}
 
 		if (life <= 0)
 		{
@@ -299,7 +317,9 @@ public class GoblinController : MonoBehaviour
 			Instantiate(fx_death, transform.position, Quaternion.identity);
 		}
 		else
+		{
 			Instantiate(fx_hurth, transform.position, Quaternion.identity);
+		}
 	}
 
 	public void SetAlive(string cmd, string[] args)
