@@ -118,18 +118,20 @@ public class GoblinController : MonoBehaviour
 	}
 
 	private void Update()
-	{
-		if (player.isDead)
+    {
+        if (isDead)
+        {
+            if (myRigidBody)
+                myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
+            return;
+        }
+
+        Gravity();
+
+        if (player.isDead)
 			return;
 
 		CheckFollowing();
-
-		if (isDead)
-		{
-			if (myRigidBody)
-				myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
-			return;
-		}
 
 		if (!isFollowing)
 			return;
@@ -139,7 +141,6 @@ public class GoblinController : MonoBehaviour
 		if (timerCooldown > 0)
 			timerCooldown -= Time.deltaTime;
 
-		Gravity();
 		Jump();
 		Move();
 		CheckAttack();
