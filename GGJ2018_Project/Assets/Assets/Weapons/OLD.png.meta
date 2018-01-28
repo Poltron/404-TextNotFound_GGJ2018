@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: ba26caa35e26c9f4699fedc1bb780338
-timeCreated: 1517089785
+guid: 2c150454dafba9d46af8c06e9b4861e2
+timeCreated: 1517053420
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -16,9 +16,6 @@ TextureImporter:
     21300018: SPRT_SHT_WEAPONS_9
     21300020: SPRT_SHT_WEAPONS_10
     21300022: SPRT_SHT_WEAPONS_11
-    21300024: SPRT_SHT_WEAPONS_12
-    21300026: SPRT_SHT_WEAPONS_13
-    21300028: SPRT_SHT_WEAPONS_14
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -150,8 +147,8 @@ TextureImporter:
       name: SPRT_SHT_WEAPONS_3
       rect:
         serializedVersion: 2
-        x: 0
-        y: 384
+        x: 192
+        y: 448
         width: 64
         height: 64
       alignment: 0
@@ -164,7 +161,7 @@ TextureImporter:
       name: SPRT_SHT_WEAPONS_4
       rect:
         serializedVersion: 2
-        x: 64
+        x: 0
         y: 384
         width: 64
         height: 64
@@ -178,7 +175,7 @@ TextureImporter:
       name: SPRT_SHT_WEAPONS_5
       rect:
         serializedVersion: 2
-        x: 128
+        x: 64
         y: 384
         width: 64
         height: 64
@@ -192,8 +189,8 @@ TextureImporter:
       name: SPRT_SHT_WEAPONS_6
       rect:
         serializedVersion: 2
-        x: 0
-        y: 320
+        x: 128
+        y: 384
         width: 64
         height: 64
       alignment: 0
@@ -206,8 +203,8 @@ TextureImporter:
       name: SPRT_SHT_WEAPONS_7
       rect:
         serializedVersion: 2
-        x: 64
-        y: 320
+        x: 192
+        y: 384
         width: 64
         height: 64
       alignment: 0
@@ -220,7 +217,7 @@ TextureImporter:
       name: SPRT_SHT_WEAPONS_8
       rect:
         serializedVersion: 2
-        x: 128
+        x: 0
         y: 320
         width: 64
         height: 64
@@ -234,8 +231,8 @@ TextureImporter:
       name: SPRT_SHT_WEAPONS_9
       rect:
         serializedVersion: 2
-        x: 0
-        y: 256
+        x: 64
+        y: 320
         width: 64
         height: 64
       alignment: 0
@@ -248,8 +245,8 @@ TextureImporter:
       name: SPRT_SHT_WEAPONS_10
       rect:
         serializedVersion: 2
-        x: 64
-        y: 256
+        x: 128
+        y: 320
         width: 64
         height: 64
       alignment: 0
@@ -262,50 +259,8 @@ TextureImporter:
       name: SPRT_SHT_WEAPONS_11
       rect:
         serializedVersion: 2
-        x: 128
-        y: 256
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SPRT_SHT_WEAPONS_12
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 192
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SPRT_SHT_WEAPONS_13
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 192
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SPRT_SHT_WEAPONS_14
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 192
+        x: 192
+        y: 320
         width: 64
         height: 64
       alignment: 0

@@ -14,6 +14,11 @@ public class CameraBehaviour : MonoBehaviour
 	private Transform focusedObject;
 
 	[SerializeField]
+	private float offsetY;
+	[SerializeField]
+	private float DistMaxY;
+
+	[SerializeField]
 	private float speedLerpToLeft;
 	[SerializeField]
 	private float speedLerpToRight;
@@ -27,6 +32,11 @@ public class CameraBehaviour : MonoBehaviour
 		state = CamState.FollowingPlayer;
 	}
 
+	private void Start()
+	{
+		
+	}
+
 	void FixedUpdate()
 	{
 		Vector3 newPos = new Vector3();
@@ -34,15 +44,36 @@ public class CameraBehaviour : MonoBehaviour
 		{
 			if (GameManager.Instance.Player.cameraPointRight.activeInHierarchy)
 			{
-				newPos = Vector3.Lerp(transform.position, GameManager.Instance.Player.cameraPointRight.transform.position, speedLerpToRight * Time.deltaTime);
+				newPos.x = Vector3.Lerp(transform.position, GameManager.Instance.Player.cameraPointRight.transform.position, speedLerpToRight * Time.deltaTime).x;
 			}
 			else if (GameManager.Instance.Player.cameraPointLeft.activeInHierarchy)
 			{
-				newPos = Vector3.Lerp(transform.position, GameManager.Instance.Player.cameraPointLeft.transform.position, speedLerpToLeft * Time.deltaTime);
+				newPos.x = Vector3.Lerp(transform.position, GameManager.Instance.Player.cameraPointLeft.transform.position, speedLerpToLeft * Time.deltaTime).x;
 			}
 			else
 			{
-				newPos = Vector3.Lerp(transform.position, GameManager.Instance.Player.transform.position, speedLerpToCenter * Time.deltaTime);
+				newPos.x = Vector3.Lerp(transform.position, GameManager.Instance.Player.transform.position, speedLerpToCenter * Time.deltaTime).x;
+			}
+
+			if(GameManager.Instance.Player.IsOnGround())
+			{
+				newPos.y = Vector3.Lerp(transform.position, GameManager.Instance.Player.transform.position + new Vector3(0, offsetY, 0), speedLerpToCenter * Time.deltaTime).y;
+			}
+			else
+			{
+				Debug.Log("POOOOOOOOOOOOOOO = " + Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position));
+				if(GameManager.Instance.Player.GetComponent<Rigidbody2D>().velocity.y > 0f)
+				{
+					newPos.y = transform.position.y;
+				}
+				else if (Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position) >= DistMaxY)
+				{
+					newPos.y = GameManager.Instance.Player.transform.position.y;
+				}
+				else
+				{
+					newPos.y = transform.position.y;
+				}
 			}
 		}
 		else if (state == CamState.Focused)
@@ -50,12 +81,7 @@ public class CameraBehaviour : MonoBehaviour
 			newPos = Vector3.Lerp(transform.position, focusedObject.position, speedLerpToFocus * Time.deltaTime);
 		}
 
-		//if(!GameManager.Instance.Player.IsOnGround())
-		//{
-		//	newPos.y = transform.position.y;
-		//}
-
-		newPos.y = transform.position.y;
+		//newPos.y = transform.position.y;
 		newPos.z = transform.position.z;
 		transform.position = newPos;
 	}
