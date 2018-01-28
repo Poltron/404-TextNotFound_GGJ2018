@@ -70,7 +70,7 @@ GameObject:
   - component: {fileID: 114774440915901664}
   - component: {fileID: 95339966984184942}
   - component: {fileID: 114902294745322396}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -461,6 +461,8 @@ MonoBehaviour:
   keyAttack: 305
   jumpHeight: 2
   jumpTime: 0.5
+  backgroundRect: []
+  backgroundSpeed: []
   feets:
   - {fileID: 4584647396123690}
   - {fileID: 4125728109518944}

@@ -17,6 +17,10 @@ public class PlayerWeapon : MonoBehaviour
 	private string key;
 	[SerializeField]
 	private List<Weapon> Weapons;
+	public List<Weapon> GetListWeapon()
+	{
+		return Weapons;
+	}
 	private ObjectEntity entity;
 
 	private Weapon currentWeapon;
