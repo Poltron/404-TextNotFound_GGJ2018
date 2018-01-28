@@ -86,8 +86,6 @@ public class GoblinController : MonoBehaviour
 
 	private ConsoleWriter console;
 
-	private PlayerController player;
-
 	private void Start()
 	{
 		myTransform = transform;
@@ -102,8 +100,6 @@ public class GoblinController : MonoBehaviour
 
 		console = FindObjectOfType<ConsoleWriter>();
 		console.AddOnSendCommand(SetAlive);
-
-		player = FindObjectOfType<PlayerController>();
 
 		attackCollider.tag = "Attack";
 
@@ -128,7 +124,7 @@ public class GoblinController : MonoBehaviour
 
         Gravity();
 
-        if (player.isDead)
+        if (GameManager.Instance.Player.isDead)
 			return;
 
 		CheckFollowing();
