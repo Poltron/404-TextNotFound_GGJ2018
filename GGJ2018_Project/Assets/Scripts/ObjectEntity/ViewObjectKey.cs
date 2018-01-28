@@ -72,7 +72,11 @@ public class ViewObjectKey : MonoBehaviour
 
 		nameEntity.textContent.text = parentEntity.GetName();
 
-		Vector3 newPos = Camera.main.WorldToScreenPoint(parentEntity.transform.position - Vector3.up);
+		Vector3 newPos;
+		if (parentEntity.GetComponent<KingGoblin>())
+			newPos = Camera.main.WorldToScreenPoint(parentEntity.transform.position - Vector3.up * 2.0f);
+		else
+			newPos = Camera.main.WorldToScreenPoint(parentEntity.transform.position - Vector3.up);
 		transform.position = newPos;
 		transform.rotation = Quaternion.identity;
 

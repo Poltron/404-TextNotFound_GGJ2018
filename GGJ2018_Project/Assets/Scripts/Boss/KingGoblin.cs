@@ -37,14 +37,18 @@ public class KingGoblin : MonoBehaviour
 
 	private void Update()
 	{
-		currentTime -= Time.deltaTime;
+		Vector3 dir = GameManager.Instance.Player.transform.position - transform.position;
+		GetComponent<SpriteRenderer>().flipX = dir.x < 0.0f;
+
+		if (GameManager.Instance.Player.GetComponent<ObjectEntity>().GetValue("ISALIVE") == "TRUE")
+			currentTime -= Time.deltaTime;
+		else
+			currentTime = intervalSpawn;
 		if (currentTime < 0.0f)
 		{
 			currentTime = intervalSpawn;
 			SpawnGoblin();
 		}
-		if (Input.GetKeyDown(KeyCode.Backspace))
-			JumpTo(column == 0 ? map.GetNbrColumn() - 1 : 0);
 
 		Gravity();
 	}
