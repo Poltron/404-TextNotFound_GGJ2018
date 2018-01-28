@@ -25,7 +25,7 @@ public class GoblinSpawner : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.name == "Player" && !hasBeenUsed)
+        if (col.gameObject.name == "Player" && !hasBeenUsed)
         {
             hasBeenUsed = true;
             
