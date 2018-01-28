@@ -111,6 +111,7 @@ public class PlayerController : MonoBehaviour
 	{
 		console = FindObjectOfType<ConsoleWriter>();
 		console.AddOnSendCommand(SetAlive);
+		weapon.GetComponent<SpriteRenderer>().sortingOrder = GetComponent<SpriteRenderer>().sortingOrder + 1;
 
 		attackCollider.tag = "Attack";
 	}
@@ -176,24 +177,7 @@ public class PlayerController : MonoBehaviour
 
 	public void Move()
 	{
-		if (isMovingRight)
-		{
-			Vector3 moveDirection = myRigidBody.velocity;
-
-			moveDirection.x = 1.0f * speed * 100f * Time.deltaTime;
-
-			myRigidBody.velocity = moveDirection;
-
-			cameraPointRight.SetActive(true);
-			cameraPointLeft.SetActive(false);
-
-			backgroundRect[0].transform.Translate(new Vector2(-backgroundSpeed[0] * Time.deltaTime, 0));
-			backgroundRect[1].transform.Translate(new Vector2(-backgroundSpeed[1] * Time.deltaTime, 0));
-			backgroundRect[2].transform.Translate(new Vector2(-backgroundSpeed[2] * Time.deltaTime, 0)); 
-
-			return;
-		}
-		else if (isMovingLeft)
+		if (isMovingLeft)
 		{
 			Vector3 moveDirection = myRigidBody.velocity;
 
@@ -201,12 +185,37 @@ public class PlayerController : MonoBehaviour
 
 			myRigidBody.velocity = moveDirection;
 
+			moveDirection = weapon.transform.localPosition;
+			moveDirection.x = -Mathf.Abs(moveDirection.x);
+			weapon.transform.localPosition = moveDirection;
+
 			cameraPointRight.SetActive(false);
 			cameraPointLeft.SetActive(true);
 
 			backgroundRect[0].transform.Translate(new Vector2(backgroundSpeed[0] * Time.deltaTime, 0));
 			backgroundRect[1].transform.Translate(new Vector2(backgroundSpeed[1] * Time.deltaTime, 0));
 			backgroundRect[2].transform.Translate(new Vector2(backgroundSpeed[2] * Time.deltaTime, 0));
+
+			return;
+		}
+		else if (isMovingRight)
+		{
+			Vector3 moveDirection = myRigidBody.velocity;
+
+			moveDirection.x = 1.0f * speed * 100f * Time.deltaTime;
+
+			myRigidBody.velocity = moveDirection;
+
+			moveDirection = weapon.transform.localPosition;
+			moveDirection.x = Mathf.Abs(moveDirection.x);
+			weapon.transform.localPosition = moveDirection;
+
+			cameraPointRight.SetActive(true);
+			cameraPointLeft.SetActive(false);
+
+			backgroundRect[0].transform.Translate(new Vector2(-backgroundSpeed[0] * Time.deltaTime, 0));
+			backgroundRect[1].transform.Translate(new Vector2(-backgroundSpeed[1] * Time.deltaTime, 0));
+			backgroundRect[2].transform.Translate(new Vector2(-backgroundSpeed[2] * Time.deltaTime, 0));
 
 			return;
 		}

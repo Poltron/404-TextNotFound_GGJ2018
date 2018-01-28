@@ -292,7 +292,7 @@ public class GoblinController : MonoBehaviour
 
 	public void SetAlive(string cmd, string[] args)
 	{
-		if (cmd != "SET")
+		if (cmd != "SET" || args.Length != 2)
 			return;
 		if (args[0] == "ISALIVE" && args[1] == "TRUE")
 		{

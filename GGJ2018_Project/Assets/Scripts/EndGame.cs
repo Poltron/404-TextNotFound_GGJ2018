@@ -7,8 +7,6 @@ using UnityEngine.UI;
 public class EndGame : MonoBehaviour
 {
 	[SerializeField]
-	private CanvasGroup group;
-	[SerializeField]
 	private float duration;
 
 	public void Finish()
