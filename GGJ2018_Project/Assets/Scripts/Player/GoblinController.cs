@@ -295,7 +295,6 @@ public class GoblinController : MonoBehaviour
 			myAnimator.SetTrigger("Dead");
 			GetComponent<ObjectEntity>().SetValue("ISALIVE", "FALSE");
 			GetComponent<Collider2D>().enabled = false;
-			GetComponent<Gravity>().enabled = false;
 			InvokeOnGoblinDie();
 		}
 	}
