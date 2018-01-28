@@ -422,9 +422,9 @@ MonoBehaviour:
   weapon: {fileID: 1654945985480732}
   distanceAttack: 1.5
   distanceFollow: 10
-  cooldownAttack: 1
+  cooldownAttack: 2
   gapAtkCol: 0.6
-  life: 3
+  life: 1
   isDead: 0
 --- !u!114 &114706748917018988
 MonoBehaviour:
