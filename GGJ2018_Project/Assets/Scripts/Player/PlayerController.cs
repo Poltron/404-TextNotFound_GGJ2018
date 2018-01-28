@@ -76,12 +76,12 @@ public class PlayerController : MonoBehaviour
 	[SerializeField]
 	private GameObject particleSystemShotgunLeft;
 
-    [SerializeField]
-    private AudioSource jumpSound;
-    [SerializeField]
-    private AudioSource jumpLandSound;
+	[SerializeField]
+	private AudioSource jumpSound;
+	[SerializeField]
+	private AudioSource jumpLandSound;
 
-    private float defaulGravity = 9.81f;
+	private float defaulGravity = 9.81f;
 	private Transform myTransform;
 	private Rigidbody2D myRigidBody;
 	private Animator myAnimator;
@@ -135,7 +135,7 @@ public class PlayerController : MonoBehaviour
 		attackCollider.tag = "Attack";
 		fx_durth.Stop();
 
-        justGrounded = true;
+		justGrounded = true;
 	}
 
 	private void OnDestroy()
@@ -177,10 +177,6 @@ public class PlayerController : MonoBehaviour
 		if (myRigidBody.velocity.x == 0.0f)
 			fx_durth.Stop();
 
-		//else if (isMovingRight || isMovingLeft)
-		//{
-		//	fx_durth.Play();
-		//}
 	}
 
 	private void FixedUpdate()
@@ -219,7 +215,7 @@ public class PlayerController : MonoBehaviour
 		else
 			isKeyJump = false;
 
-		if (Input.GetKeyDown(keyAttack))
+		if (Input.GetKeyDown(keyAttack) || Input.GetKeyDown(KeyCode.LeftControl))
 			isKeyAttack = true;
 		else
 			isKeyAttack = false;
@@ -294,8 +290,8 @@ public class PlayerController : MonoBehaviour
 			{
 				Vector3 moveDirection = myRigidBody.velocity;
 
-                Instantiate(jumpSound, myTransform.position, Quaternion.identity);
-                moveDirection.y = JumpForce(jumpHeight, jumpTime);
+				Instantiate(jumpSound, myTransform.position, Quaternion.identity);
+				moveDirection.y = JumpForce(jumpHeight, jumpTime);
 				myRigidBody.velocity = moveDirection;
 			}
 		}
@@ -375,7 +371,7 @@ public class PlayerController : MonoBehaviour
 					{
 						gravity = defaulGravity;
 						justGrounded = true;
-                        Instantiate(jumpLandSound, myTransform.position, Quaternion.identity);
+						Instantiate(jumpLandSound, myTransform.position, Quaternion.identity);
 					}
 					else
 					{
@@ -471,7 +467,7 @@ public class PlayerController : MonoBehaviour
 			}
 			source.clip = collision.transform.parent.GetComponent<GoblinController>().GetComponentInChildren<PlayerWeapon>().GetCurrentWeapon().touch;
 			source.loop = false;
-            source.volume = 0.1f;
+			source.volume = 0.1f;
 			if (source.clip != null)
 				source.Play();
 
@@ -515,6 +511,8 @@ public class PlayerController : MonoBehaviour
 			float h = 0.0f;
 			if (float.TryParse(args[1], out h))
 			{
+				if (h > 10.0f)
+					h = 10.0f;
 				jumpTime = jumpTime * h / jumpHeight;
 				jumpHeight = h;
 			}
