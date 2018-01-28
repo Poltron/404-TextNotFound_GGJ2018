@@ -85,6 +85,8 @@ public class GoblinController : MonoBehaviour
 	private GameObject fx_death;
 	[SerializeField]
 	private GameObject fx_hurth;
+	[SerializeField]
+	private ParticleSystem fx_durth;
 
 	private bool isInputEnabled = true;
 
@@ -142,6 +144,7 @@ public class GoblinController : MonoBehaviour
         GetComponent<SpriteRenderer>().color = Color.Lerp(GetComponent<SpriteRenderer>().color, Color.white, Time.deltaTime * 5.0f);
     }
 
+
     private void Update()
     {
         HitBodyColor();
@@ -153,9 +156,9 @@ public class GoblinController : MonoBehaviour
             return;
         }
 
-        Gravity();
+		Gravity();
 
-        if (GameManager.Instance.Player.isDead)
+		if (GameManager.Instance.Player.isDead)
 			return;
 
 		CheckFollowing();
@@ -172,6 +175,11 @@ public class GoblinController : MonoBehaviour
 		Move();
 		CheckAttack();
 		Attack();
+
+		if (fx_durth.isPlaying == false && myRigidBody.velocity.x != 0.0f)
+			fx_durth.Play();
+		if (myRigidBody.velocity.x == 0.0f)
+			fx_durth.Stop();
 	}
 
 	public void Attack()
