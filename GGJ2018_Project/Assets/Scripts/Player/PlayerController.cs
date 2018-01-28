@@ -148,9 +148,11 @@ public class PlayerController : MonoBehaviour
         Gravity();
 		Move();
 		Jump();
-	}
 
-	public void KeyUpdate()
+        ClampPlayerInCam();
+    }
+
+    public void KeyUpdate()
 	{
 		if (!isInputEnabled)
 			return;
@@ -253,7 +255,23 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	IEnumerator WaitForFrame()
+    public void ClampPlayerInCam()
+    {
+        var leftBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).x;
+        var rightBorder = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0)).x;
+        var topBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).y;
+        var bottomBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0)).y;
+
+        Vector3 playerSize = GetComponent<SpriteRenderer>().bounds.size;
+
+        this.transform.position = new Vector3(
+        Mathf.Clamp(this.transform.position.x, leftBorder + playerSize.x / 2, rightBorder - playerSize.x / 2),
+        Mathf.Clamp(this.transform.position.y, topBorder + playerSize.y / 2, bottomBorder - playerSize.y / 2),
+        0
+        );
+    }
+
+    IEnumerator WaitForFrame()
 	{
 		yield return null;
 		attackCollider.SetActive(false);
