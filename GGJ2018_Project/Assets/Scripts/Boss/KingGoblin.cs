@@ -26,6 +26,7 @@ public class KingGoblin : MonoBehaviour
 	private GameObject fx_apparition;
 	[SerializeField]
 	private GameObject fx_tp;
+	private List<GameObject> hearts;
 
 	private void Start()
 	{
@@ -76,8 +77,22 @@ public class KingGoblin : MonoBehaviour
 		int l = 0;
 		if (int.TryParse(life, out l))
 		{
-			//GetComponent<SpriteRenderer>().color = Color.red;
-			--l;
+			l -= other.transform.parent.GetComponent<PlayerController>().GetComponentInChildren<PlayerWeapon>().GetCurrentWeapon().damage;
+
+			int i = 0;
+			foreach (GameObject heart in hearts)
+			{
+				if (i < l)
+				{
+					heart.SetActive(true);
+				}
+				else
+				{
+					heart.SetActive(false);
+				}
+				i++;
+			}
+
 			entity.SetValue("LIFE", l.ToString());
 			if (l < 1)
 			{
