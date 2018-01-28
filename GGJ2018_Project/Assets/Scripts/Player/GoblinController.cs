@@ -354,19 +354,7 @@ public class GoblinController : MonoBehaviour
             if (source.clip != null)
 				source.Play();
 
-			int i = 0;
-			foreach (GameObject heart in hearts)
-			{
-				if (i < life)
-				{
-					heart.SetActive(true);
-				}
-				else
-				{
-					heart.SetActive(false);
-				}
-				i++;
-			}
+			UpdateHearth();
 		}
 
 		if (life <= 0)
@@ -385,6 +373,23 @@ public class GoblinController : MonoBehaviour
 		}
 	}
 
+	private void UpdateHearth()
+	{
+		int i = 0;
+		foreach (GameObject heart in hearts)
+		{
+			if (i < life)
+			{
+				heart.SetActive(true);
+			}
+			else
+			{
+				heart.SetActive(false);
+			}
+			i++;
+		}
+	}
+
 	public void SetAlive(string cmd, string[] args)
 	{
 		if (cmd != "SET" || args.Length != 2)
@@ -398,6 +403,7 @@ public class GoblinController : MonoBehaviour
 				life = 3;
 				myAnimator.SetTrigger("Idle");
 				GetComponent<Collider2D>().enabled = true;
+				UpdateHearth();
 			}
 		}
 	}

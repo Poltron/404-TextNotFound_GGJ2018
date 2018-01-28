@@ -13,6 +13,15 @@ public class UiMainMenu : MonoBehaviour
 	private Button btnWebsite;
 	[SerializeField]
 	private Button btnQuit;
+	[SerializeField]
+	private Button btnOpenCredit;
+	[SerializeField]
+	private Button btnCloseCredit;
+	#endregion
+
+	#region vars Panels
+	[SerializeField]
+	private GameObject panCredit;
 	#endregion
 
 	private void Start()
@@ -20,6 +29,8 @@ public class UiMainMenu : MonoBehaviour
 		btnPlay.onClick.AddListener(ClickPlay);
 		btnWebsite.onClick.AddListener(ClickWebsite);
 		btnQuit.onClick.AddListener(ClickQuit);
+		btnOpenCredit.onClick.AddListener(ClickOpenCredit);
+		btnCloseCredit.onClick.AddListener(ClickCloseCredit);
 
 		btnPlay.Select();
 	}
@@ -32,6 +43,17 @@ public class UiMainMenu : MonoBehaviour
 	private void ClickWebsite()
 	{
 		Application.OpenURL("https://ggj2018.guillaume-paringaux.fr"); 
+	}
+
+	private void ClickOpenCredit()
+	{
+		panCredit.SetActive(true);
+	}
+
+	private void ClickCloseCredit()
+	{
+		panCredit.SetActive(false);
+		btnPlay.Select();
 	}
 
 	private void ClickQuit()

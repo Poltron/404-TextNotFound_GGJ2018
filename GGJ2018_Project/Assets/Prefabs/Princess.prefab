@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 61858111340033978}
   - component: {fileID: 114668664029784424}
   - component: {fileID: 114078285138574924}
+  - component: {fileID: 114106301927167896}
   m_Layer: 0
   m_Name: Princess
   m_TagString: Princess
@@ -125,6 +126,17 @@ MonoBehaviour:
   sp: {fileID: 21300000, guid: bee4664b3cad42e4b9787b097c0df691, type: 3}
   isVisible: 0
   fx_death: {fileID: 1475428012408620, guid: ab5597bbbcbe56a45a13f3a2ad008f79, type: 2}
+--- !u!114 &114106301927167896
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1393624860751786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b85234a1cbfe934eac84c168441f5aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114442206952464656
 MonoBehaviour:
   m_ObjectHideFlags: 1

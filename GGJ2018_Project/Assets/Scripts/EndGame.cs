@@ -19,8 +19,8 @@ public class EndGame : MonoBehaviour
 	IEnumerator UploadTimer(int minute, int second, bool kiss)
 	{
 		WWWForm form = new WWWForm();
-		form.AddField("timerMinute", minute);
-		form.AddField("timerSecond", second);
+		form.AddField("timerMinute", minute.ToString("D2"));
+		form.AddField("timerSecond", second.ToString("D2"));
 		form.AddField("kiss", kiss.ToString());
 
 		using (var w = UnityWebRequest.Post("https://ggj2018.guillaume-paringaux.fr/unity/addScore/" + PlayerPrefs.GetString("ServerId"), form)) 

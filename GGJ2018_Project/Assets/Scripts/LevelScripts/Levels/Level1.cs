@@ -41,7 +41,7 @@ public class Level1 : Level
 			}
 			else
 			{
-				Debug.Log("ServeurId : " + w.downloadHandler.text);
+				//Debug.Log("ServeurId : " + w.downloadHandler.text);
 				PlayerPrefs.SetString("ServerId", w.downloadHandler.text);
 			}
 		}

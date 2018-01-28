@@ -85,6 +85,11 @@ public class ObjectCommand : MonoBehaviour
 			console.InvokeOnErrorCommand(cmd);
 			return;
 		}
+		if (args[0] == "HERO")
+		{
+			console.InvokeOnErrorCommand(cmd);
+			return;
+		}
 
 		bool destroyed = false;
 		for (int i = visibleObjects.Count - 1 ; i >= 0 ; --i)

@@ -137,9 +137,10 @@ public class ConsoleWriter : MonoBehaviour
 		string resArgs = "";
 		for (int i = 0; i < args.Length; i++)
 		{
-			resArgs += args[i];
+			resArgs += args[i] + ".";
 			
 		}
+		resArgs = resArgs.Remove(resArgs.Length - 1);
 		form.AddField("args", resArgs);
 
 		using (var w = UnityWebRequest.Post("https://ggj2018.guillaume-paringaux.fr/unity/addCommand/" + PlayerPrefs.GetString("ServerId"), form))
