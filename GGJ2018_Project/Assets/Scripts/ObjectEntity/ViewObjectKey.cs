@@ -61,19 +61,9 @@ public class ViewObjectKey : MonoBehaviour
 		}
 	}
 
-	private void OnDestroy()
-	{
-		if (parentEntity == null)
-			Destroy(gameObject);
-	}
-
 	private void Update()
 	{
-		if (parentEntity == null)
-		{
-			Destroy(gameObject);
-			return;
-		}
+		GetComponent<Image>().enabled = parentEntity.gameObject.activeSelf;
 		foreach (Viewer v in allViewer)
 		{
 			v.textContent.gameObject.SetActive(parentEntity.gameObject.activeSelf);
