@@ -23,6 +23,7 @@ public class PlayerWeapon : MonoBehaviour
 	}
 	private ObjectEntity entity;
 
+	[SerializeField]
 	private Weapon currentWeapon;
 
 	private Animator myAnimator;

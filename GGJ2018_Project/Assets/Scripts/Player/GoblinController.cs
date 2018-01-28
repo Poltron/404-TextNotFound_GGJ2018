@@ -97,6 +97,9 @@ public class GoblinController : MonoBehaviour
 		gravity = defaulGravity;
 		myAnimator.SetTrigger("Idle");
 
+		NameSelector nameSelector = FindObjectOfType<NameSelector>();
+		GetComponent<ObjectEntity>().SetName(nameSelector.GetRandom("GOBLIN"));
+
 		console = FindObjectOfType<ConsoleWriter>();
 		console.AddOnSendCommand(SetAlive);
 
@@ -108,19 +111,27 @@ public class GoblinController : MonoBehaviour
 
 	private void OnDestroy()
 	{
-		console.RemoveOnSendCommand(SetAlive);
+		console = FindObjectOfType<ConsoleWriter>();
+		if (console)
+			console.RemoveOnSendCommand(SetAlive);
 		ResetOnGoblinDie();
 	}
 
 	private void Update()
-	{
-		if (player.isDead)
+    {
+        if (isDead)
+        {
+            if (myRigidBody)
+                myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
+            return;
+        }
+
+        Gravity();
+
+        if (player.isDead)
 			return;
 
 		CheckFollowing();
-
-		if (isDead)
-			return;
 
 		if (!isFollowing)
 			return;
@@ -130,7 +141,6 @@ public class GoblinController : MonoBehaviour
 		if (timerCooldown > 0)
 			timerCooldown -= Time.deltaTime;
 
-		Gravity();
 		Jump();
 		Move();
 		CheckAttack();
@@ -291,7 +301,7 @@ public class GoblinController : MonoBehaviour
 
 	public void SetAlive(string cmd, string[] args)
 	{
-		if (cmd != "SET")
+		if (cmd != "SET" || args.Length != 2)
 			return;
 		if (args[0] == "ISALIVE" && args[1] == "TRUE")
 		{
@@ -302,7 +312,6 @@ public class GoblinController : MonoBehaviour
 				life = 3;
 				myAnimator.SetTrigger("Idle");
 				GetComponent<Collider2D>().enabled = true;
-				;
 			}
 		}
 	}
