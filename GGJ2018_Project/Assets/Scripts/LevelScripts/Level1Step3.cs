@@ -38,21 +38,16 @@ public class Level1Step3 : LevelStep
     private IEnumerator FadeBlackScreen()
     {
         GameObject blackscreen = GameObject.Find("InitialGameOverScreen");
-		Image image = blackscreen.transform.Find("Image").GetComponent<Image>();
-        Text text = blackscreen.GetComponentInChildren<Text>();
+		CanvasGroup grp = blackscreen.GetComponentInChildren<CanvasGroup>();
 
         yield return new WaitForSeconds(timeBeforeFadeFromBlack);
 
-        for (float f = timeForBlackScreenFade; f >0 ; f -= Time.deltaTime)
+		for (float t = 0.0f ; t < 1.0f ; t += Time.deltaTime / timeForBlackScreenFade)
         {
-            image.color = new Color(image.color.r, image.color.g, image.color.b, f);
-            text.color = new Color(text.color.r, text.color.g, text.color.b, f);
-            yield return new WaitForEndOfFrame();
+			grp.alpha = Mathf.Lerp(1.0f, 0.0f, t);
+			yield return new WaitForEndOfFrame();
         }
-
-        image.color = new Color(image.color.r, image.color.g, image.color.b, 0);
-        text.color = new Color(text.color.r, text.color.g, text.color.b, 0);
-
+		grp.alpha = 0.0f;
         GameManager.Instance.Player.EnableInput();
     }
 

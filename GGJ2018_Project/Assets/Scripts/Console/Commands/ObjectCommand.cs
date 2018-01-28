@@ -22,6 +22,7 @@ public class ObjectCommand : MonoBehaviour
 		console.AddOnSendCommand(Set);
 		console.AddOnSendCommand(SendCorrectCommand);
 		console.AddOnSendCommand(Jeremie);
+		console.AddOnSendCommand(Kiss);
 		console.AddOnErrorCommand(ErrorCommand);
 	}
 
@@ -105,6 +106,36 @@ public class ObjectCommand : MonoBehaviour
 		}
 		if (!isSet)
 			console.InvokeOnErrorCommand(cmd);
+	}
+
+	public void Kiss(string cmd, string[] args)
+	{
+		if (cmd != "KISS")
+			return;
+		if (args.Length != 1)
+		{
+			console.InvokeOnErrorCommand(cmd);
+			return;
+		}
+
+		if (args[0] == "PRINCESS")
+		{
+			GameObject princess = GameObject.FindGameObjectWithTag("Princess");
+			if (princess == null)
+			{
+				console.InvokeOnErrorCommand(cmd);
+				return;
+			}
+			princess.GetComponent<EndGame>().Finish();
+		}
+		else
+		{
+			ErrorCommand("");
+			ErrorCommand("");
+			ErrorCommand("");
+			ErrorCommand("");
+			console.InvokeOnErrorCommand(cmd);
+		}
 	}
 
 	private void SendCorrectCommand(string cmd, string[] args)
