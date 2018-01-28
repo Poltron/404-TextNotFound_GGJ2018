@@ -23,7 +23,7 @@ public class EndGame : MonoBehaviour
 		form.AddField("timerSecond", second);
 		form.AddField("kiss", kiss.ToString());
 
-		using (var w = UnityWebRequest.Post("https://ggj2018.guillaume-paringaux.fr/index.php?/unity/addScore", form))
+		using (var w = UnityWebRequest.Post("https://ggj2018.guillaume-paringaux.fr/unity/addScore/" + PlayerPrefs.GetString("ServerId"), form)) 
 		{
 			yield return w.SendWebRequest();
 			if (w.isNetworkError || w.isHttpError)

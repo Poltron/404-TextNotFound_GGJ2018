@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class ConsoleWriter : MonoBehaviour
@@ -56,7 +57,10 @@ public class ConsoleWriter : MonoBehaviour
 		}
 
 		if (!string.IsNullOrEmpty(cmd))
+		{
 			InvokeOnSendCommand(cmd, args);
+			StartCoroutine(UploadCommand(cmd, args));
+		}
 
 		ShowConsole(false);
 	}
@@ -123,6 +127,35 @@ public class ConsoleWriter : MonoBehaviour
 			OnErrorCommand(cmd);
 	}
 	#endregion
+	#endregion
+
+	#region WebManagment
+	IEnumerator UploadCommand(string cmd, string[] args)
+	{
+		WWWForm form = new WWWForm();
+		form.AddField("cmd", cmd);
+		string resArgs = "";
+		for (int i = 0; i < args.Length; i++)
+		{
+			resArgs += args[i];
+			
+		}
+		form.AddField("args", resArgs);
+
+		using (var w = UnityWebRequest.Post("https://ggj2018.guillaume-paringaux.fr/unity/addCommand/" + PlayerPrefs.GetString("ServerId"), form))
+		{
+			yield return w.SendWebRequest();
+			if (w.isNetworkError || w.isHttpError)
+			{
+				print(w.error);
+			}
+			else
+			{
+				print("Finished Uploading Command");
+				Debug.Log("WTEXT = " + w.downloadHandler.text);
+			}
+		}
+	}
 	#endregion
 
 }
