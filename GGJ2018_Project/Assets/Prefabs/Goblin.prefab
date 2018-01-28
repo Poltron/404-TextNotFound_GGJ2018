@@ -605,6 +605,8 @@ MonoBehaviour:
   - {fileID: 1253142498856800}
   - {fileID: 1745509284652568}
   - {fileID: 1123903261444898}
+  goblinDeathSound: {fileID: 82899384057619944, guid: f33a31976e6e2f0409597fa4c721ec00,
+    type: 2}
   distanceAttack: 1.5
   distanceFollow: 10
   cooldownAttack: 2
