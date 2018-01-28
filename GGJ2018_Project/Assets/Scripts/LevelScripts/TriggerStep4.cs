@@ -9,8 +9,8 @@ public class TriggerStep4 : MonoBehaviour
     [SerializeField]
     AudioClip fightBegin;
 
-    [SerializeField]
-    AudioClip fightEnd;
+    /*[SerializeField]
+    AudioClip fightEnd;*/
 
     [SerializeField]
     List<GameObject> goblins;
@@ -21,10 +21,10 @@ public class TriggerStep4 : MonoBehaviour
         {
             hasBeenUsed = true;
             Begin();
-			foreach (GameObject goblin in goblins)
+			/*foreach (GameObject goblin in goblins)
 			{
 				goblin.GetComponent<GoblinController>().AddOnGoblinDie(CheckAllDie);
-			}
+			}*/
         }
     }
 
@@ -51,7 +51,7 @@ public class TriggerStep4 : MonoBehaviour
     public void SoundEndFight()
     {
 		Debug.Log("SoundEndFight");
-		GameManager.Instance.DialogAudioSource.clip = fightEnd;
-        GameManager.Instance.DialogAudioSource.Play();
+		//GameManager.Instance.DialogAudioSource.clip = fightEnd;
+        //GameManager.Instance.DialogAudioSource.Play();
     }
 }

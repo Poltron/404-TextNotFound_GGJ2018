@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 124109054084178472}
   - component: {fileID: 81431977713698156}
   - component: {fileID: 114570158314133612}
-  - component: {fileID: 114630145439318252}
+  - component: {fileID: 114236226110158894}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -87,6 +87,23 @@ AudioListener:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1740990052440346}
   m_Enabled: 1
+--- !u!114 &114236226110158894
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1740990052440346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec99efe60ef87b641b5199dce20396ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offsetY: 3
+  DistMaxY: 12
+  speedLerpToLeft: 5
+  speedLerpToRight: 5
+  speedLerpToCenter: 5
+  speedLerpToFocus: 5
 --- !u!114 &114570158314133612
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -105,21 +122,6 @@ MonoBehaviour:
   nbrColumn: 10
   columns: []
   player: {fileID: 0}
---- !u!114 &114630145439318252
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1740990052440346}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec99efe60ef87b641b5199dce20396ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speedLerpToLeft: 5
-  speedLerpToRight: 5
-  speedLerpToCenter: 5
-  speedLerpToFocus: 5
 --- !u!124 &124109054084178472
 Behaviour:
   m_ObjectHideFlags: 1

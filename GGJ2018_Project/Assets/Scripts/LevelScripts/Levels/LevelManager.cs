@@ -25,7 +25,7 @@ public class LevelManager : MonoBehaviour
         if (levels.Count < 1)
             return;
 
-        GameManager.Instance.Player.DisableInput();
+		GameManager.Instance.Player.DisableInput();
         //GameObject.Find("GameOverScreen").GetComponent<SpriteRenderer>().enabled = true;
         GameManager.Instance.Player.GetComponent<Animator>().SetTrigger("Dead");
         levels[0].BeginLevel();
