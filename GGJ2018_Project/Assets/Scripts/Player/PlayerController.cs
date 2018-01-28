@@ -122,7 +122,8 @@ public class PlayerController : MonoBehaviour
 
 	private void OnDestroy()
 	{
-		console.RemoveOnSendCommand(SetAlive);
+        if (console)
+		    console.RemoveOnSendCommand(SetAlive);
 	}
 
 	private void Update()
@@ -292,6 +293,12 @@ public class PlayerController : MonoBehaviour
 
 		Vector3 playerSize = GetComponent<SpriteRenderer>().bounds.size;
 
+        if (this.transform.position.y > bottomBorder - playerSize.y / 2)
+        {
+            gravity = defaulGravity;
+            myRigidBody.velocity = new Vector2(myRigidBody.velocity.x, -1);
+        }
+
 		this.transform.position = new Vector3(
 		Mathf.Clamp(this.transform.position.x, leftBorder + playerSize.x / 2, rightBorder - playerSize.x / 2),
 		Mathf.Clamp(this.transform.position.y, topBorder + playerSize.y / 2, bottomBorder - playerSize.y / 2),
@@ -323,6 +330,7 @@ public class PlayerController : MonoBehaviour
 				{
 					if (justGrounded == false && isOnGround == false)
 					{
+                        gravity = defaulGravity;
 						justGrounded = true;
 					}
 					else
@@ -374,9 +382,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if (!isInputEnabled)
 			return;
-
-		Debug.Log("Justgrouded = " + justGrounded);
-
+        
 		if (Input.GetKeyDown(keyJump))
 		{
 			myAnimator.SetTrigger("Jump");
