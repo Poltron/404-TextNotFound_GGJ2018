@@ -71,6 +71,10 @@ public class PlayerController : MonoBehaviour
 	private GameObject attackCollider;
 	[SerializeField]
 	private GameObject weapon;
+	[SerializeField]
+	private GameObject particleSystemShotgunRight;
+	[SerializeField]
+	private GameObject particleSystemShotgunLeft;
 
 	private float defaulGravity = 9.81f;
 	private Transform myTransform;
@@ -126,34 +130,34 @@ public class PlayerController : MonoBehaviour
 		if (timerCooldown > 0)
 			timerCooldown -= Time.deltaTime;
 
-        if (isDead)
-        {
-            return;
-        }
+		if (isDead)
+		{
+			return;
+		}
 
 		KeyUpdate();
 		Attack();
+		HasJustGrounded();
 		Animation();
 	}
 
 	private void FixedUpdate()
 	{
-        if (isDead)
-        {
-            if (myRigidBody)
-                myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
+		if (isDead)
+		{
+			if (myRigidBody)
+				myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
 
-            return;
-        }
+			return;
+		}
 
-        Gravity();
+		Gravity();
 		Move();
 		Jump();
+		ClampPlayerInCam();
+	}
 
-        ClampPlayerInCam();
-    }
-
-    public void KeyUpdate()
+	public void KeyUpdate()
 	{
 		if (!isInputEnabled)
 			return;
@@ -262,26 +266,40 @@ public class PlayerController : MonoBehaviour
 			StartCoroutine(WaitForFrame());
 			timerCooldown = cooldownAttack;
 			weapon.GetComponent<Animator>().SetTrigger("Attack");
+			var PlayerWeapon = GetComponentInChildren<PlayerWeapon>();
+			if (PlayerWeapon.GetCurrentWeapon().code == 3)
+			{
+				if (!mySpriteRenderer.flipX)
+				{
+					particleSystemShotgunRight.GetComponent<ParticleSystem>().Stop();
+					particleSystemShotgunRight.GetComponent<ParticleSystem>().Play();
+				}
+				else
+				{
+					particleSystemShotgunLeft.GetComponent<ParticleSystem>().Stop();
+					particleSystemShotgunLeft.GetComponent<ParticleSystem>().Play();
+				}
+			}
 		}
 	}
 
-    public void ClampPlayerInCam()
-    {
-        var leftBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).x;
-        var rightBorder = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0)).x;
-        var topBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).y;
-        var bottomBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0)).y;
+	public void ClampPlayerInCam()
+	{
+		var leftBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).x;
+		var rightBorder = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0)).x;
+		var topBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).y;
+		var bottomBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0)).y;
 
-        Vector3 playerSize = GetComponent<SpriteRenderer>().bounds.size;
+		Vector3 playerSize = GetComponent<SpriteRenderer>().bounds.size;
 
-        this.transform.position = new Vector3(
-        Mathf.Clamp(this.transform.position.x, leftBorder + playerSize.x / 2, rightBorder - playerSize.x / 2),
-        Mathf.Clamp(this.transform.position.y, topBorder + playerSize.y / 2, bottomBorder - playerSize.y / 2),
-        0
-        );
-    }
+		this.transform.position = new Vector3(
+		Mathf.Clamp(this.transform.position.x, leftBorder + playerSize.x / 2, rightBorder - playerSize.x / 2),
+		Mathf.Clamp(this.transform.position.y, topBorder + playerSize.y / 2, bottomBorder - playerSize.y / 2),
+		0
+		);
+	}
 
-    IEnumerator WaitForFrame()
+	IEnumerator WaitForFrame()
 	{
 		yield return null;
 		attackCollider.SetActive(false);
@@ -291,6 +309,31 @@ public class PlayerController : MonoBehaviour
 	{
 		gravity = CalculeGravity(height, time);
 		return (4.0f * height) / time;
+	}
+
+	public bool HasJustGrounded()
+	{
+		foreach (var trans in feets)
+		{
+			RaycastHit2D[] ray = Physics2D.RaycastAll(trans.position, -Vector2.up, 0.1f);
+
+			foreach (RaycastHit2D r in ray)
+			{
+				if (r.transform.tag == "Platform")
+				{
+					if (justGrounded == false && isOnGround == false)
+					{
+						justGrounded = true;
+					}
+					else
+					{
+						justGrounded = false;
+					}
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	public bool IsOnGround()
@@ -303,10 +346,6 @@ public class PlayerController : MonoBehaviour
 			{
 				if (r.transform.tag == "Platform")
 				{
-					if (justGrounded == false && isOnGround == false)
-						justGrounded = true;
-					else
-						justGrounded = false;
 					isOnGround = true;
 					return true;
 				}
@@ -336,11 +375,13 @@ public class PlayerController : MonoBehaviour
 		if (!isInputEnabled)
 			return;
 
+		Debug.Log("Justgrouded = " + justGrounded);
+
 		if (Input.GetKeyDown(keyJump))
 		{
 			myAnimator.SetTrigger("Jump");
 		}
-		if (((Input.GetKeyUp(keyRight) || Input.GetKeyUp(keyLeft)) && IsOnGround() && !isMovingLeft && !isMovingRight)
+		if (((Input.GetKeyUp(keyRight) || Input.GetKeyUp(keyLeft)) && IsOnGround() && (!isMovingLeft && !isMovingRight))
 			|| justGrounded && (!isMovingLeft && !isMovingRight))
 		{
 			myAnimator.SetTrigger("Idle");
@@ -400,9 +441,9 @@ public class PlayerController : MonoBehaviour
 		else if (args[0] == "WEAPON")
 		{
 			var PlayerWeapon = GetComponentInChildren<PlayerWeapon>();
-			foreach(Weapon w in PlayerWeapon.GetListWeapon())
+			foreach (Weapon w in PlayerWeapon.GetListWeapon())
 			{
-				if(string.Equals(w.name, args[1], System.StringComparison.InvariantCultureIgnoreCase))
+				if (string.Equals(w.name, args[1], System.StringComparison.InvariantCultureIgnoreCase))
 				{
 					PlayerWeapon.GetComponent<Animator>().SetTrigger(w.trigger);
 				}

@@ -25,6 +25,11 @@ public class PlayerWeapon : MonoBehaviour
 
 	[SerializeField]
 	private Weapon currentWeapon;
+	public Weapon GetCurrentWeapon()
+	{
+		Debug.Log("CurrentWeapon = " + currentWeapon.name);
+		return currentWeapon;
+	}
 
 	private Animator myAnimator;
 
@@ -49,7 +54,9 @@ public class PlayerWeapon : MonoBehaviour
 		else if (value == "MACE")
 			SetWeapon(2);
 		else if (value == "SHOTGUN")
+		{
 			SetWeapon(3);
+		}
 	}
 
 	public void SetWeapon(int code)
@@ -60,7 +67,6 @@ public class PlayerWeapon : MonoBehaviour
 			{
 				myAnimator.SetTrigger(w.trigger);
 				currentWeapon = w;
-				Debug.Log("Damage = " + currentWeapon.damage);
 			}
 		}
 	}

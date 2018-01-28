@@ -61895,21 +61895,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114774440915901664, guid: af5d3a991d1499048a03f91be2892bb2,
-        type: 2}
-      propertyPath: backgroundRect.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114902294745322396, guid: af5d3a991d1499048a03f91be2892bb2,
-        type: 2}
-      propertyPath: inspectorValues.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114774440915901664, guid: af5d3a991d1499048a03f91be2892bb2,
-        type: 2}
-      propertyPath: backgroundSpeed.Array.size
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4671183865612054, guid: af5d3a991d1499048a03f91be2892bb2, type: 2}
       propertyPath: m_LocalPosition.x
       value: -3.14
@@ -61942,41 +61927,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 224256358412154204, guid: af5d3a991d1499048a03f91be2892bb2,
-        type: 2}
-      propertyPath: m_SizeDelta.y
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 224256358412154204, guid: af5d3a991d1499048a03f91be2892bb2,
-        type: 2}
-      propertyPath: m_SizeDelta.x
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 114774440915901664, guid: af5d3a991d1499048a03f91be2892bb2,
-        type: 2}
-      propertyPath: gapAtkCol
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 114902294745322396, guid: af5d3a991d1499048a03f91be2892bb2,
-        type: 2}
-      propertyPath: inspectorValues.Array.data[1].key
-      value: JUMP
-      objectReference: {fileID: 0}
-    - target: {fileID: 114902294745322396, guid: af5d3a991d1499048a03f91be2892bb2,
-        type: 2}
-      propertyPath: inspectorValues.Array.data[1].value
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114774440915901664, guid: af5d3a991d1499048a03f91be2892bb2,
-        type: 2}
-      propertyPath: backgroundRect.Array.data[2]
-      value: 
-      objectReference: {fileID: 2092020340}
-    - target: {fileID: 114774440915901664, guid: af5d3a991d1499048a03f91be2892bb2,
-        type: 2}
-      propertyPath: backgroundRect.Array.data[1]
-      value: 
-      objectReference: {fileID: 440277262}
     - target: {fileID: 114774440915901664, guid: af5d3a991d1499048a03f91be2892bb2,
         type: 2}
       propertyPath: backgroundRect.Array.data[0]
@@ -61984,63 +61934,23 @@ Prefab:
       objectReference: {fileID: 157550158}
     - target: {fileID: 114774440915901664, guid: af5d3a991d1499048a03f91be2892bb2,
         type: 2}
-      propertyPath: backgroundSpeed.Array.data[0]
-      value: 0.2
-      objectReference: {fileID: 0}
+      propertyPath: backgroundRect.Array.data[1]
+      value: 
+      objectReference: {fileID: 440277262}
     - target: {fileID: 114774440915901664, guid: af5d3a991d1499048a03f91be2892bb2,
         type: 2}
-      propertyPath: backgroundSpeed.Array.data[1]
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114774440915901664, guid: af5d3a991d1499048a03f91be2892bb2,
+      propertyPath: backgroundRect.Array.data[2]
+      value: 
+      objectReference: {fileID: 2092020340}
+    - target: {fileID: 224256358412154204, guid: af5d3a991d1499048a03f91be2892bb2,
         type: 2}
-      propertyPath: backgroundSpeed.Array.data[2]
-      value: 0.8
+      propertyPath: m_SizeDelta.x
+      value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 212458179586775122, guid: af5d3a991d1499048a03f91be2892bb2,
+    - target: {fileID: 224256358412154204, guid: af5d3a991d1499048a03f91be2892bb2,
         type: 2}
-      propertyPath: m_SortingOrder
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 114902294745322396, guid: af5d3a991d1499048a03f91be2892bb2,
-        type: 2}
-      propertyPath: inspectorValues.Array.data[2].key
-      value: WEAPON
-      objectReference: {fileID: 0}
-    - target: {fileID: 114902294745322396, guid: af5d3a991d1499048a03f91be2892bb2,
-        type: 2}
-      propertyPath: inspectorValues.Array.data[2].value
-      value: FIST
-      objectReference: {fileID: 0}
-    - target: {fileID: 114821978040152342, guid: af5d3a991d1499048a03f91be2892bb2,
-        type: 2}
-      propertyPath: Weapons.Array.data[0].name
-      value: FIST
-      objectReference: {fileID: 0}
-    - target: {fileID: 114821978040152342, guid: af5d3a991d1499048a03f91be2892bb2,
-        type: 2}
-      propertyPath: Weapons.Array.data[1].name
-      value: SWORD
-      objectReference: {fileID: 0}
-    - target: {fileID: 114821978040152342, guid: af5d3a991d1499048a03f91be2892bb2,
-        type: 2}
-      propertyPath: Weapons.Array.data[2].name
-      value: MACE
-      objectReference: {fileID: 0}
-    - target: {fileID: 114821978040152342, guid: af5d3a991d1499048a03f91be2892bb2,
-        type: 2}
-      propertyPath: Weapons.Array.data[3].name
-      value: SHOTGUN
-      objectReference: {fileID: 0}
-    - target: {fileID: 114821978040152342, guid: af5d3a991d1499048a03f91be2892bb2,
-        type: 2}
-      propertyPath: key
-      value: WEAPON
-      objectReference: {fileID: 0}
-    - target: {fileID: 212422666912309718, guid: af5d3a991d1499048a03f91be2892bb2,
-        type: 2}
-      propertyPath: m_WasSpriteAssigned
-      value: 0
+      propertyPath: m_SizeDelta.y
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: af5d3a991d1499048a03f91be2892bb2, type: 2}
