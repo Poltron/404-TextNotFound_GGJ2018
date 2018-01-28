@@ -35,10 +35,15 @@ public class PlayerWeapon : MonoBehaviour
 	private Animator myAnimator;
 	private AudioSource sourceAudio;
 
-	private void Start()
+	private void Awake()
 	{
 		myAnimator = GetComponent<Animator>();
 		entity = gameObject.GetComponentInParent<ObjectEntity>();
+
+	}
+
+	private void Start()
+	{
 		currentWeapon = Weapons[0];
 		sourceAudio = GetComponent<AudioSource>();
 	}
