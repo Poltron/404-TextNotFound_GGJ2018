@@ -108,7 +108,27 @@ public class GoblinController : MonoBehaviour
 		console.AddOnSendCommand(SetAlive);
 
 		attackCollider.tag = "Attack";
-
+        
+        int result = Random.Range(0, 4);
+        switch(result)
+        {
+            case 0:
+                GetComponent<ObjectEntity>().SetValue("WEAPON", "FIST");
+                weapon.GetComponent<Animator>().SetTrigger("SwitchToFist");
+                break;
+            case 1:
+                GetComponent<ObjectEntity>().SetValue("WEAPON", "SWORD");
+                weapon.GetComponent<Animator>().SetTrigger("SwitchToSword");
+                break;
+            case 2:
+                GetComponent<ObjectEntity>().SetValue("WEAPON", "MACE");
+                weapon.GetComponent<Animator>().SetTrigger("SwitchToMace");
+                break;
+            case 3:
+                GetComponent<ObjectEntity>().SetValue("WEAPON", "SHOTGUN");
+                weapon.GetComponent<Animator>().SetTrigger("SwitchToShotgun");
+                break;
+        }
 	}
 
 	private void OnDestroy()
