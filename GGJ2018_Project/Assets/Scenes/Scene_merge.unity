@@ -21856,6 +21856,18 @@ Prefab:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 114091902907256562, guid: f5b9c5bf041fe444faa050abd138e99d,
+        type: 2}
+      propertyPath: fx_apparition
+      value: 
+      objectReference: {fileID: 1934347606173256, guid: 03bff58fed827ef47aeb6fdf31ac1048,
+        type: 2}
+    - target: {fileID: 114091902907256562, guid: f5b9c5bf041fe444faa050abd138e99d,
+        type: 2}
+      propertyPath: fx_tp
+      value: 
+      objectReference: {fileID: 1631519012453216, guid: 46574184bee65da4bb2f9ac065e1c340,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f5b9c5bf041fe444faa050abd138e99d, type: 2}
   m_IsPrefabParent: 0
@@ -22780,24 +22792,34 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 224304969506310050, guid: 0097c8dd7363b5e49890e86fb5c2b94c,
-        type: 2}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1744335238375050, guid: 0097c8dd7363b5e49890e86fb5c2b94c, type: 2}
       propertyPath: m_Name
       value: Goblin (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 212214049548720994, guid: 0097c8dd7363b5e49890e86fb5c2b94c,
-        type: 2}
-      propertyPath: m_FlipX
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224304969506310050, guid: 0097c8dd7363b5e49890e86fb5c2b94c,
         type: 2}
       propertyPath: m_SizeDelta.x
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 224304969506310050, guid: 0097c8dd7363b5e49890e86fb5c2b94c,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114429266616588312, guid: 0097c8dd7363b5e49890e86fb5c2b94c,
+        type: 2}
+      propertyPath: Weapons.Array.data[0].code
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114429266616588312, guid: 0097c8dd7363b5e49890e86fb5c2b94c,
+        type: 2}
+      propertyPath: Weapons.Array.data[1].code
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114429266616588312, guid: 0097c8dd7363b5e49890e86fb5c2b94c,
+        type: 2}
+      propertyPath: Weapons.Array.data[2].code
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0097c8dd7363b5e49890e86fb5c2b94c, type: 2}
@@ -62306,6 +62328,8 @@ MonoBehaviour:
   visibleObjects: []
   fxDisparition: {fileID: 1250809775065010, guid: fe0bd2f23630ffe489bf12bd2bf526f6,
     type: 2}
+  fxApparition: {fileID: 1934347606173256, guid: 03bff58fed827ef47aeb6fdf31ac1048,
+    type: 2}
 --- !u!114 &1658920049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62334,14 +62358,17 @@ MonoBehaviour:
   allNames:
   - categorie: GOBLIN
     allNames:
-    - TROLOLOL
-    - JEREMIE
-    - GUILLAUME
+    - THIERRY
+    - STEPHANE
+    - KEVIN
+    - CORINNE
+    - CHRIS
+    - CATHERIN
+    - HELENE
+    - BOB
   - categorie: BOSS
     allNames:
-    - KENNY
-    - ETIENNE
-    - MAXIME
+    - BIGBADBOSS
 --- !u!1001 &1659606664
 Prefab:
   m_ObjectHideFlags: 0
@@ -63922,15 +63949,41 @@ Prefab:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1854966179467824, guid: af5d3a991d1499048a03f91be2892bb2, type: 2}
-      propertyPath: m_Layer
-      value: 31
-      objectReference: {fileID: 0}
-    - target: {fileID: 114774440915901664, guid: af5d3a991d1499048a03f91be2892bb2,
+    - target: {fileID: 114821978040152342, guid: af5d3a991d1499048a03f91be2892bb2,
         type: 2}
-      propertyPath: cooldownAttack
-      value: 0
-      objectReference: {fileID: 0}
+      propertyPath: Weapons.Array.data[0].source
+      value: 
+      objectReference: {fileID: 8300000, guid: 702984cc3fb3d6045ab5b027b93e6073, type: 3}
+    - target: {fileID: 114821978040152342, guid: af5d3a991d1499048a03f91be2892bb2,
+        type: 2}
+      propertyPath: Weapons.Array.data[0].touch
+      value: 
+      objectReference: {fileID: 8300000, guid: e6fa1522d719770488eb4a7821bac845, type: 3}
+    - target: {fileID: 114821978040152342, guid: af5d3a991d1499048a03f91be2892bb2,
+        type: 2}
+      propertyPath: Weapons.Array.data[1].source
+      value: 
+      objectReference: {fileID: 8300000, guid: 12319af324623f04f891550d464979c5, type: 3}
+    - target: {fileID: 114821978040152342, guid: af5d3a991d1499048a03f91be2892bb2,
+        type: 2}
+      propertyPath: Weapons.Array.data[1].touch
+      value: 
+      objectReference: {fileID: 8300000, guid: 040f1b0eb93b33b43a4410cbe621f643, type: 3}
+    - target: {fileID: 114821978040152342, guid: af5d3a991d1499048a03f91be2892bb2,
+        type: 2}
+      propertyPath: Weapons.Array.data[2].source
+      value: 
+      objectReference: {fileID: 8300000, guid: 5804d7aa8376bd74bb7dc6af31f788b8, type: 3}
+    - target: {fileID: 114821978040152342, guid: af5d3a991d1499048a03f91be2892bb2,
+        type: 2}
+      propertyPath: Weapons.Array.data[2].touch
+      value: 
+      objectReference: {fileID: 8300000, guid: 6c32bedb470bc534f9e9933c45c1653b, type: 3}
+    - target: {fileID: 114821978040152342, guid: af5d3a991d1499048a03f91be2892bb2,
+        type: 2}
+      propertyPath: Weapons.Array.data[3].source
+      value: 
+      objectReference: {fileID: 8300000, guid: 4b6b7b2af609a8842a931eb8b84f9f0d, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: af5d3a991d1499048a03f91be2892bb2, type: 2}
   m_IsPrefabParent: 0

@@ -23,6 +23,9 @@ public class KingGoblin : MonoBehaviour
 	[SerializeField]
 	private GameObject fx_hurth;
 	[SerializeField]
+	private GameObject fx_apparition;
+	[SerializeField]
+	private GameObject fx_tp;
 	private List<GameObject> hearts;
 
 	private void Start()
@@ -121,6 +124,7 @@ public class KingGoblin : MonoBehaviour
 		transform.position = pos;
 		this.column = column;
 		myAnimator.SetTrigger("Jump");
+		Instantiate(fx_tp, transform.position, Quaternion.identity);
 	}
 
 	public void SpawnGoblin()
@@ -128,7 +132,8 @@ public class KingGoblin : MonoBehaviour
 		int columnSpawn = column == 0 ? 4 : 7;
 		Vector3 direction = GameObject.FindGameObjectWithTag("Player").transform.position - transform.position;
 
-		Instantiate(toSpawn, transform.position + direction.normalized * 2.0f, Quaternion.identity);
+		Instantiate(toSpawn, transform.position + direction.normalized * 2.0f, Quaternion.identity).GetComponent<GoblinController>().distanceFollow = 30;
+		Instantiate(fx_apparition, transform.position + direction.normalized * 2.0f, Quaternion.identity);
 		myAnimator.SetTrigger("Spawn");
 	}
 }

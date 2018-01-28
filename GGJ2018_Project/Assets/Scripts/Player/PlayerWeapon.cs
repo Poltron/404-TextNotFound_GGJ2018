@@ -9,6 +9,8 @@ public struct Weapon
 	public string trigger;
 	public int damage;
 	public int code;
+	public AudioClip source;
+	public AudioClip touch;
 }
 
 public class PlayerWeapon : MonoBehaviour
@@ -31,12 +33,14 @@ public class PlayerWeapon : MonoBehaviour
 	}
 
 	private Animator myAnimator;
+	private AudioSource sourceAudio;
 
 	private void Start()
 	{
 		myAnimator = GetComponent<Animator>();
 		entity = gameObject.GetComponentInParent<ObjectEntity>();
 		currentWeapon = Weapons[0];
+		sourceAudio = GetComponent<AudioSource>();
 	}
 
 	private void Update()
@@ -58,11 +62,18 @@ public class PlayerWeapon : MonoBehaviour
 		}
 	}
 
+	public void Attack()
+	{
+		sourceAudio.clip = currentWeapon.source;
+		sourceAudio.loop = false;
+		sourceAudio.Play();
+	}
+
 	public void SetWeapon(int code)
 	{
-		foreach(Weapon w in Weapons)
+		foreach (Weapon w in Weapons)
 		{
-			if(code == w.code)
+			if (code == w.code)
 			{
 				myAnimator.SetTrigger(w.trigger);
 				currentWeapon = w;
