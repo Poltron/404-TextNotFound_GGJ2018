@@ -61998,6 +61998,11 @@ Prefab:
       propertyPath: key
       value: WEAPON
       objectReference: {fileID: 0}
+    - target: {fileID: 212422666912309718, guid: af5d3a991d1499048a03f91be2892bb2,
+        type: 2}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: af5d3a991d1499048a03f91be2892bb2, type: 2}
   m_IsPrefabParent: 0

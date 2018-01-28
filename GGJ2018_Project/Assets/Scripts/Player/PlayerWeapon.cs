@@ -60,6 +60,7 @@ public class PlayerWeapon : MonoBehaviour
 			{
 				myAnimator.SetTrigger(w.trigger);
 				currentWeapon = w;
+				Debug.Log("Damage = " + currentWeapon.damage);
 			}
 		}
 	}
