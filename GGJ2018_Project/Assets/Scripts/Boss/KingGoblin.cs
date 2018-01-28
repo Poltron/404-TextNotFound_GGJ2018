@@ -39,8 +39,15 @@ public class KingGoblin : MonoBehaviour
 		currentTime = intervalSpawn;
 	}
 
+	private void HitBodyColor()
+	{
+		GetComponent<SpriteRenderer>().color = Color.Lerp(GetComponent<SpriteRenderer>().color, Color.white, Time.deltaTime * 5.0f);
+	}
+
 	private void Update()
 	{
+		HitBodyColor();
+
 		Vector3 dir = GameManager.Instance.Player.transform.position - transform.position;
 		GetComponent<SpriteRenderer>().flipX = dir.x < 0.0f;
 
@@ -65,11 +72,13 @@ public class KingGoblin : MonoBehaviour
 		int l = 0;
 		if (int.TryParse(life, out l))
 		{
+			//GetComponent<SpriteRenderer>().color = Color.red;
 			--l;
 			entity.SetValue("LIFE", l.ToString());
 			if (l < 1)
 			{
-				myAnimator.SetTrigger("Dead");
+				if (l == 0)
+					myAnimator.SetTrigger("Dead");
 				enabled = false;
 				myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
 				Instantiate(fx_death, transform.position, Quaternion.identity);

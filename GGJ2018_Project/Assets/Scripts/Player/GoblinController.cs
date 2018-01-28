@@ -117,16 +117,24 @@ public class GoblinController : MonoBehaviour
 		if (console)
 			console.RemoveOnSendCommand(SetAlive);
 		ResetOnGoblinDie();
-	}
+    }
 
-	private void Update()
-	{
-		if (isDead)
-		{
-			if (myRigidBody)
-				myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
-			return;
-		}
+    private void HitBodyColor()
+    {
+        GetComponent<SpriteRenderer>().color = Color.Lerp(GetComponent<SpriteRenderer>().color, Color.white, Time.deltaTime * 5.0f);
+    }
+
+
+    private void Update()
+    {
+        HitBodyColor();
+
+        if (isDead)
+        {
+            if (myRigidBody)
+                myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
+            return;
+        }
 
 		Gravity();
 
@@ -293,8 +301,11 @@ public class GoblinController : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (collision.gameObject.tag == "Attack")
-			--life;
+        if (collision.gameObject.tag == "Attack")
+        {
+            --life;
+            GetComponent<SpriteRenderer>().color = Color.red;
+        }
 
 		if (life <= 0)
 		{

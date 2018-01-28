@@ -137,8 +137,15 @@ public class PlayerController : MonoBehaviour
 			console.RemoveOnSendCommand(SetAlive);
 	}
 
+	private void HitBodyColor()
+	{
+		GetComponent<SpriteRenderer>().color = Color.Lerp(GetComponent<SpriteRenderer>().color, Color.white, Time.deltaTime * 5.0f);
+	}
+
 	private void Update()
 	{
+		HitBodyColor();
+
 		if (timerCooldown > 0)
 			timerCooldown -= Time.deltaTime;
 
@@ -442,7 +449,10 @@ public class PlayerController : MonoBehaviour
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (collision.gameObject.tag == "Attack")
+		{
 			--life;
+			GetComponent<SpriteRenderer>().color = Color.red;
+		}
 
 		if (life <= 0)
 		{
@@ -461,9 +471,18 @@ public class PlayerController : MonoBehaviour
 			return;
 		if (args[0] == "ISALIVE" && args[1] == "TRUE")
 		{
+			if (isDead)
+				myAnimator.SetTrigger("Revive");
+			else
+				myAnimator.SetTrigger("Idle");
 			isDead = false;
 			life = 5;
-			myAnimator.SetTrigger("Idle");
+		}
+		if (args[0] == "ISALIVE" && args[1] == "FALSE")
+		{
+			isDead = true;
+			life = 0;
+			myAnimator.SetTrigger("Death");
 		}
 		else if (args[0] == "JUMP")
 		{
