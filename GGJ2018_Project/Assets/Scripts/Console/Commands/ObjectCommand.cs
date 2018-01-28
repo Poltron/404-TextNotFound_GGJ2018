@@ -14,8 +14,11 @@ public class ObjectCommand : MonoBehaviour
 	private ObjectEntity[] allObject;
 	[SerializeField]
 	public List<ObjectEntity> visibleObjects;
+
 	[SerializeField]
 	private GameObject fxDisparition;
+	[SerializeField]
+	private GameObject fxApparition;
 
 	private void Awake()
 	{
@@ -57,6 +60,7 @@ public class ObjectCommand : MonoBehaviour
 				return;
 			}
 			Instantiate(obj.gameObject, position, Quaternion.identity);
+			Instantiate(fxApparition, obj.transform.position, Quaternion.identity);
 			return;
 		}
 		console.InvokeOnErrorCommand(cmd);
