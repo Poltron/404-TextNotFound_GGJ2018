@@ -227,7 +227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entity: {fileID: 114438483302882390}
-  toSpawn: {fileID: 1744335238375050, guid: acf350e8a51c2784e8e589d904b9934a, type: 2}
+  toSpawn: {fileID: 1744335238375050, guid: 0097c8dd7363b5e49890e86fb5c2b94c, type: 2}
   intervalSpawn: 5
 --- !u!114 &114147162117816202
 MonoBehaviour:

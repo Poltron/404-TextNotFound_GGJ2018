@@ -57,8 +57,14 @@ public class KingGoblin : MonoBehaviour
 		{
 			--l;
 			entity.SetValue("LIFE", l.ToString());
+			if (l < 1)
+			{
+				GetComponent<Animator>().SetTrigger("Dead");
+				enabled = false;
+			}
 		}
-		JumpTo(column == 0 ? map.GetNbrColumn() - 1 : 0);
+		if (l > 0)
+			JumpTo(column == 0 ? map.GetNbrColumn() - 1 : 0);
 	}
 
 	public void Gravity()

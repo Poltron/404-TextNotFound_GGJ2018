@@ -126,8 +126,10 @@ public class PlayerController : MonoBehaviour
 		if (timerCooldown > 0)
 			timerCooldown -= Time.deltaTime;
 
-		if (isDead)
-			return;
+        if (isDead)
+        {
+            return;
+        }
 
 		KeyUpdate();
 		Attack();
@@ -136,7 +138,15 @@ public class PlayerController : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		Gravity();
+        if (isDead)
+        {
+            if (myRigidBody)
+                myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
+
+            return;
+        }
+
+        Gravity();
 		Move();
 		Jump();
 	}
@@ -192,9 +202,10 @@ public class PlayerController : MonoBehaviour
 			cameraPointRight.SetActive(false);
 			cameraPointLeft.SetActive(true);
 
-			backgroundRect[0].transform.Translate(new Vector2(backgroundSpeed[0] * Time.deltaTime, 0));
-			backgroundRect[1].transform.Translate(new Vector2(backgroundSpeed[1] * Time.deltaTime, 0));
-			backgroundRect[2].transform.Translate(new Vector2(backgroundSpeed[2] * Time.deltaTime, 0));
+
+			/*backgroundRect[0].transform.Translate(new Vector2(-backgroundSpeed[0] * Time.deltaTime, 0));
+			backgroundRect[1].transform.Translate(new Vector2(-backgroundSpeed[1] * Time.deltaTime, 0));
+			backgroundRect[2].transform.Translate(new Vector2(-backgroundSpeed[2] * Time.deltaTime, 0)); */
 
 			return;
 		}
@@ -213,9 +224,9 @@ public class PlayerController : MonoBehaviour
 			cameraPointRight.SetActive(true);
 			cameraPointLeft.SetActive(false);
 
-			backgroundRect[0].transform.Translate(new Vector2(-backgroundSpeed[0] * Time.deltaTime, 0));
-			backgroundRect[1].transform.Translate(new Vector2(-backgroundSpeed[1] * Time.deltaTime, 0));
-			backgroundRect[2].transform.Translate(new Vector2(-backgroundSpeed[2] * Time.deltaTime, 0));
+			/*backgroundRect[0].transform.Translate(new Vector2(backgroundSpeed[0] * Time.deltaTime, 0));
+			backgroundRect[1].transform.Translate(new Vector2(backgroundSpeed[1] * Time.deltaTime, 0));
+			backgroundRect[2].transform.Translate(new Vector2(backgroundSpeed[2] * Time.deltaTime, 0));*/
 
 			return;
 		}

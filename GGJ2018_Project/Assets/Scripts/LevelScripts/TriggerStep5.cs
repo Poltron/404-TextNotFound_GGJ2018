@@ -2,25 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TriggerStep5 : MonoBehaviour {
+public class TriggerStep5 : MonoBehaviour
+{
 
-    [SerializeField]
-    AudioClip bridgemisplaced;
+	[SerializeField]
+	AudioClip bridgemisplaced;
+	[SerializeField]
+	private GameObject[] activeObject;
 
-    bool hasBeenUsed;
+	bool hasBeenUsed;
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.name == "Player" && !hasBeenUsed)
-        {
-            hasBeenUsed = true;
-            Do();
-        }
-    }
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.name == "Player" && !hasBeenUsed)
+		{
+			hasBeenUsed = true;
+			Do();
+		}
+	}
 
-    public void Do()
-    {
-        GameManager.Instance.DialogAudioSource.clip = bridgemisplaced;
-        GameManager.Instance.DialogAudioSource.Play();
-    }
+	public void Do()
+	{
+		GameManager.Instance.DialogAudioSource.clip = bridgemisplaced;
+		GameManager.Instance.DialogAudioSource.Play();
+		foreach (GameObject obj in activeObject)
+			obj.SetActive(true);
+	}
 }

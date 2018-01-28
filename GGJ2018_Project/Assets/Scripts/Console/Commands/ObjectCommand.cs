@@ -126,7 +126,9 @@ public class ObjectCommand : MonoBehaviour
 				console.InvokeOnErrorCommand(cmd);
 				return;
 			}
-			princess.GetComponent<EndGame>().Finish();
+			EndGame end = princess.GetComponent<EndGame>();
+			if (end.isVisible)
+				end.Finish();
 		}
 		else
 		{

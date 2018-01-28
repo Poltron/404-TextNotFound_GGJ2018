@@ -8,6 +8,7 @@ public class EndGame : MonoBehaviour
 {
 	[SerializeField]
 	private float duration;
+	public bool isVisible;
 
 	public void Finish()
 	{
@@ -19,6 +20,16 @@ public class EndGame : MonoBehaviour
 		if (collision.transform.tag != "Attack")
 			return;
 		StartCoroutine(Appear(SceneManager.GetActiveScene().name));
+	}
+
+	private void OnBecameVisible()
+	{
+		isVisible = true;
+	}
+
+	private void OnBecameInvisible()
+	{
+		isVisible = false;
 	}
 
 	private IEnumerator Appear(string sceneToLoad)
@@ -39,7 +50,7 @@ public class EndGame : MonoBehaviour
 		GameManager.Instance.Player.EnableInput();
 
 		yield return new WaitForSeconds(5.0f);
-		
+
 		SceneManager.LoadScene(sceneToLoad);
 	}
 }

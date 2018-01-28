@@ -67,8 +67,7 @@ public class GoblinController : MonoBehaviour
 
 	[SerializeField]
 	private float distanceAttack;
-	[SerializeField]
-	private int distanceFollow;
+	public int distanceFollow;
 	private bool isFollowing;
 	private bool isAttack;
 	[SerializeField]
@@ -98,6 +97,9 @@ public class GoblinController : MonoBehaviour
 		gravity = defaulGravity;
 		myAnimator.SetTrigger("Idle");
 
+		NameSelector nameSelector = FindObjectOfType<NameSelector>();
+		GetComponent<ObjectEntity>().SetName(nameSelector.GetRandom("GOBLIN"));
+
 		console = FindObjectOfType<ConsoleWriter>();
 		console.AddOnSendCommand(SetAlive);
 
@@ -109,7 +111,9 @@ public class GoblinController : MonoBehaviour
 
 	private void OnDestroy()
 	{
-		console.RemoveOnSendCommand(SetAlive);
+		console = FindObjectOfType<ConsoleWriter>();
+		if (console)
+			console.RemoveOnSendCommand(SetAlive);
 		ResetOnGoblinDie();
 	}
 
@@ -121,7 +125,11 @@ public class GoblinController : MonoBehaviour
 		CheckFollowing();
 
 		if (isDead)
+		{
+			if (myRigidBody)
+				myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
 			return;
+		}
 
 		if (!isFollowing)
 			return;
