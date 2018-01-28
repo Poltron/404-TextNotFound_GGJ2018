@@ -85,6 +85,8 @@ public class GoblinController : MonoBehaviour
 	private GameObject fx_death;
 	[SerializeField]
 	private GameObject fx_hurth;
+	[SerializeField]
+	private ParticleSystem fx_durth;
 
 	private bool isInputEnabled = true;
 
@@ -118,17 +120,17 @@ public class GoblinController : MonoBehaviour
 	}
 
 	private void Update()
-    {
-        if (isDead)
-        {
-            if (myRigidBody)
-                myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
-            return;
-        }
+	{
+		if (isDead)
+		{
+			if (myRigidBody)
+				myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
+			return;
+		}
 
-        Gravity();
+		Gravity();
 
-        if (GameManager.Instance.Player.isDead)
+		if (GameManager.Instance.Player.isDead)
 			return;
 
 		CheckFollowing();
@@ -145,6 +147,11 @@ public class GoblinController : MonoBehaviour
 		Move();
 		CheckAttack();
 		Attack();
+
+		if (fx_durth.isPlaying == false && myRigidBody.velocity.x != 0.0f)
+			fx_durth.Play();
+		if (myRigidBody.velocity.x == 0.0f)
+			fx_durth.Stop();
 	}
 
 	public void Attack()
