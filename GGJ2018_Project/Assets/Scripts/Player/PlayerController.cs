@@ -134,6 +134,8 @@ public class PlayerController : MonoBehaviour
 
 		attackCollider.tag = "Attack";
 		fx_durth.Stop();
+
+        justGrounded = true;
 	}
 
 	private void OnDestroy()
