@@ -58,7 +58,10 @@ public class GoblinController : MonoBehaviour
 	[SerializeField]
 	private List<GameObject> hearts;
 
-	private float defaulGravity = 9.81f;
+    [SerializeField]
+    private AudioSource goblinDeathSound;
+
+    private float defaulGravity = 9.81f;
 	private Transform myTransform;
 	private Rigidbody2D myRigidBody;
 	private Animator myAnimator;
@@ -110,27 +113,26 @@ public class GoblinController : MonoBehaviour
 		console.AddOnSendCommand(SetAlive);
 
 		attackCollider.tag = "Attack";
-        
-        int result = Random.Range(0, 4);
-        switch(result)
-        {
-            case 0:
-                GetComponent<ObjectEntity>().SetValue("WEAPON", "FIST");
-                weapon.GetComponent<Animator>().SetTrigger("SwitchToFist");
-                break;
-            case 1:
-                GetComponent<ObjectEntity>().SetValue("WEAPON", "SWORD");
-                weapon.GetComponent<Animator>().SetTrigger("SwitchToSword");
-                break;
-            case 2:
-                GetComponent<ObjectEntity>().SetValue("WEAPON", "MACE");
-                weapon.GetComponent<Animator>().SetTrigger("SwitchToMace");
-                break;
-            case 3:
-                GetComponent<ObjectEntity>().SetValue("WEAPON", "SHOTGUN");
-                weapon.GetComponent<Animator>().SetTrigger("SwitchToShotgun");
-                break;
-        }
+
+		int result = Random.Range(0, 3);
+		switch (result)
+		{
+			case 0:
+				GetComponent<ObjectEntity>().SetValue("WEAPON", "FIST");
+				weapon.GetComponent<Animator>().SetTrigger("SwitchToFist");
+				GetComponentInChildren<PlayerWeapon>().SetWeapon(0);
+				break;
+			case 1:
+				GetComponent<ObjectEntity>().SetValue("WEAPON", "SWORD");
+				weapon.GetComponent<Animator>().SetTrigger("SwitchToSword");
+				GetComponentInChildren<PlayerWeapon>().SetWeapon(1);
+				break;
+			case 2:
+				GetComponent<ObjectEntity>().SetValue("WEAPON", "MACE");
+				weapon.GetComponent<Animator>().SetTrigger("SwitchToMace");
+				GetComponentInChildren<PlayerWeapon>().SetWeapon(2);
+				break;
+		}
 	}
 
 	private void OnDestroy()
@@ -139,24 +141,27 @@ public class GoblinController : MonoBehaviour
 		if (console)
 			console.RemoveOnSendCommand(SetAlive);
 		ResetOnGoblinDie();
-    }
+	}
 
-    private void HitBodyColor()
-    {
-        GetComponent<SpriteRenderer>().color = Color.Lerp(GetComponent<SpriteRenderer>().color, Color.white, Time.deltaTime * 5.0f);
-    }
+	private void HitBodyColor()
+	{
+		GetComponent<SpriteRenderer>().color = Color.Lerp(GetComponent<SpriteRenderer>().color, Color.white, Time.deltaTime * 5.0f);
+	}
 
 
-    private void Update()
-    {
-        HitBodyColor();
+	private void Update()
+	{
+		HitBodyColor();
 
         if (isDead)
         {
             if (myRigidBody)
                 myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
+
+			fx_durth.Stop();
             return;
         }
+
 
 		Gravity();
 
@@ -210,6 +215,12 @@ public class GoblinController : MonoBehaviour
 			isMovingRight = true;
 			mySpriteRenderer.flipX = false;
 			weapon.GetComponent<SpriteRenderer>().flipX = false;
+
+			Vector3 moveDirection = weapon.transform.localPosition;
+			moveDirection.x = -Mathf.Abs(moveDirection.x);
+			weapon.transform.localPosition = moveDirection;
+
+
 			attackCollider.transform.localPosition = new Vector3(gapAtkCol, 0, 0);
 
 		}
@@ -219,6 +230,9 @@ public class GoblinController : MonoBehaviour
 			isMovingRight = false;
 			mySpriteRenderer.flipX = true;
 			weapon.GetComponent<SpriteRenderer>().flipX = true;
+			Vector3 moveDirection = weapon.transform.localPosition;
+			moveDirection.x = Mathf.Abs(moveDirection.x);
+			weapon.transform.localPosition = moveDirection;
 			attackCollider.transform.localPosition = new Vector3(-gapAtkCol, 0, 0);
 		}
 
@@ -258,7 +272,7 @@ public class GoblinController : MonoBehaviour
 			return;
 
 		isFollowing = Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position) <= distanceFollow;
-	}
+    }
 
 	public void CheckAttack()
 	{
@@ -327,6 +341,16 @@ public class GoblinController : MonoBehaviour
 		{
 			life -= collision.transform.parent.GetComponent<PlayerController>().GetComponentInChildren<PlayerWeapon>().GetCurrentWeapon().damage;
 
+			AudioSource source = GetComponent<AudioSource>();
+			if (source == null)
+			{
+				source = gameObject.AddComponent<AudioSource>();
+			}
+			source.clip = collision.transform.parent.GetComponent<PlayerController>().GetComponentInChildren<PlayerWeapon>().GetCurrentWeapon().touch;
+			source.loop = false;
+			if (source.clip != null)
+				source.Play();
+
 			int i = 0;
 			foreach (GameObject heart in hearts)
 			{
@@ -344,6 +368,7 @@ public class GoblinController : MonoBehaviour
 
 		if (life <= 0)
 		{
+            Instantiate(goblinDeathSound, transform.position, Quaternion.identity);
 			isDead = true;
 			myAnimator.SetTrigger("Dead");
 			GetComponent<ObjectEntity>().SetValue("ISALIVE", "FALSE");

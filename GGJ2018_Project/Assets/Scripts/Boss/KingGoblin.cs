@@ -132,7 +132,7 @@ public class KingGoblin : MonoBehaviour
 		int columnSpawn = column == 0 ? 4 : 7;
 		Vector3 direction = GameObject.FindGameObjectWithTag("Player").transform.position - transform.position;
 
-		Instantiate(toSpawn, transform.position + direction.normalized * 2.0f, Quaternion.identity);
+		Instantiate(toSpawn, transform.position + direction.normalized * 2.0f, Quaternion.identity).GetComponent<GoblinController>().distanceFollow = 30;
 		Instantiate(fx_apparition, transform.position + direction.normalized * 2.0f, Quaternion.identity);
 		myAnimator.SetTrigger("Spawn");
 	}

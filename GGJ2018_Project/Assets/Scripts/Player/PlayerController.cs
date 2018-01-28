@@ -76,7 +76,12 @@ public class PlayerController : MonoBehaviour
 	[SerializeField]
 	private GameObject particleSystemShotgunLeft;
 
-	private float defaulGravity = 9.81f;
+    [SerializeField]
+    private AudioSource jumpSound;
+    [SerializeField]
+    private AudioSource jumpLandSound;
+
+    private float defaulGravity = 9.81f;
 	private Transform myTransform;
 	private Rigidbody2D myRigidBody;
 	private Animator myAnimator;
@@ -129,6 +134,8 @@ public class PlayerController : MonoBehaviour
 
 		attackCollider.tag = "Attack";
 		fx_durth.Stop();
+
+        justGrounded = true;
 	}
 
 	private void OnDestroy()
@@ -287,7 +294,8 @@ public class PlayerController : MonoBehaviour
 			{
 				Vector3 moveDirection = myRigidBody.velocity;
 
-				moveDirection.y = JumpForce(jumpHeight, jumpTime);
+                Instantiate(jumpSound, myTransform.position, Quaternion.identity);
+                moveDirection.y = JumpForce(jumpHeight, jumpTime);
 				myRigidBody.velocity = moveDirection;
 			}
 		}
@@ -301,6 +309,7 @@ public class PlayerController : MonoBehaviour
 			StartCoroutine(WaitForFrame());
 			timerCooldown = cooldownAttack;
 			weapon.GetComponent<Animator>().SetTrigger("Attack");
+			weapon.GetComponent<PlayerWeapon>().Attack();
 			var PlayerWeapon = GetComponentInChildren<PlayerWeapon>();
 			if (PlayerWeapon.GetCurrentWeapon().code == 3)
 			{
@@ -366,6 +375,7 @@ public class PlayerController : MonoBehaviour
 					{
 						gravity = defaulGravity;
 						justGrounded = true;
+                        Instantiate(jumpLandSound, myTransform.position, Quaternion.identity);
 					}
 					else
 					{
@@ -451,6 +461,21 @@ public class PlayerController : MonoBehaviour
 		if (collision.gameObject.tag == "Attack")
 		{
 			--life;
+
+			life -= collision.transform.parent.GetComponent<GoblinController>().GetComponentInChildren<PlayerWeapon>().GetCurrentWeapon().damage;
+
+			AudioSource source = GetComponent<AudioSource>();
+			if (source == null)
+			{
+				source = gameObject.AddComponent<AudioSource>();
+			}
+			source.clip = collision.transform.parent.GetComponent<GoblinController>().GetComponentInChildren<PlayerWeapon>().GetCurrentWeapon().touch;
+			source.loop = false;
+			if (source.clip != null)
+				source.Play();
+
+
+
 			GetComponent<SpriteRenderer>().color = Color.red;
 		}
 

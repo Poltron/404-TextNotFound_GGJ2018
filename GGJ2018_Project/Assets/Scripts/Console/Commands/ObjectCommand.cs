@@ -15,7 +15,14 @@ public class ObjectCommand : MonoBehaviour
 	[SerializeField]
 	public List<ObjectEntity> visibleObjects;
 
-	[SerializeField]
+    [SerializeField]
+    private AudioSource objAdded;
+    [SerializeField]
+    private AudioSource objRemoved;
+    [SerializeField]
+    private AudioSource valueChanged;
+
+    [SerializeField]
 	private GameObject fxDisparition;
 	[SerializeField]
 	private GameObject fxApparition;
@@ -41,9 +48,11 @@ public class ObjectCommand : MonoBehaviour
 		{
 			console.InvokeOnErrorCommand(cmd);
 			return;
-		}
+        }
 
-		foreach (ObjectEntity obj in allObject)
+        Instantiate(objAdded, Camera.main.transform.position, Quaternion.identity);
+
+        foreach (ObjectEntity obj in allObject)
 		{
 			if (!string.Equals(obj.GetName(), args[0], System.StringComparison.InvariantCultureIgnoreCase))
 				continue;
@@ -62,8 +71,8 @@ public class ObjectCommand : MonoBehaviour
 			Instantiate(obj.gameObject, position, Quaternion.identity);
 			Instantiate(fxApparition, obj.transform.position, Quaternion.identity);
 			return;
-		}
-		console.InvokeOnErrorCommand(cmd);
+        }
+        console.InvokeOnErrorCommand(cmd);
 		return;
 	}
 
@@ -87,8 +96,9 @@ public class ObjectCommand : MonoBehaviour
 			obj.gameObject.SetActive(false);
 			Instantiate(fxDisparition, obj.transform.position, Quaternion.identity);
 			destroyed = true;
-		}
-		if (!destroyed)
+        }
+        Instantiate(objRemoved, Camera.main.transform.position, Quaternion.identity);
+        if (!destroyed)
 			console.InvokeOnErrorCommand(cmd);
 		return;
 	}
@@ -113,6 +123,9 @@ public class ObjectCommand : MonoBehaviour
 			if (!isSet)
 				break;
 		}
+
+        Instantiate(valueChanged, Camera.main.transform.position, Quaternion.identity);
+
 		if (!isSet)
 			console.InvokeOnErrorCommand(cmd);
 	}
@@ -172,20 +185,18 @@ public class ObjectCommand : MonoBehaviour
 		if (!string.Equals(cmd, "QUIT", System.StringComparison.InvariantCultureIgnoreCase))
 			return;
 
-		if (args.Length != 0)
+		if (args.Length != 1)
 		{
 			console.InvokeOnErrorCommand(cmd);
 			return;
 		}
 
-		GameObject princess = GameObject.FindGameObjectWithTag("Princess");
-		if (princess == null)
+		if (args[0] == "MENU")
 		{
 			UnityEngine.SceneManagement.SceneManager.LoadScene("Scene_Jeanweb");
-			return;
 		}
-		EndGame end = princess.GetComponent<EndGame>();
-		end.Finish();
+		else if (args[0] == "GAME")
+			Application.Quit();
 	}
 
 

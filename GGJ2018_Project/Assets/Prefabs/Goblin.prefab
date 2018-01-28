@@ -153,6 +153,7 @@ GameObject:
   - component: {fileID: 114429266616588312}
   - component: {fileID: 95258569482650718}
   - component: {fileID: 212550531306899426}
+  - component: {fileID: 82985985747724634}
   m_Layer: 10
   m_Name: Weapon
   m_TagString: Untagged
@@ -345,7 +346,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1744335238375050}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 15.56, y: 0.01, z: 0}
+  m_LocalPosition: {x: 383.43237, y: 31.335573, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4037379771601316}
@@ -466,6 +467,86 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5}
   m_EdgeRadius: 0
+--- !u!82 &82985985747724634
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1654945985480732}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 0.105
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!95 &95258569482650718
 Animator:
   serializedVersion: 3
@@ -569,19 +650,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: WEAPON
   Weapons:
-  - name: Fist
+  - name: FIST
     trigger: SwitchToFist
     damage: 1
     code: 18
-  - name: Sword
+    source: {fileID: 8300000, guid: 702984cc3fb3d6045ab5b027b93e6073, type: 3}
+    touch: {fileID: 8300000, guid: e6fa1522d719770488eb4a7821bac845, type: 3}
+  - name: SWORD
     trigger: SwitchToSword
-    damage: 10
+    damage: 2
     code: 435
+    source: {fileID: 8300000, guid: 12319af324623f04f891550d464979c5, type: 3}
+    touch: {fileID: 8300000, guid: 040f1b0eb93b33b43a4410cbe621f643, type: 3}
+  - name: MACE
+    trigger: SwitchToMace
+    damage: 3
+    code: 435
+    source: {fileID: 8300000, guid: 5804d7aa8376bd74bb7dc6af31f788b8, type: 3}
+    touch: {fileID: 8300000, guid: 6c32bedb470bc534f9e9933c45c1653b, type: 3}
   currentWeapon:
     name: 
     trigger: 
     damage: 0
     code: 0
+    source: {fileID: 0}
+    touch: {fileID: 0}
 --- !u!114 &114614820785421112
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -605,6 +698,8 @@ MonoBehaviour:
   - {fileID: 1253142498856800}
   - {fileID: 1745509284652568}
   - {fileID: 1123903261444898}
+  goblinDeathSound: {fileID: 82899384057619944, guid: f33a31976e6e2f0409597fa4c721ec00,
+    type: 2}
   distanceAttack: 1.5
   distanceFollow: 10
   cooldownAttack: 2
@@ -7611,7 +7706,7 @@ SpriteRenderer:
   m_SortingOrder: 50
   m_Sprite: {fileID: 21300000, guid: 75f7f87b1d410cb48ac845ed4a460f12, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.4, y: 0.4}
