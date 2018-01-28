@@ -545,7 +545,7 @@ MonoBehaviour:
   gapAtkCol: 0.6
   life: 0
   isDead: 0
-  cooldownAttack: 1
+  cooldownAttack: 0
 --- !u!114 &114821978040152342
 MonoBehaviour:
   m_ObjectHideFlags: 1
