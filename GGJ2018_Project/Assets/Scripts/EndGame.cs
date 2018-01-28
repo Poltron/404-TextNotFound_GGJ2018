@@ -47,7 +47,7 @@ public class EndGame : MonoBehaviour
 			yield return new WaitForEndOfFrame();
 		}
 		grp.alpha = 1.0f;
-		GameManager.Instance.Player.EnableInput();
+		GameManager.Instance.Player.DisableInput();
 
 		yield return new WaitForSeconds(5.0f);
 
