@@ -8,6 +8,8 @@ public class EndGame : MonoBehaviour
 {
 	[SerializeField]
 	private float duration;
+	[SerializeField]
+	private Sprite sp;
 	public bool isVisible;
 
 	public void Finish()
@@ -19,6 +21,7 @@ public class EndGame : MonoBehaviour
 	{
 		if (collision.transform.tag != "Attack")
 			return;
+		GetComponent<SpriteRenderer>().sprite = sp;
 		StartCoroutine(Appear(SceneManager.GetActiveScene().name));
 	}
 

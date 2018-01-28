@@ -118,7 +118,8 @@ public class PlayerController : MonoBehaviour
 
 	private void OnDestroy()
 	{
-		console.RemoveOnSendCommand(SetAlive);
+		if (console)
+			console.RemoveOnSendCommand(SetAlive);
 	}
 
 	private void Update()
@@ -126,10 +127,10 @@ public class PlayerController : MonoBehaviour
 		if (timerCooldown > 0)
 			timerCooldown -= Time.deltaTime;
 
-        if (isDead)
-        {
-            return;
-        }
+		if (isDead)
+		{
+			return;
+		}
 
 		KeyUpdate();
 		Attack();
@@ -138,22 +139,22 @@ public class PlayerController : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-        if (isDead)
-        {
-            if (myRigidBody)
-                myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
+		if (isDead)
+		{
+			if (myRigidBody)
+				myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
 
-            return;
-        }
+			return;
+		}
 
-        Gravity();
+		Gravity();
 		Move();
 		Jump();
 
-        ClampPlayerInCam();
-    }
+		ClampPlayerInCam();
+	}
 
-    public void KeyUpdate()
+	public void KeyUpdate()
 	{
 		if (!isInputEnabled)
 			return;
@@ -265,23 +266,23 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-    public void ClampPlayerInCam()
-    {
-        var leftBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).x;
-        var rightBorder = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0)).x;
-        var topBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).y;
-        var bottomBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0)).y;
+	public void ClampPlayerInCam()
+	{
+		var leftBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).x;
+		var rightBorder = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0)).x;
+		var topBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).y;
+		var bottomBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0)).y;
 
-        Vector3 playerSize = GetComponent<SpriteRenderer>().bounds.size;
+		Vector3 playerSize = GetComponent<SpriteRenderer>().bounds.size;
 
-        this.transform.position = new Vector3(
-        Mathf.Clamp(this.transform.position.x, leftBorder + playerSize.x / 2, rightBorder - playerSize.x / 2),
-        Mathf.Clamp(this.transform.position.y, topBorder + playerSize.y / 2, bottomBorder - playerSize.y / 2),
-        0
-        );
-    }
+		this.transform.position = new Vector3(
+		Mathf.Clamp(this.transform.position.x, leftBorder + playerSize.x / 2, rightBorder - playerSize.x / 2),
+		Mathf.Clamp(this.transform.position.y, topBorder + playerSize.y / 2, bottomBorder - playerSize.y / 2),
+		0
+		);
+	}
 
-    IEnumerator WaitForFrame()
+	IEnumerator WaitForFrame()
 	{
 		yield return null;
 		attackCollider.SetActive(false);
@@ -400,9 +401,9 @@ public class PlayerController : MonoBehaviour
 		else if (args[0] == "WEAPON")
 		{
 			var PlayerWeapon = GetComponentInChildren<PlayerWeapon>();
-			foreach(Weapon w in PlayerWeapon.GetListWeapon())
+			foreach (Weapon w in PlayerWeapon.GetListWeapon())
 			{
-				if(string.Equals(w.name, args[1], System.StringComparison.InvariantCultureIgnoreCase))
+				if (string.Equals(w.name, args[1], System.StringComparison.InvariantCultureIgnoreCase))
 				{
 					PlayerWeapon.GetComponent<Animator>().SetTrigger(w.trigger);
 				}

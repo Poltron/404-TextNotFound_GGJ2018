@@ -26,7 +26,7 @@ public class UiMainMenu : MonoBehaviour
 
 	private void ClickPlay()
 	{
-        SceneManager.LoadScene("scene_eti");
+        SceneManager.LoadScene("Scene_merge");
 	}
 
 	private void ClickHightscore()
