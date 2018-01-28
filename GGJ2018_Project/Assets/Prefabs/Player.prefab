@@ -417,7 +417,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1641779361798518}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 2c84d539f78ca1440b47433e1836f7a8, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -534,7 +534,7 @@ MonoBehaviour:
   feets:
   - {fileID: 4584647396123690}
   - {fileID: 4125728109518944}
-  speed: 2
+  speed: 3
   attackCollider: {fileID: 1854966179467824}
   weapon: {fileID: 1696885730421258}
   particleSystemShotgunRight: {fileID: 1879033353875196}
@@ -544,7 +544,7 @@ MonoBehaviour:
   gapAtkCol: 0.6
   life: 0
   isDead: 0
-  cooldownAttack: 0
+  cooldownAttack: 2
 --- !u!114 &114821978040152342
 MonoBehaviour:
   m_ObjectHideFlags: 1
