@@ -155,6 +155,8 @@ public class GoblinController : MonoBehaviour
         {
             if (myRigidBody)
                 myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
+
+			fx_durth.Stop();
             return;
         }
 
