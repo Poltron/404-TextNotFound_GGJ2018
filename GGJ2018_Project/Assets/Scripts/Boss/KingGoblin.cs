@@ -16,8 +16,12 @@ public class KingGoblin : MonoBehaviour
 	private float gravity;
 	private MapColumn map;
 	private int column;
-
 	private float currentTime;
+
+	[SerializeField]
+	private GameObject fx_death;
+	[SerializeField]
+	private GameObject fx_hurth;
 
 	private void Start()
 	{
@@ -68,7 +72,10 @@ public class KingGoblin : MonoBehaviour
 				myAnimator.SetTrigger("Dead");
 				enabled = false;
 				myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
+				Instantiate(fx_death, transform.position, Quaternion.identity);
 			}
+			else
+				Instantiate(fx_hurth, transform.position, Quaternion.identity);
 		}
 		if (l > 0)
 			JumpTo(column == 0 ? map.GetNbrColumn() - 1 : 0);

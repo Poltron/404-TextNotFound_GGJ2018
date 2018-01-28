@@ -50,10 +50,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 8d8d67c7b38bab447902e4e475519d46, type: 3}
-    m_FontSize: 14
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 8
+    m_MinSize: 2
     m_MaxSize: 20
     m_Alignment: 3
     m_AlignByGeometry: 0

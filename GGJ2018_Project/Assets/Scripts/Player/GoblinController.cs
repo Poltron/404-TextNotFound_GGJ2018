@@ -79,8 +79,12 @@ public class GoblinController : MonoBehaviour
 
 	[SerializeField]
 	private int life;
-
 	public bool isDead;
+
+	[SerializeField]
+	private GameObject fx_death;
+	[SerializeField]
+	private GameObject fx_hurth;
 
 	private bool isInputEnabled = true;
 
@@ -292,7 +296,10 @@ public class GoblinController : MonoBehaviour
 			GetComponent<ObjectEntity>().SetValue("ISALIVE", "FALSE");
 			GetComponent<Collider2D>().enabled = false;
 			InvokeOnGoblinDie();
+			Instantiate(fx_death, transform.position, Quaternion.identity);
 		}
+		else
+			Instantiate(fx_hurth, transform.position, Quaternion.identity);
 	}
 
 	public void SetAlive(string cmd, string[] args)

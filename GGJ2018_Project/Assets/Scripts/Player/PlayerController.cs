@@ -101,6 +101,11 @@ public class PlayerController : MonoBehaviour
 	private float cooldownAttack;
 	private float timerCooldown;
 
+	[SerializeField]
+	private GameObject fx_death;
+	[SerializeField]
+	private GameObject fx_hurth;
+
 	private bool isInputEnabled = true;
 
 	private void Awake()
@@ -247,8 +252,8 @@ public class PlayerController : MonoBehaviour
 		else
 		{
 			myRigidBody.velocity = new Vector2(0.0f, myRigidBody.velocity.y);
-			cameraPointRight.SetActive(false);
-			cameraPointLeft.SetActive(false);
+			/*cameraPointRight.SetActive(false);
+			cameraPointLeft.SetActive(false);*/
 		}
 	}
 
@@ -300,11 +305,11 @@ public class PlayerController : MonoBehaviour
 
 		Vector3 playerSize = GetComponent<SpriteRenderer>().bounds.size;
 
-        if (this.transform.position.y > bottomBorder - playerSize.y / 2)
-        {
-            gravity = defaulGravity;
-            myRigidBody.velocity = new Vector2(myRigidBody.velocity.x, -1);
-        }
+		if (this.transform.position.y > bottomBorder - playerSize.y / 2)
+		{
+			gravity = defaulGravity;
+			myRigidBody.velocity = new Vector2(myRigidBody.velocity.x, -1);
+		}
 
 		this.transform.position = new Vector3(
 		Mathf.Clamp(this.transform.position.x, leftBorder + playerSize.x / 2, rightBorder - playerSize.x / 2),
@@ -337,7 +342,7 @@ public class PlayerController : MonoBehaviour
 				{
 					if (justGrounded == false && isOnGround == false)
 					{
-                        gravity = defaulGravity;
+						gravity = defaulGravity;
 						justGrounded = true;
 					}
 					else
@@ -389,7 +394,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if (!isInputEnabled)
 			return;
-        
+
 		if (Input.GetKeyDown(keyJump))
 		{
 			myAnimator.SetTrigger("Jump");
@@ -428,8 +433,11 @@ public class PlayerController : MonoBehaviour
 		{
 			isDead = true;
 			myAnimator.SetTrigger("Dead");
+			Instantiate(fx_death, transform.position, Quaternion.identity);
 			GetComponent<ObjectEntity>().SetValue("ISALIVE", "FALSE");
 		}
+		else
+			Instantiate(fx_hurth, transform.position, Quaternion.identity);
 	}
 
 	public void SetAlive(string cmd, string[] args)
