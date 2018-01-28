@@ -313,7 +313,6 @@ public class GoblinController : MonoBehaviour
 				life = 3;
 				myAnimator.SetTrigger("Idle");
 				GetComponent<Collider2D>().enabled = true;
-				GetComponent<Gravity>().enabled = true;
 			}
 		}
 	}
