@@ -81,6 +81,7 @@ public class PlayerController : MonoBehaviour
 	private Rigidbody2D myRigidBody;
 	private Animator myAnimator;
 	private SpriteRenderer mySpriteRenderer;
+	private HeartContainer myHeartContainer;
 	private float gravity;
 	private bool justGrounded = false;
 	private bool isOnGround;
@@ -117,6 +118,8 @@ public class PlayerController : MonoBehaviour
 		console.AddOnSendCommand(SetAlive);
 		weapon.GetComponent<SpriteRenderer>().sortingOrder = GetComponent<SpriteRenderer>().sortingOrder + 1;
 
+		myHeartContainer = HeartContainer.GetHeartContainer();
+
 		attackCollider.tag = "Attack";
 	}
 
@@ -131,10 +134,13 @@ public class PlayerController : MonoBehaviour
 		if (timerCooldown > 0)
 			timerCooldown -= Time.deltaTime;
 
+		myHeartContainer.SetHeart(life);
+
 		if (isDead)
 		{
 			return;
 		}
+
 
 		KeyUpdate();
 		Attack();
@@ -338,10 +344,12 @@ public class PlayerController : MonoBehaviour
 					{
 						justGrounded = false;
 					}
+					isOnGround = true;
 					return true;
 				}
 			}
 		}
+		isOnGround = false;
 		return false;
 	}
 
@@ -349,18 +357,16 @@ public class PlayerController : MonoBehaviour
 	{
 		foreach (var trans in feets)
 		{
-			RaycastHit2D[] ray = Physics2D.RaycastAll(trans.position, -Vector2.up, 0.1f);
+			RaycastHit2D[] ray = Physics2D.RaycastAll(trans.position, -Vector2.up, 0.2f);
 
 			foreach (RaycastHit2D r in ray)
 			{
 				if (r.transform.tag == "Platform")
 				{
-					isOnGround = true;
 					return true;
 				}
 			}
 		}
-		isOnGround = false;
 		return false;
 	}
 
