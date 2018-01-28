@@ -71,6 +71,10 @@ public class PlayerController : MonoBehaviour
 	private GameObject attackCollider;
 	[SerializeField]
 	private GameObject weapon;
+	[SerializeField]
+	private GameObject particleSystemShotgunRight;
+	[SerializeField]
+	private GameObject particleSystemShotgunLeft;
 
 	private float defaulGravity = 9.81f;
 	private Transform myTransform;
@@ -134,6 +138,7 @@ public class PlayerController : MonoBehaviour
 
 		KeyUpdate();
 		Attack();
+		HasJustGrounded();
 		Animation();
 	}
 
@@ -150,9 +155,9 @@ public class PlayerController : MonoBehaviour
 		Gravity();
 		Move();
 		Jump();
-
 		ClampPlayerInCam();
 	}
+
 
 	public void KeyUpdate()
 	{
@@ -263,6 +268,20 @@ public class PlayerController : MonoBehaviour
 			StartCoroutine(WaitForFrame());
 			timerCooldown = cooldownAttack;
 			weapon.GetComponent<Animator>().SetTrigger("Attack");
+			var PlayerWeapon = GetComponentInChildren<PlayerWeapon>();
+			if (PlayerWeapon.GetCurrentWeapon().code == 3)
+			{
+				if (!mySpriteRenderer.flipX)
+				{
+					particleSystemShotgunRight.GetComponent<ParticleSystem>().Stop();
+					particleSystemShotgunRight.GetComponent<ParticleSystem>().Play();
+				}
+				else
+				{
+					particleSystemShotgunLeft.GetComponent<ParticleSystem>().Stop();
+					particleSystemShotgunLeft.GetComponent<ParticleSystem>().Play();
+				}
+			}
 		}
 	}
 
@@ -274,6 +293,12 @@ public class PlayerController : MonoBehaviour
 		var bottomBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0)).y;
 
 		Vector3 playerSize = GetComponent<SpriteRenderer>().bounds.size;
+
+        if (this.transform.position.y > bottomBorder - playerSize.y / 2)
+        {
+            gravity = defaulGravity;
+            myRigidBody.velocity = new Vector2(myRigidBody.velocity.x, -1);
+        }
 
 		this.transform.position = new Vector3(
 		Mathf.Clamp(this.transform.position.x, leftBorder + playerSize.x / 2, rightBorder - playerSize.x / 2),
@@ -294,7 +319,7 @@ public class PlayerController : MonoBehaviour
 		return (4.0f * height) / time;
 	}
 
-	public bool IsOnGround()
+	public bool HasJustGrounded()
 	{
 		foreach (var trans in feets)
 		{
@@ -305,9 +330,31 @@ public class PlayerController : MonoBehaviour
 				if (r.transform.tag == "Platform")
 				{
 					if (justGrounded == false && isOnGround == false)
+					{
+                        gravity = defaulGravity;
 						justGrounded = true;
+					}
 					else
+					{
 						justGrounded = false;
+					}
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public bool IsOnGround()
+	{
+		foreach (var trans in feets)
+		{
+			RaycastHit2D[] ray = Physics2D.RaycastAll(trans.position, -Vector2.up, 0.1f);
+
+			foreach (RaycastHit2D r in ray)
+			{
+				if (r.transform.tag == "Platform")
+				{
 					isOnGround = true;
 					return true;
 				}
@@ -336,12 +383,12 @@ public class PlayerController : MonoBehaviour
 	{
 		if (!isInputEnabled)
 			return;
-
+        
 		if (Input.GetKeyDown(keyJump))
 		{
 			myAnimator.SetTrigger("Jump");
 		}
-		if (((Input.GetKeyUp(keyRight) || Input.GetKeyUp(keyLeft)) && IsOnGround() && !isMovingLeft && !isMovingRight)
+		if (((Input.GetKeyUp(keyRight) || Input.GetKeyUp(keyLeft)) && IsOnGround() && (!isMovingLeft && !isMovingRight))
 			|| justGrounded && (!isMovingLeft && !isMovingRight))
 		{
 			myAnimator.SetTrigger("Idle");

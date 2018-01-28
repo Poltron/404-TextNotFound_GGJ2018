@@ -25,6 +25,10 @@ public class PlayerWeapon : MonoBehaviour
 
 	[SerializeField]
 	private Weapon currentWeapon;
+	public Weapon GetCurrentWeapon()
+	{
+		return currentWeapon;
+	}
 
 	private Animator myAnimator;
 
@@ -49,7 +53,9 @@ public class PlayerWeapon : MonoBehaviour
 		else if (value == "MACE")
 			SetWeapon(2);
 		else if (value == "SHOTGUN")
+		{
 			SetWeapon(3);
+		}
 	}
 
 	public void SetWeapon(int code)
