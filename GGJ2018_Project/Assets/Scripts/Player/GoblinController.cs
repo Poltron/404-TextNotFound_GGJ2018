@@ -119,8 +119,12 @@ public class GoblinController : MonoBehaviour
 
 		CheckFollowing();
 
-		if (isDead)
-			return;
+        if (isDead)
+        {
+            if (myRigidBody)
+                myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
+            return;
+        }
 
 		if (!isFollowing)
 			return;

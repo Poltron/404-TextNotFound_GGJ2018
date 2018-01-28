@@ -125,8 +125,10 @@ public class PlayerController : MonoBehaviour
 		if (timerCooldown > 0)
 			timerCooldown -= Time.deltaTime;
 
-		if (isDead)
-			return;
+        if (isDead)
+        {
+            return;
+        }
 
 		KeyUpdate();
 		Attack();
@@ -135,7 +137,15 @@ public class PlayerController : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		Gravity();
+        if (isDead)
+        {
+            if (myRigidBody)
+                myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
+
+            return;
+        }
+
+        Gravity();
 		Move();
 		Jump();
 	}
