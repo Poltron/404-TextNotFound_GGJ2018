@@ -105,6 +105,8 @@ public class PlayerController : MonoBehaviour
 	private GameObject fx_death;
 	[SerializeField]
 	private GameObject fx_hurth;
+	[SerializeField]
+	private ParticleSystem fx_durth;
 
 	private bool isInputEnabled = true;
 
@@ -126,6 +128,7 @@ public class PlayerController : MonoBehaviour
 		myHeartContainer = HeartContainer.GetHeartContainer();
 
 		attackCollider.tag = "Attack";
+		fx_durth.Stop();
 	}
 
 	private void OnDestroy()
@@ -134,8 +137,15 @@ public class PlayerController : MonoBehaviour
 			console.RemoveOnSendCommand(SetAlive);
 	}
 
+	private void HitBodyColor()
+	{
+		GetComponent<SpriteRenderer>().color = Color.Lerp(GetComponent<SpriteRenderer>().color, Color.white, Time.deltaTime * 5.0f);
+	}
+
 	private void Update()
 	{
+		HitBodyColor();
+
 		if (timerCooldown > 0)
 			timerCooldown -= Time.deltaTime;
 
@@ -151,6 +161,19 @@ public class PlayerController : MonoBehaviour
 		Attack();
 		HasJustGrounded();
 		Animation();
+
+
+		if (!isOnGround)
+			fx_durth.Stop();
+		else if (fx_durth.isPlaying == false && myRigidBody.velocity.x != 0.0f)
+			fx_durth.Play();
+		if (myRigidBody.velocity.x == 0.0f)
+			fx_durth.Stop();
+
+		//else if (isMovingRight || isMovingLeft)
+		//{
+		//	fx_durth.Play();
+		//}
 	}
 
 	private void FixedUpdate()
@@ -168,7 +191,6 @@ public class PlayerController : MonoBehaviour
 		Jump();
 		ClampPlayerInCam();
 	}
-
 
 	public void KeyUpdate()
 	{
@@ -427,12 +449,15 @@ public class PlayerController : MonoBehaviour
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (collision.gameObject.tag == "Attack")
+		{
 			--life;
+			GetComponent<SpriteRenderer>().color = Color.red;
+		}
 
 		if (life <= 0)
 		{
 			isDead = true;
-			myAnimator.SetTrigger("Dead");
+			myAnimator.SetTrigger("Death");
 			Instantiate(fx_death, transform.position, Quaternion.identity);
 			GetComponent<ObjectEntity>().SetValue("ISALIVE", "FALSE");
 		}
@@ -446,9 +471,18 @@ public class PlayerController : MonoBehaviour
 			return;
 		if (args[0] == "ISALIVE" && args[1] == "TRUE")
 		{
+			if (isDead)
+				myAnimator.SetTrigger("Revive");
+			else
+				myAnimator.SetTrigger("Idle");
 			isDead = false;
 			life = 5;
-			myAnimator.SetTrigger("Idle");
+		}
+		if (args[0] == "ISALIVE" && args[1] == "FALSE")
+		{
+			isDead = true;
+			life = 0;
+			myAnimator.SetTrigger("Death");
 		}
 		else if (args[0] == "JUMP")
 		{
