@@ -12,6 +12,9 @@ public class EndGame : MonoBehaviour
 	private Sprite sp;
 	public bool isVisible;
 
+	[SerializeField]
+	private GameObject fx_death;
+
 	public void Finish()
 	{
 		StartCoroutine(Appear("Scene_Jeanweb"));
@@ -23,6 +26,7 @@ public class EndGame : MonoBehaviour
 			return;
 		GetComponent<SpriteRenderer>().sprite = sp;
 		StartCoroutine(Appear(SceneManager.GetActiveScene().name));
+		Instantiate(fx_death, transform.position, Quaternion.identity);
 	}
 
 	private void OnBecameVisible()

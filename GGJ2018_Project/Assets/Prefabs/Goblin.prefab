@@ -426,6 +426,8 @@ MonoBehaviour:
   gapAtkCol: 0.6
   life: 3
   isDead: 0
+  fx_death: {fileID: 1475428012408620, guid: ab5597bbbcbe56a45a13f3a2ad008f79, type: 2}
+  fx_hurth: {fileID: 0}
 --- !u!114 &114706748917018988
 MonoBehaviour:
   m_ObjectHideFlags: 1

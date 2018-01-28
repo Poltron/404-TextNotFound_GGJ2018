@@ -14,6 +14,8 @@ public class ObjectCommand : MonoBehaviour
 	private ObjectEntity[] allObject;
 	[SerializeField]
 	public List<ObjectEntity> visibleObjects;
+	[SerializeField]
+	private GameObject fxDisparition;
 
 	private void Awake()
 	{
@@ -79,6 +81,7 @@ public class ObjectCommand : MonoBehaviour
 				continue;
 
 			obj.gameObject.SetActive(false);
+			Instantiate(fxDisparition, obj.transform.position, Quaternion.identity);
 			destroyed = true;
 		}
 		if (!destroyed)

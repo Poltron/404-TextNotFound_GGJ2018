@@ -230,6 +230,8 @@ MonoBehaviour:
   toSpawn: {fileID: 1744335238375050, guid: 0097c8dd7363b5e49890e86fb5c2b94c, type: 2}
   intervalSpawn: 5
   myAnimator: {fileID: 95518448455393022}
+  fx_death: {fileID: 1475428012408620, guid: ab5597bbbcbe56a45a13f3a2ad008f79, type: 2}
+  fx_hurth: {fileID: 0}
 --- !u!114 &114147162117816202
 MonoBehaviour:
   m_ObjectHideFlags: 1
