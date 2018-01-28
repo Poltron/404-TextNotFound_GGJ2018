@@ -11464,7 +11464,7 @@ Prefab:
     - target: {fileID: 224731945405322284, guid: 11670908c42c7d34990bcff36a6fbf89,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114631767699750224, guid: 11670908c42c7d34990bcff36a6fbf89, type: 2}
@@ -19417,7 +19417,7 @@ Prefab:
     - target: {fileID: 224404523689351880, guid: 2cdf87956f07e9448a3d8441fa273ed9,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4476370683461480, guid: 2cdf87956f07e9448a3d8441fa273ed9, type: 2}
       propertyPath: m_LocalScale.x
@@ -43389,7 +43389,7 @@ Prefab:
     - target: {fileID: 224404523689351880, guid: 2cdf87956f07e9448a3d8441fa273ed9,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2cdf87956f07e9448a3d8441fa273ed9, type: 2}
@@ -51623,7 +51623,7 @@ Prefab:
     - target: {fileID: 224404523689351880, guid: 2cdf87956f07e9448a3d8441fa273ed9,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4476370683461480, guid: 2cdf87956f07e9448a3d8441fa273ed9, type: 2}
       propertyPath: m_LocalScale.x
@@ -62348,14 +62348,17 @@ MonoBehaviour:
   allNames:
   - categorie: GOBLIN
     allNames:
-    - TROLOLOL
-    - JEREMIE
-    - GUILLAUME
+    - THIERRY
+    - STEPHANE
+    - KEVIN
+    - CORINNE
+    - CHRIS
+    - CATHERIN
+    - HELENE
+    - BOB
   - categorie: BOSS
     allNames:
-    - KENNY
-    - ETIENNE
-    - MAXIME
+    - BIGBADBOSS
 --- !u!1001 &1659606664
 Prefab:
   m_ObjectHideFlags: 0
@@ -66758,7 +66761,7 @@ Prefab:
     - target: {fileID: 224619061386170130, guid: 89c35b942e437e548adc8e96d12a8937,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4551832719882188, guid: 89c35b942e437e548adc8e96d12a8937, type: 2}
       propertyPath: m_LocalScale.x
@@ -66845,7 +66848,7 @@ Prefab:
     - target: {fileID: 224404523689351880, guid: 2cdf87956f07e9448a3d8441fa273ed9,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2cdf87956f07e9448a3d8441fa273ed9, type: 2}
@@ -70891,7 +70894,7 @@ Prefab:
     - target: {fileID: 224404523689351880, guid: 2cdf87956f07e9448a3d8441fa273ed9,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2cdf87956f07e9448a3d8441fa273ed9, type: 2}
@@ -72074,7 +72077,7 @@ Prefab:
     - target: {fileID: 224404523689351880, guid: 2cdf87956f07e9448a3d8441fa273ed9,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2cdf87956f07e9448a3d8441fa273ed9, type: 2}
@@ -75410,7 +75413,7 @@ Prefab:
     - target: {fileID: 224404523689351880, guid: 2cdf87956f07e9448a3d8441fa273ed9,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4476370683461480, guid: 2cdf87956f07e9448a3d8441fa273ed9, type: 2}
       propertyPath: m_LocalScale.x
