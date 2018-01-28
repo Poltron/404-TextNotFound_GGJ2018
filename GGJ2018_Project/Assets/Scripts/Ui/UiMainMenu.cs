@@ -10,7 +10,7 @@ public class UiMainMenu : MonoBehaviour
 	[SerializeField]
 	private Button btnPlay;
 	[SerializeField]
-	private Button btnHightscore;
+	private Button btnWebsite;
 	[SerializeField]
 	private Button btnQuit;
 	#endregion
@@ -18,7 +18,7 @@ public class UiMainMenu : MonoBehaviour
 	private void Start()
 	{
 		btnPlay.onClick.AddListener(ClickPlay);
-		btnHightscore.onClick.AddListener(ClickHightscore);
+		btnWebsite.onClick.AddListener(ClickWebsite);
 		btnQuit.onClick.AddListener(ClickQuit);
 
 		btnPlay.Select();
@@ -29,9 +29,9 @@ public class UiMainMenu : MonoBehaviour
         SceneManager.LoadScene("Scene_merge");
 	}
 
-	private void ClickHightscore()
+	private void ClickWebsite()
 	{
-
+		Application.OpenURL("https://ggj2018.guillaume-paringaux.fr"); 
 	}
 
 	private void ClickQuit()
