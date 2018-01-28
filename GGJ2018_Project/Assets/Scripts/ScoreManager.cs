@@ -8,11 +8,11 @@ public class ScoreManager : MonoBehaviour
 	private int score = 0;
 
 	[SerializeField]
-	private float timer = 0.0f;
+	public float timer = 0.0f;
 	[SerializeField]
-	private int seconde = 0;
+	public int seconde = 0;
 	[SerializeField]
-	private int minute = 0;
+	public int minute = 0;
 
 	public void ResetScore()
 	{

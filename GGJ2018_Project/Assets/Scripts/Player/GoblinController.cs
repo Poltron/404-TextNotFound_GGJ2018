@@ -153,12 +153,15 @@ public class GoblinController : MonoBehaviour
 	{
 		HitBodyColor();
 
-		if (isDead)
-		{
-			if (myRigidBody)
-				myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
-			return;
-		}
+        if (isDead)
+        {
+            if (myRigidBody)
+                myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
+
+			fx_durth.Stop();
+            return;
+        }
+
 
 		Gravity();
 
