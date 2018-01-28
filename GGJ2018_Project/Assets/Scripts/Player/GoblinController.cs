@@ -348,7 +348,8 @@ public class GoblinController : MonoBehaviour
 			}
 			source.clip = collision.transform.parent.GetComponent<PlayerController>().GetComponentInChildren<PlayerWeapon>().GetCurrentWeapon().touch;
 			source.loop = false;
-			if (source.clip != null)
+            source.volume = 0.1f;
+            if (source.clip != null)
 				source.Play();
 
 			int i = 0;

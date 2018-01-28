@@ -18,6 +18,9 @@ public class KingGoblin : MonoBehaviour
 	private int column;
 	private float currentTime;
 
+    [SerializeField]
+    private AudioSource deathBossGoblin;
+
 	[SerializeField]
 	private GameObject fx_death;
 	[SerializeField]
@@ -26,6 +29,7 @@ public class KingGoblin : MonoBehaviour
 	private GameObject fx_apparition;
 	[SerializeField]
 	private GameObject fx_tp;
+    [SerializeField]
 	private List<GameObject> hearts;
 
 	private void Start()
@@ -79,7 +83,20 @@ public class KingGoblin : MonoBehaviour
 		{
 			l -= other.transform.parent.GetComponent<PlayerController>().GetComponentInChildren<PlayerWeapon>().GetCurrentWeapon().damage;
 
-			int i = 0;
+
+            AudioSource source = GetComponent<AudioSource>();
+            if (source == null)
+            {
+                source = gameObject.AddComponent<AudioSource>();
+            }
+            source.clip = other.transform.parent.GetComponent<PlayerController>().GetComponentInChildren<PlayerWeapon>().GetCurrentWeapon().touch;
+            source.loop = false;
+            source.volume = 0.1f;
+            if (source.clip != null)
+                source.Play();
+
+
+            int i = 0;
 			foreach (GameObject heart in hearts)
 			{
 				if (i < l)
@@ -101,6 +118,7 @@ public class KingGoblin : MonoBehaviour
 				enabled = false;
 				myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
 				Instantiate(fx_death, transform.position, Quaternion.identity);
+                Instantiate(deathBossGoblin, transform.position, Quaternion.identity);
 			}
 			else
 				Instantiate(fx_hurth, transform.position, Quaternion.identity);
@@ -123,7 +141,7 @@ public class KingGoblin : MonoBehaviour
 		pos.y = GameManager.Instance.Player.transform.position.y;
 		transform.position = pos;
 		this.column = column;
-		myAnimator.SetTrigger("Jump");
+		//myAnimator.SetTrigger("Jump");
 		Instantiate(fx_tp, transform.position, Quaternion.identity);
 	}
 
