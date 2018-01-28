@@ -22,10 +22,14 @@ public class UiMainMenu : MonoBehaviour
 	#region vars Panels
 	[SerializeField]
 	private GameObject panCredit;
+	[SerializeField]
+	private GameObject panIntroduction;
 	#endregion
 
 	private void Start()
 	{
+		panIntroduction.SetActive(true);
+
 		btnPlay.onClick.AddListener(ClickPlay);
 		btnWebsite.onClick.AddListener(ClickWebsite);
 		btnQuit.onClick.AddListener(ClickQuit);
