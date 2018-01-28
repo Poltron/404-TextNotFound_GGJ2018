@@ -319,9 +319,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.6837611
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
-  m_ExitTime: 0.5837881
+  m_ExitTime: 0
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -386,7 +386,7 @@ AnimatorState:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: ShotgunAttack
-  m_Speed: 1
+  m_Speed: 5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101575176407770798}
@@ -516,7 +516,7 @@ AnimatorState:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: FistAttack
-  m_Speed: 7
+  m_Speed: 3
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101972893672117758}
