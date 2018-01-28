@@ -37,13 +37,15 @@ public class ScoreManager : MonoBehaviour
 		{
 			timer = 0;
 			++seconde;
-			OnTimerEvent(seconde, minute);
+			if (seconde != 60)
+				OnTimerEvent(seconde, minute);
 		}
 
-		if (seconde >= 60)
+		if (seconde > 59) 
 		{
 			seconde = 0;
 			++minute;
+			OnTimerEvent(seconde, minute);
 		}
 	}
 
