@@ -67,8 +67,7 @@ public class GoblinController : MonoBehaviour
 
 	[SerializeField]
 	private float distanceAttack;
-	[SerializeField]
-	private int distanceFollow;
+	public int distanceFollow;
 	private bool isFollowing;
 	private bool isAttack;
 	[SerializeField]

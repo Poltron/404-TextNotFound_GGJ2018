@@ -31,7 +31,8 @@ public class GoblinSpawner : MonoBehaviour {
             
             foreach(Transform spawn in spawns)
             {
-                Instantiate(goblin, spawn.position, Quaternion.identity);
+                GameObject g = Instantiate(goblin, spawn.position, Quaternion.identity);
+                g.GetComponent<GoblinController>().distanceFollow = 100;
             }
         }
     }
