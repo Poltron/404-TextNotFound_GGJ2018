@@ -27,7 +27,6 @@ public class PlayerWeapon : MonoBehaviour
 	private Weapon currentWeapon;
 	public Weapon GetCurrentWeapon()
 	{
-		Debug.Log("CurrentWeapon = " + currentWeapon.name);
 		return currentWeapon;
 	}
 

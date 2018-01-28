@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 114749831447896932}
   - component: {fileID: 61986210704255380}
   - component: {fileID: 114968291100893120}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: King
   m_TagString: Untagged
   m_Icon: {fileID: 0}
