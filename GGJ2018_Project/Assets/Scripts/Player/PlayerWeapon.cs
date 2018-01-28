@@ -17,9 +17,18 @@ public class PlayerWeapon : MonoBehaviour
 	private string key;
 	[SerializeField]
 	private List<Weapon> Weapons;
+	public List<Weapon> GetListWeapon()
+	{
+		return Weapons;
+	}
 	private ObjectEntity entity;
 
+	[SerializeField]
 	private Weapon currentWeapon;
+	public Weapon GetCurrentWeapon()
+	{
+		return currentWeapon;
+	}
 
 	private Animator myAnimator;
 
@@ -44,7 +53,9 @@ public class PlayerWeapon : MonoBehaviour
 		else if (value == "MACE")
 			SetWeapon(2);
 		else if (value == "SHOTGUN")
+		{
 			SetWeapon(3);
+		}
 	}
 
 	public void SetWeapon(int code)

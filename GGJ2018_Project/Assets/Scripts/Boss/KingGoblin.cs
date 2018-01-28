@@ -10,12 +10,18 @@ public class KingGoblin : MonoBehaviour
 	private GameObject toSpawn;
 	[SerializeField]
 	private float intervalSpawn;
+	[SerializeField]
+	private Animator myAnimator;
 	private Rigidbody2D myRigidBody;
 	private float gravity;
 	private MapColumn map;
 	private int column;
-
 	private float currentTime;
+
+	[SerializeField]
+	private GameObject fx_death;
+	[SerializeField]
+	private GameObject fx_hurth;
 
 	private void Start()
 	{
@@ -33,16 +39,27 @@ public class KingGoblin : MonoBehaviour
 		currentTime = intervalSpawn;
 	}
 
-	private void Update()
+    private void HitBodyColor()
+    {
+        GetComponent<SpriteRenderer>().color = Color.Lerp(GetComponent<SpriteRenderer>().color, Color.white, Time.deltaTime * 5.0f);
+    }
+
+    private void Update()
 	{
-		currentTime -= Time.deltaTime;
+        HitBodyColor();
+
+		Vector3 dir = GameManager.Instance.Player.transform.position - transform.position;
+		GetComponent<SpriteRenderer>().flipX = dir.x < 0.0f;
+
+		if (GameManager.Instance.Player.GetComponent<ObjectEntity>().GetValue("ISALIVE") == "TRUE")
+			currentTime -= Time.deltaTime;
+		else
+			currentTime = intervalSpawn;
 		if (currentTime < 0.0f)
 		{
 			currentTime = intervalSpawn;
 			SpawnGoblin();
 		}
-		if (Input.GetKeyDown(KeyCode.Backspace))
-			JumpTo(column == 0 ? map.GetNbrColumn() - 1 : 0);
 
 		Gravity();
 	}
@@ -55,10 +72,21 @@ public class KingGoblin : MonoBehaviour
 		int l = 0;
 		if (int.TryParse(life, out l))
 		{
+            GetComponent<SpriteRenderer>().color = Color.red;
 			--l;
 			entity.SetValue("LIFE", l.ToString());
+			if (l < 1)
+			{
+				myAnimator.SetTrigger("Dead");
+				enabled = false;
+				myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
+				Instantiate(fx_death, transform.position, Quaternion.identity);
+			}
+			else
+				Instantiate(fx_hurth, transform.position, Quaternion.identity);
 		}
-		JumpTo(column == 0 ? map.GetNbrColumn() - 1 : 0);
+		if (l > 0)
+			JumpTo(column == 0 ? map.GetNbrColumn() - 1 : 0);
 	}
 
 	public void Gravity()
@@ -72,8 +100,10 @@ public class KingGoblin : MonoBehaviour
 	private void JumpTo(int column)
 	{
 		Vector3 pos = map.PositionColumn(column);
+		pos.y = GameManager.Instance.Player.transform.position.y;
 		transform.position = pos;
 		this.column = column;
+		myAnimator.SetTrigger("Jump");
 	}
 
 	public void SpawnGoblin()
@@ -82,5 +112,6 @@ public class KingGoblin : MonoBehaviour
 		Vector3 direction = GameObject.FindGameObjectWithTag("Player").transform.position - transform.position;
 
 		Instantiate(toSpawn, transform.position + direction.normalized * 2.0f, Quaternion.identity);
+		myAnimator.SetTrigger("Spawn");
 	}
 }

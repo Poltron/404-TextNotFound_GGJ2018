@@ -55,7 +55,8 @@ public class ConsoleWriter : MonoBehaviour
 			}
 		}
 
-		InvokeOnSendCommand(cmd, args);
+		if (!string.IsNullOrEmpty(cmd))
+			InvokeOnSendCommand(cmd, args);
 
 		ShowConsole(false);
 	}

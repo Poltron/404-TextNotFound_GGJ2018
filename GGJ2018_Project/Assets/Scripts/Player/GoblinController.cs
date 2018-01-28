@@ -79,14 +79,16 @@ public class GoblinController : MonoBehaviour
 
 	[SerializeField]
 	private int life;
-
 	public bool isDead;
+
+	[SerializeField]
+	private GameObject fx_death;
+	[SerializeField]
+	private GameObject fx_hurth;
 
 	private bool isInputEnabled = true;
 
 	private ConsoleWriter console;
-
-	private PlayerController player;
 
 	private void Start()
 	{
@@ -97,10 +99,11 @@ public class GoblinController : MonoBehaviour
 		gravity = defaulGravity;
 		myAnimator.SetTrigger("Idle");
 
+		NameSelector nameSelector = FindObjectOfType<NameSelector>();
+		GetComponent<ObjectEntity>().SetName(nameSelector.GetRandom("GOBLIN"));
+
 		console = FindObjectOfType<ConsoleWriter>();
 		console.AddOnSendCommand(SetAlive);
-
-		player = FindObjectOfType<PlayerController>();
 
 		attackCollider.tag = "Attack";
 
@@ -108,19 +111,34 @@ public class GoblinController : MonoBehaviour
 
 	private void OnDestroy()
 	{
-		console.RemoveOnSendCommand(SetAlive);
+		console = FindObjectOfType<ConsoleWriter>();
+		if (console)
+			console.RemoveOnSendCommand(SetAlive);
 		ResetOnGoblinDie();
-	}
+    }
 
-	private void Update()
-	{
-		if (player.isDead)
+    private void HitBodyColor()
+    {
+        GetComponent<SpriteRenderer>().color = Color.Lerp(GetComponent<SpriteRenderer>().color, Color.white, Time.deltaTime * 5.0f);
+    }
+
+    private void Update()
+    {
+        HitBodyColor();
+
+        if (isDead)
+        {
+            if (myRigidBody)
+                myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
+            return;
+        }
+
+        Gravity();
+
+        if (GameManager.Instance.Player.isDead)
 			return;
 
 		CheckFollowing();
-
-		if (isDead)
-			return;
 
 		if (!isFollowing)
 			return;
@@ -130,7 +148,6 @@ public class GoblinController : MonoBehaviour
 		if (timerCooldown > 0)
 			timerCooldown -= Time.deltaTime;
 
-		Gravity();
 		Jump();
 		Move();
 		CheckAttack();
@@ -276,8 +293,11 @@ public class GoblinController : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (collision.gameObject.tag == "Attack")
-			--life;
+        if (collision.gameObject.tag == "Attack")
+        {
+            --life;
+            GetComponent<SpriteRenderer>().color = Color.red;
+        }
 
 		if (life <= 0)
 		{
@@ -286,12 +306,15 @@ public class GoblinController : MonoBehaviour
 			GetComponent<ObjectEntity>().SetValue("ISALIVE", "FALSE");
 			GetComponent<Collider2D>().enabled = false;
 			InvokeOnGoblinDie();
+			Instantiate(fx_death, transform.position, Quaternion.identity);
 		}
+		else
+			Instantiate(fx_hurth, transform.position, Quaternion.identity);
 	}
 
 	public void SetAlive(string cmd, string[] args)
 	{
-		if (cmd != "SET")
+		if (cmd != "SET" || args.Length != 2)
 			return;
 		if (args[0] == "ISALIVE" && args[1] == "TRUE")
 		{
@@ -302,7 +325,6 @@ public class GoblinController : MonoBehaviour
 				life = 3;
 				myAnimator.SetTrigger("Idle");
 				GetComponent<Collider2D>().enabled = true;
-				;
 			}
 		}
 	}

@@ -61,15 +61,15 @@ public class CameraBehaviour : MonoBehaviour
 			}
 			else
 			{
-				if(GameManager.Instance.Player.GetComponent<Rigidbody2D>().velocity.y > 0f)
+				if(GameManager.Instance.Player.GetComponent<Rigidbody2D>().velocity.y < 0f &&
+                    GameManager.Instance.Player.transform.position.y < (Camera.main.transform.position.y - Camera.main.orthographicSize + 3.5f))
 				{
-					newPos.y = transform.position.y;
+                    float ecart = (Camera.main.transform.position.y - Camera.main.orthographicSize + 3.5f);
+                    float dist = GameManager.Instance.Player.transform.position.y - ecart;
+
+                    newPos.y = transform.position.y + (dist);
 				}
-				else if (Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position) >= DistMaxY)
-				{
-					newPos.y = GameManager.Instance.Player.transform.position.y;
-				}
-				else
+				else // on bouge vers le haut ou vers le bas mais on est pas dans la partie basse de la caméra
 				{
 					newPos.y = transform.position.y;
 				}
@@ -80,7 +80,6 @@ public class CameraBehaviour : MonoBehaviour
 			newPos = Vector3.Lerp(transform.position, focusedObject.position, speedLerpToFocus * Time.deltaTime);
 		}
 
-		//newPos.y = transform.position.y;
 		newPos.z = transform.position.z;
 		transform.position = newPos;
 	}

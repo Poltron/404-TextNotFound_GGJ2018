@@ -2,25 +2,55 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TriggerStep5 : MonoBehaviour {
+public class TriggerStep5 : MonoBehaviour
+{
+
+	[SerializeField]
+	AudioClip kinggoblinspeech;
 
     [SerializeField]
-    AudioClip bridgemisplaced;
+    CameraFocusZone focusZone;
 
-    bool hasBeenUsed;
+	[SerializeField]
+	private GameObject[] activeObject;
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.name == "Player" && !hasBeenUsed)
+	bool hasBeenUsed;
+
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.name == "Player" && !hasBeenUsed)
+		{
+			hasBeenUsed = true;
+			Do();
+		}
+	}
+
+	public void Do()
+	{
+        if (kinggoblinspeech)
         {
-            hasBeenUsed = true;
-            Do();
+            GameManager.Instance.DialogAudioSource.clip = kinggoblinspeech;
+            GameManager.Instance.DialogAudioSource.Play();
+        }
+
+		foreach (GameObject obj in activeObject)
+			obj.SetActive(true);
+	}
+
+    void Update()
+    {
+        if (hasBeenUsed)
+        {
+            if (int.Parse(activeObject[0].GetComponent<ObjectEntity>().GetValue("LIFE")) <= 0 || !activeObject[0].gameObject.activeInHierarchy)
+            {
+                StartCoroutine(DisableZone(focusZone));
+            }
         }
     }
 
-    public void Do()
+    IEnumerator DisableZone(CameraFocusZone zone)
     {
-        GameManager.Instance.DialogAudioSource.clip = bridgemisplaced;
-        GameManager.Instance.DialogAudioSource.Play();
+        yield return new WaitForSeconds(1.5f);
+        zone.gameObject.SetActive(false);
     }
 }

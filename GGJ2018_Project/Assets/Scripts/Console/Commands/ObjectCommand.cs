@@ -13,7 +13,9 @@ public class ObjectCommand : MonoBehaviour
 	[SerializeField]
 	private ObjectEntity[] allObject;
 	[SerializeField]
-	private List<ObjectEntity> visibleObjects;
+	public List<ObjectEntity> visibleObjects;
+	[SerializeField]
+	private GameObject fxDisparition;
 
 	private void Awake()
 	{
@@ -23,6 +25,8 @@ public class ObjectCommand : MonoBehaviour
 		console.AddOnSendCommand(SendCorrectCommand);
 		console.AddOnSendCommand(Jeremie);
 		console.AddOnSendCommand(Kiss);
+		console.AddOnSendCommand(MoveTo);
+		console.AddOnSendCommand(Quit);
 		console.AddOnErrorCommand(ErrorCommand);
 	}
 
@@ -77,6 +81,7 @@ public class ObjectCommand : MonoBehaviour
 				continue;
 
 			obj.gameObject.SetActive(false);
+			Instantiate(fxDisparition, obj.transform.position, Quaternion.identity);
 			destroyed = true;
 		}
 		if (!destroyed)
@@ -126,7 +131,9 @@ public class ObjectCommand : MonoBehaviour
 				console.InvokeOnErrorCommand(cmd);
 				return;
 			}
-			princess.GetComponent<EndGame>().Finish();
+			EndGame end = princess.GetComponent<EndGame>();
+			if (end.isVisible)
+				end.Finish();
 		}
 		else
 		{
@@ -137,6 +144,46 @@ public class ObjectCommand : MonoBehaviour
 			console.InvokeOnErrorCommand(cmd);
 		}
 	}
+
+	public void MoveTo(string cmd, string[] args)
+	{
+		if (!string.Equals(cmd, "MOVETO", System.StringComparison.InvariantCultureIgnoreCase))
+			return;
+
+		foreach (Transform t in FindObjectsOfType<Transform>())
+		{
+			if (!string.Equals(t.name, args[0], System.StringComparison.InvariantCultureIgnoreCase))
+				continue;
+			Vector3 pos = t.position;
+			GameManager.Instance.Player.transform.position = t.position;
+			pos.z = -10.0f;
+			Camera.main.transform.position = pos;
+			return;
+		}
+
+	}
+
+	public void Quit(string cmd, string[] args)
+	{
+		if (!string.Equals(cmd, "QUIT", System.StringComparison.InvariantCultureIgnoreCase))
+			return;
+
+		if (args.Length != 0)
+		{
+			console.InvokeOnErrorCommand(cmd);
+			return;
+		}
+
+		GameObject princess = GameObject.FindGameObjectWithTag("Princess");
+		if (princess == null)
+		{
+			UnityEngine.SceneManagement.SceneManager.LoadScene("Scene_Jeanweb");
+			return;
+		}
+		EndGame end = princess.GetComponent<EndGame>();
+		end.Finish();
+	}
+
 
 	private void SendCorrectCommand(string cmd, string[] args)
 	{
@@ -152,6 +199,8 @@ public class ObjectCommand : MonoBehaviour
 	{
 		//if (!string.Equals(cmd, "ADD", System.StringComparison.InvariantCultureIgnoreCase))
 		//	return;
+		if (GameObject.FindGameObjectWithTag("Player").GetComponent<ObjectEntity>().GetValue("ISALIVE") == "FALSE")
+			return;
 
 		foreach (ObjectEntity obj in allObject)
 		{
