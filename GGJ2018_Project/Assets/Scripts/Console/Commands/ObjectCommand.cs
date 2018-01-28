@@ -13,7 +13,7 @@ public class ObjectCommand : MonoBehaviour
 	[SerializeField]
 	private ObjectEntity[] allObject;
 	[SerializeField]
-	private List<ObjectEntity> visibleObjects;
+	public List<ObjectEntity> visibleObjects;
 
 	private void Awake()
 	{
