@@ -67,6 +67,7 @@ public class KingGoblin : MonoBehaviour
 			{
 				myAnimator.SetTrigger("Dead");
 				enabled = false;
+				myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
 			}
 		}
 		if (l > 0)

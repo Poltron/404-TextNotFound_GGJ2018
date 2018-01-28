@@ -71,12 +71,17 @@ public class PlayerController : MonoBehaviour
 	private GameObject attackCollider;
 	[SerializeField]
 	private GameObject weapon;
+	[SerializeField]
+	private GameObject particleSystemShotgunRight;
+	[SerializeField]
+	private GameObject particleSystemShotgunLeft;
 
 	private float defaulGravity = 9.81f;
 	private Transform myTransform;
 	private Rigidbody2D myRigidBody;
 	private Animator myAnimator;
 	private SpriteRenderer mySpriteRenderer;
+	private HeartContainer myHeartContainer;
 	private float gravity;
 	private bool justGrounded = false;
 	private bool isOnGround;
@@ -113,12 +118,15 @@ public class PlayerController : MonoBehaviour
 		console.AddOnSendCommand(SetAlive);
 		weapon.GetComponent<SpriteRenderer>().sortingOrder = GetComponent<SpriteRenderer>().sortingOrder + 1;
 
+		myHeartContainer = HeartContainer.GetHeartContainer();
+
 		attackCollider.tag = "Attack";
 	}
 
 	private void OnDestroy()
 	{
-		console.RemoveOnSendCommand(SetAlive);
+		if (console)
+			console.RemoveOnSendCommand(SetAlive);
 	}
 
 	private void Update()
@@ -126,34 +134,38 @@ public class PlayerController : MonoBehaviour
 		if (timerCooldown > 0)
 			timerCooldown -= Time.deltaTime;
 
-        if (isDead)
-        {
-            return;
-        }
+		myHeartContainer.SetHeart(life);
+
+		if (isDead)
+		{
+			return;
+		}
+
 
 		KeyUpdate();
 		Attack();
+		HasJustGrounded();
 		Animation();
 	}
 
 	private void FixedUpdate()
 	{
-        if (isDead)
-        {
-            if (myRigidBody)
-                myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
+		if (isDead)
+		{
+			if (myRigidBody)
+				myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
 
-            return;
-        }
+			return;
+		}
 
-        Gravity();
+		Gravity();
 		Move();
 		Jump();
+		ClampPlayerInCam();
+	}
 
-        ClampPlayerInCam();
-    }
 
-    public void KeyUpdate()
+	public void KeyUpdate()
 	{
 		if (!isInputEnabled)
 			return;
@@ -262,26 +274,46 @@ public class PlayerController : MonoBehaviour
 			StartCoroutine(WaitForFrame());
 			timerCooldown = cooldownAttack;
 			weapon.GetComponent<Animator>().SetTrigger("Attack");
+			var PlayerWeapon = GetComponentInChildren<PlayerWeapon>();
+			if (PlayerWeapon.GetCurrentWeapon().code == 3)
+			{
+				if (!mySpriteRenderer.flipX)
+				{
+					particleSystemShotgunRight.GetComponent<ParticleSystem>().Stop();
+					particleSystemShotgunRight.GetComponent<ParticleSystem>().Play();
+				}
+				else
+				{
+					particleSystemShotgunLeft.GetComponent<ParticleSystem>().Stop();
+					particleSystemShotgunLeft.GetComponent<ParticleSystem>().Play();
+				}
+			}
 		}
 	}
 
-    public void ClampPlayerInCam()
-    {
-        var leftBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).x;
-        var rightBorder = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0)).x;
-        var topBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).y;
-        var bottomBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0)).y;
+	public void ClampPlayerInCam()
+	{
+		var leftBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).x;
+		var rightBorder = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0)).x;
+		var topBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).y;
+		var bottomBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0)).y;
 
-        Vector3 playerSize = GetComponent<SpriteRenderer>().bounds.size;
+		Vector3 playerSize = GetComponent<SpriteRenderer>().bounds.size;
 
-        this.transform.position = new Vector3(
-        Mathf.Clamp(this.transform.position.x, leftBorder + playerSize.x / 2, rightBorder - playerSize.x / 2),
-        Mathf.Clamp(this.transform.position.y, topBorder + playerSize.y / 2, bottomBorder - playerSize.y / 2),
-        0
-        );
-    }
+        if (this.transform.position.y > bottomBorder - playerSize.y / 2)
+        {
+            gravity = defaulGravity;
+            myRigidBody.velocity = new Vector2(myRigidBody.velocity.x, -1);
+        }
 
-    IEnumerator WaitForFrame()
+		this.transform.position = new Vector3(
+		Mathf.Clamp(this.transform.position.x, leftBorder + playerSize.x / 2, rightBorder - playerSize.x / 2),
+		Mathf.Clamp(this.transform.position.y, topBorder + playerSize.y / 2, bottomBorder - playerSize.y / 2),
+		0
+		);
+	}
+
+	IEnumerator WaitForFrame()
 	{
 		yield return null;
 		attackCollider.SetActive(false);
@@ -293,7 +325,7 @@ public class PlayerController : MonoBehaviour
 		return (4.0f * height) / time;
 	}
 
-	public bool IsOnGround()
+	public bool HasJustGrounded()
 	{
 		foreach (var trans in feets)
 		{
@@ -304,15 +336,37 @@ public class PlayerController : MonoBehaviour
 				if (r.transform.tag == "Platform")
 				{
 					if (justGrounded == false && isOnGround == false)
+					{
+                        gravity = defaulGravity;
 						justGrounded = true;
+					}
 					else
+					{
 						justGrounded = false;
+					}
 					isOnGround = true;
 					return true;
 				}
 			}
 		}
 		isOnGround = false;
+		return false;
+	}
+
+	public bool IsOnGround()
+	{
+		foreach (var trans in feets)
+		{
+			RaycastHit2D[] ray = Physics2D.RaycastAll(trans.position, -Vector2.up, 0.2f);
+
+			foreach (RaycastHit2D r in ray)
+			{
+				if (r.transform.tag == "Platform")
+				{
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 
@@ -335,12 +389,12 @@ public class PlayerController : MonoBehaviour
 	{
 		if (!isInputEnabled)
 			return;
-
+        
 		if (Input.GetKeyDown(keyJump))
 		{
 			myAnimator.SetTrigger("Jump");
 		}
-		if (((Input.GetKeyUp(keyRight) || Input.GetKeyUp(keyLeft)) && IsOnGround() && !isMovingLeft && !isMovingRight)
+		if (((Input.GetKeyUp(keyRight) || Input.GetKeyUp(keyLeft)) && IsOnGround() && (!isMovingLeft && !isMovingRight))
 			|| justGrounded && (!isMovingLeft && !isMovingRight))
 		{
 			myAnimator.SetTrigger("Idle");
@@ -400,9 +454,9 @@ public class PlayerController : MonoBehaviour
 		else if (args[0] == "WEAPON")
 		{
 			var PlayerWeapon = GetComponentInChildren<PlayerWeapon>();
-			foreach(Weapon w in PlayerWeapon.GetListWeapon())
+			foreach (Weapon w in PlayerWeapon.GetListWeapon())
 			{
-				if(string.Equals(w.name, args[1], System.StringComparison.InvariantCultureIgnoreCase))
+				if (string.Equals(w.name, args[1], System.StringComparison.InvariantCultureIgnoreCase))
 				{
 					PlayerWeapon.GetComponent<Animator>().SetTrigger(w.trigger);
 				}

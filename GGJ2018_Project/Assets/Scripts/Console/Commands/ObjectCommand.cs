@@ -24,6 +24,7 @@ public class ObjectCommand : MonoBehaviour
 		console.AddOnSendCommand(Jeremie);
 		console.AddOnSendCommand(Kiss);
 		console.AddOnSendCommand(MoveTo);
+		console.AddOnSendCommand(Quit);
 		console.AddOnErrorCommand(ErrorCommand);
 	}
 
@@ -158,6 +159,28 @@ public class ObjectCommand : MonoBehaviour
 		}
 
 	}
+
+	public void Quit(string cmd, string[] args)
+	{
+		if (!string.Equals(cmd, "QUIT", System.StringComparison.InvariantCultureIgnoreCase))
+			return;
+
+		if (args.Length != 0)
+		{
+			console.InvokeOnErrorCommand(cmd);
+			return;
+		}
+
+		GameObject princess = GameObject.FindGameObjectWithTag("Princess");
+		if (princess == null)
+		{
+			UnityEngine.SceneManagement.SceneManager.LoadScene("Scene_Jeanweb");
+			return;
+		}
+		EndGame end = princess.GetComponent<EndGame>();
+		end.Finish();
+	}
+
 
 	private void SendCorrectCommand(string cmd, string[] args)
 	{
