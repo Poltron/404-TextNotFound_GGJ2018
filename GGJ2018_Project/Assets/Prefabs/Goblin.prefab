@@ -478,7 +478,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.105
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -534,7 +534,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -698,6 +698,8 @@ MonoBehaviour:
   - {fileID: 1253142498856800}
   - {fileID: 1745509284652568}
   - {fileID: 1123903261444898}
+  goblinDeathSound: {fileID: 82899384057619944, guid: f33a31976e6e2f0409597fa4c721ec00,
+    type: 2}
   distanceAttack: 1.5
   distanceFollow: 10
   cooldownAttack: 2

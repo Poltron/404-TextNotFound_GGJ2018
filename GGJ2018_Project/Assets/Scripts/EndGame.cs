@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -15,8 +16,32 @@ public class EndGame : MonoBehaviour
 	[SerializeField]
 	private GameObject fx_death;
 
+	IEnumerator UploadTimer(int minute, int second, bool kiss)
+	{
+		WWWForm form = new WWWForm();
+		form.AddField("timerMinute", minute);
+		form.AddField("timerSecond", second);
+		form.AddField("kiss", kiss.ToString());
+
+		using (var w = UnityWebRequest.Post("https://ggj2018.guillaume-paringaux.fr/index.php?/unity/addScore", form))
+		{
+			yield return w.SendWebRequest();
+			if (w.isNetworkError || w.isHttpError)
+			{
+				print(w.error);
+			}
+			else
+			{
+				print("Finished Uploading Score");
+				Debug.Log("WTEXT = " + w.downloadHandler.text);
+			}
+		}
+	}
+
 	public void Finish()
 	{
+		ScoreManager score = FindObjectOfType<ScoreManager>();
+		StartCoroutine(UploadTimer(score.minute, score.seconde, true));
 		StartCoroutine(Appear("Scene_Jeanweb"));
 	}
 
@@ -24,6 +49,8 @@ public class EndGame : MonoBehaviour
 	{
 		if (collision.transform.tag != "Attack")
 			return;
+		ScoreManager score = FindObjectOfType<ScoreManager>();
+		StartCoroutine(UploadTimer(score.minute, score.seconde, false));
 		GetComponent<SpriteRenderer>().sprite = sp;
 		StartCoroutine(Appear(SceneManager.GetActiveScene().name));
 		Instantiate(fx_death, transform.position, Quaternion.identity);

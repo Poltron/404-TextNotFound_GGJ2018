@@ -76,7 +76,12 @@ public class PlayerController : MonoBehaviour
 	[SerializeField]
 	private GameObject particleSystemShotgunLeft;
 
-	private float defaulGravity = 9.81f;
+    [SerializeField]
+    private AudioSource jumpSound;
+    [SerializeField]
+    private AudioSource jumpLandSound;
+
+    private float defaulGravity = 9.81f;
 	private Transform myTransform;
 	private Rigidbody2D myRigidBody;
 	private Animator myAnimator;
@@ -129,6 +134,8 @@ public class PlayerController : MonoBehaviour
 
 		attackCollider.tag = "Attack";
 		fx_durth.Stop();
+
+        justGrounded = true;
 	}
 
 	private void OnDestroy()
@@ -287,7 +294,8 @@ public class PlayerController : MonoBehaviour
 			{
 				Vector3 moveDirection = myRigidBody.velocity;
 
-				moveDirection.y = JumpForce(jumpHeight, jumpTime);
+                Instantiate(jumpSound, myTransform.position, Quaternion.identity);
+                moveDirection.y = JumpForce(jumpHeight, jumpTime);
 				myRigidBody.velocity = moveDirection;
 			}
 		}
@@ -367,6 +375,7 @@ public class PlayerController : MonoBehaviour
 					{
 						gravity = defaulGravity;
 						justGrounded = true;
+                        Instantiate(jumpLandSound, myTransform.position, Quaternion.identity);
 					}
 					else
 					{

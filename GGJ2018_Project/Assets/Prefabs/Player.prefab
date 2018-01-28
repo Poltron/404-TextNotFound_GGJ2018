@@ -564,7 +564,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -683,6 +683,9 @@ MonoBehaviour:
   weapon: {fileID: 1696885730421258}
   particleSystemShotgunRight: {fileID: 1879033353875196}
   particleSystemShotgunLeft: {fileID: 1007878898557234}
+  jumpSound: {fileID: 82079548886139500, guid: 78d147fede1fa074096bf165192a92e0, type: 2}
+  jumpLandSound: {fileID: 82530161514802764, guid: 62c033088a7d02a4b9dceb665f304a25,
+    type: 2}
   cameraPointRight: {fileID: 1808279549574362}
   cameraPointLeft: {fileID: 1514958771577036}
   gapAtkCol: 0.6
@@ -709,25 +712,25 @@ MonoBehaviour:
     trigger: SwitchToFist
     damage: 1
     code: 0
-    source: {fileID: 0}
-    touch: {fileID: 0}
+    source: {fileID: 8300000, guid: 702984cc3fb3d6045ab5b027b93e6073, type: 3}
+    touch: {fileID: 8300000, guid: e6fa1522d719770488eb4a7821bac845, type: 3}
   - name: SWORD
     trigger: SwitchToSword
     damage: 2
     code: 1
-    source: {fileID: 0}
-    touch: {fileID: 0}
+    source: {fileID: 8300000, guid: 12319af324623f04f891550d464979c5, type: 3}
+    touch: {fileID: 8300000, guid: 040f1b0eb93b33b43a4410cbe621f643, type: 3}
   - name: MACE
     trigger: SwitchToMace
     damage: 3
     code: 2
-    source: {fileID: 0}
-    touch: {fileID: 0}
+    source: {fileID: 8300000, guid: 5804d7aa8376bd74bb7dc6af31f788b8, type: 3}
+    touch: {fileID: 8300000, guid: 6c32bedb470bc534f9e9933c45c1653b, type: 3}
   - name: SHOTGUN
     trigger: SwitchToShotgun
     damage: 50
     code: 3
-    source: {fileID: 0}
+    source: {fileID: 8300000, guid: 4b6b7b2af609a8842a931eb8b84f9f0d, type: 3}
     touch: {fileID: 0}
   currentWeapon:
     name: 

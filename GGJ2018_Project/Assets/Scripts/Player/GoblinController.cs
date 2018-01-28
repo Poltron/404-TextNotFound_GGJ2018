@@ -58,7 +58,10 @@ public class GoblinController : MonoBehaviour
 	[SerializeField]
 	private List<GameObject> hearts;
 
-	private float defaulGravity = 9.81f;
+    [SerializeField]
+    private AudioSource goblinDeathSound;
+
+    private float defaulGravity = 9.81f;
 	private Transform myTransform;
 	private Rigidbody2D myRigidBody;
 	private Animator myAnimator;
@@ -150,12 +153,15 @@ public class GoblinController : MonoBehaviour
 	{
 		HitBodyColor();
 
-		if (isDead)
-		{
-			if (myRigidBody)
-				myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
-			return;
-		}
+        if (isDead)
+        {
+            if (myRigidBody)
+                myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
+
+			fx_durth.Stop();
+            return;
+        }
+
 
 		Gravity();
 
@@ -266,7 +272,7 @@ public class GoblinController : MonoBehaviour
 			return;
 
 		isFollowing = Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position) <= distanceFollow;
-	}
+    }
 
 	public void CheckAttack()
 	{
@@ -362,6 +368,7 @@ public class GoblinController : MonoBehaviour
 
 		if (life <= 0)
 		{
+            Instantiate(goblinDeathSound, transform.position, Quaternion.identity);
 			isDead = true;
 			myAnimator.SetTrigger("Dead");
 			GetComponent<ObjectEntity>().SetValue("ISALIVE", "FALSE");

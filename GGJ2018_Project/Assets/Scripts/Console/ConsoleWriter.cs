@@ -11,7 +11,7 @@ public class ConsoleWriter : MonoBehaviour
 	public delegate void ErrorCommand(string cmd);
 	private event ErrorCommand OnErrorCommand;
 
-	[SerializeField]
+    [SerializeField]
 	private GameObject console;
 	[SerializeField]
 	private ConsoleVisual writer;
