@@ -397,5 +397,16 @@ public class PlayerController : MonoBehaviour
 				jumpHeight = h;
 			}
 		}
+		else if (args[0] == "WEAPON")
+		{
+			var PlayerWeapon = GetComponentInChildren<PlayerWeapon>();
+			foreach(Weapon w in PlayerWeapon.GetListWeapon())
+			{
+				if(string.Equals(w.name, args[1], System.StringComparison.InvariantCultureIgnoreCase))
+				{
+					PlayerWeapon.GetComponent<Animator>().SetTrigger(w.trigger);
+				}
+			}
+		}
 	}
 }
