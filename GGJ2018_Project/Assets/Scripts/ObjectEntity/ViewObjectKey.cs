@@ -36,6 +36,7 @@ public class ViewObjectKey : MonoBehaviour
 		trans.anchorMin = new Vector2(0.5f, 0.0f);
 		trans.anchorMax = new Vector2(0.5f, 1.0f);
 		trans.localScale = Vector3.one;
+		trans.pivot = new Vector2(0.5f, 1.0f);
 
 		Viewer newViewer = new Viewer();
 		nameEntity = newViewer;

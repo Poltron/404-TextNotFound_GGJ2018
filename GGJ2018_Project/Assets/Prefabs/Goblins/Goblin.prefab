@@ -108,6 +108,7 @@ GameObject:
   - component: {fileID: 95428715145274222}
   - component: {fileID: 114614820785421112}
   - component: {fileID: 114706748917018988}
+  - component: {fileID: 114306057065801706}
   m_Layer: 10
   m_Name: Goblin
   m_TagString: Ennemi
@@ -362,6 +363,17 @@ MonoBehaviour:
   - WEAPON
   textValue: {fileID: 114166316911148372, guid: 8127582bb17957b45b0da000f7b3742b,
     type: 2}
+--- !u!114 &114306057065801706
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1744335238375050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b85234a1cbfe934eac84c168441f5aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114347853296309336
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -103,7 +103,7 @@ public class GoblinController : MonoBehaviour
 
 		player = FindObjectOfType<PlayerController>();
 
-		attackCollider.tag = "Attack"; 
+		attackCollider.tag = "Attack";
 
 	}
 
@@ -284,7 +284,7 @@ public class GoblinController : MonoBehaviour
 		{
 			isDead = true;
 			myAnimator.SetTrigger("Dead");
-			GetComponent<ObjectEntity>().SetValue("ISAALIVE", "FALSE");
+			GetComponent<ObjectEntity>().SetValue("ISALIVE", "FALSE");
 			GetComponent<Collider2D>().enabled = false;
 			InvokeOnGoblinDie();
 		}
@@ -292,6 +292,8 @@ public class GoblinController : MonoBehaviour
 
 	public void SetAlive(string cmd, string[] args)
 	{
+		if (cmd != "SET")
+			return;
 		if (args[0] == "ISALIVE" && args[1] == "TRUE")
 		{
 			if (isFollowing)
@@ -301,6 +303,7 @@ public class GoblinController : MonoBehaviour
 				life = 3;
 				myAnimator.SetTrigger("Idle");
 				GetComponent<Collider2D>().enabled = true;
+				;
 			}
 		}
 	}
