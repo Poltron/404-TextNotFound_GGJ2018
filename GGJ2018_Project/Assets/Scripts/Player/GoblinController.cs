@@ -339,6 +339,8 @@ public class GoblinController : MonoBehaviour
 	{
 		if (collision.gameObject.tag == "Attack")
 		{
+			if (collision.transform.GetComponentInParent<GoblinController>())
+				return;
 			life -= collision.transform.parent.GetComponent<PlayerController>().GetComponentInChildren<PlayerWeapon>().GetCurrentWeapon().damage;
 
 			AudioSource source = GetComponent<AudioSource>();

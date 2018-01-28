@@ -18,8 +18,8 @@ public class KingGoblin : MonoBehaviour
 	private int column;
 	private float currentTime;
 
-    [SerializeField]
-    private AudioSource deathBossGoblin;
+	[SerializeField]
+	private AudioSource deathBossGoblin;
 
 	[SerializeField]
 	private GameObject fx_death;
@@ -29,7 +29,7 @@ public class KingGoblin : MonoBehaviour
 	private GameObject fx_apparition;
 	[SerializeField]
 	private GameObject fx_tp;
-    [SerializeField]
+	[SerializeField]
 	private List<GameObject> hearts;
 
 	private void Start()
@@ -84,19 +84,19 @@ public class KingGoblin : MonoBehaviour
 			l -= other.transform.parent.GetComponent<PlayerController>().GetComponentInChildren<PlayerWeapon>().GetCurrentWeapon().damage;
 
 
-            AudioSource source = GetComponent<AudioSource>();
-            if (source == null)
-            {
-                source = gameObject.AddComponent<AudioSource>();
-            }
-            source.clip = other.transform.parent.GetComponent<PlayerController>().GetComponentInChildren<PlayerWeapon>().GetCurrentWeapon().touch;
-            source.loop = false;
-            source.volume = 0.1f;
-            if (source.clip != null)
-                source.Play();
+			AudioSource source = GetComponent<AudioSource>();
+			if (source == null)
+			{
+				source = gameObject.AddComponent<AudioSource>();
+			}
+			source.clip = other.transform.parent.GetComponent<PlayerController>().GetComponentInChildren<PlayerWeapon>().GetCurrentWeapon().touch;
+			source.loop = false;
+			source.volume = 0.1f;
+			if (source.clip != null)
+				source.Play();
 
 
-            int i = 0;
+			int i = 0;
 			foreach (GameObject heart in hearts)
 			{
 				if (i < l)
@@ -113,12 +113,12 @@ public class KingGoblin : MonoBehaviour
 			entity.SetValue("LIFE", l.ToString());
 			if (l < 1)
 			{
-				if (l == 0)
+				if (enabled)
 					myAnimator.SetTrigger("Dead");
 				enabled = false;
 				myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
 				Instantiate(fx_death, transform.position, Quaternion.identity);
-                Instantiate(deathBossGoblin, transform.position, Quaternion.identity);
+				Instantiate(deathBossGoblin, transform.position, Quaternion.identity);
 			}
 			else
 				Instantiate(fx_hurth, transform.position, Quaternion.identity);
