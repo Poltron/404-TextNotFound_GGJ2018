@@ -231,7 +231,7 @@ MonoBehaviour:
   intervalSpawn: 5
   myAnimator: {fileID: 95518448455393022}
   fx_death: {fileID: 1475428012408620, guid: ab5597bbbcbe56a45a13f3a2ad008f79, type: 2}
-  fx_hurth: {fileID: 0}
+  fx_hurth: {fileID: 1092052383947886, guid: 0940d0449748638498ea6cd1c5b5efd9, type: 2}
 --- !u!114 &114147162117816202
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -151,7 +151,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4288862353682952}
   - component: {fileID: 61228917645099048}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: Attack
   m_TagString: Attack
   m_Icon: {fileID: 0}
@@ -504,6 +504,7 @@ MonoBehaviour:
   viewKey:
   - ISALIVE
   - WEAPON
+  - JUMP
   textValue: {fileID: 114166316911148372, guid: 8127582bb17957b45b0da000f7b3742b,
     type: 2}
 --- !u!114 &114774440915901664
@@ -544,7 +545,9 @@ MonoBehaviour:
   gapAtkCol: 0.6
   life: 0
   isDead: 0
-  cooldownAttack: 2
+  cooldownAttack: 0
+  fx_death: {fileID: 1475428012408620, guid: ab5597bbbcbe56a45a13f3a2ad008f79, type: 2}
+  fx_hurth: {fileID: 1092052383947886, guid: 0940d0449748638498ea6cd1c5b5efd9, type: 2}
 --- !u!114 &114821978040152342
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -252,8 +252,8 @@ public class PlayerController : MonoBehaviour
 		else
 		{
 			myRigidBody.velocity = new Vector2(0.0f, myRigidBody.velocity.y);
-			cameraPointRight.SetActive(false);
-			cameraPointLeft.SetActive(false);
+			/*cameraPointRight.SetActive(false);
+			cameraPointLeft.SetActive(false);*/
 		}
 	}
 

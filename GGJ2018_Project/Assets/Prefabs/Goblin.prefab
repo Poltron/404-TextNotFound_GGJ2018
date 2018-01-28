@@ -422,12 +422,12 @@ MonoBehaviour:
   weapon: {fileID: 1654945985480732}
   distanceAttack: 1.5
   distanceFollow: 10
-  cooldownAttack: 1
+  cooldownAttack: 2
   gapAtkCol: 0.6
-  life: 3
+  life: 1
   isDead: 0
   fx_death: {fileID: 1475428012408620, guid: ab5597bbbcbe56a45a13f3a2ad008f79, type: 2}
-  fx_hurth: {fileID: 0}
+  fx_hurth: {fileID: 1092052383947886, guid: 0940d0449748638498ea6cd1c5b5efd9, type: 2}
 --- !u!114 &114706748917018988
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -500,7 +500,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 50
   m_Sprite: {fileID: 21300000, guid: 75f7f87b1d410cb48ac845ed4a460f12, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

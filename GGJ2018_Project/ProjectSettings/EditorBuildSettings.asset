@@ -11,3 +11,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Scene_merge.unity
     guid: e001933aab094a74482d6cc037ce1e68
+  - enabled: 1
+    path: Assets/Scenes/Scene_HUD.unity
+    guid: ac5868e95513c58428fa972d5c0400cd
