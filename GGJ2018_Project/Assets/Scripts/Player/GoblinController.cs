@@ -110,27 +110,27 @@ public class GoblinController : MonoBehaviour
 		console.AddOnSendCommand(SetAlive);
 
 		attackCollider.tag = "Attack";
-        
-        int result = Random.Range(0, 4);
-        switch(result)
-        {
-            case 0:
-                GetComponent<ObjectEntity>().SetValue("WEAPON", "FIST");
-                weapon.GetComponent<Animator>().SetTrigger("SwitchToFist");
-                break;
-            case 1:
-                GetComponent<ObjectEntity>().SetValue("WEAPON", "SWORD");
-                weapon.GetComponent<Animator>().SetTrigger("SwitchToSword");
-                break;
-            case 2:
-                GetComponent<ObjectEntity>().SetValue("WEAPON", "MACE");
-                weapon.GetComponent<Animator>().SetTrigger("SwitchToMace");
-                break;
-            case 3:
-                GetComponent<ObjectEntity>().SetValue("WEAPON", "SHOTGUN");
-                weapon.GetComponent<Animator>().SetTrigger("SwitchToShotgun");
-                break;
-        }
+
+		int result = Random.Range(0, 4);
+		switch (result)
+		{
+			case 0:
+				GetComponent<ObjectEntity>().SetValue("WEAPON", "FIST");
+				weapon.GetComponent<Animator>().SetTrigger("SwitchToFist");
+				break;
+			case 1:
+				GetComponent<ObjectEntity>().SetValue("WEAPON", "SWORD");
+				weapon.GetComponent<Animator>().SetTrigger("SwitchToSword");
+				break;
+			case 2:
+				GetComponent<ObjectEntity>().SetValue("WEAPON", "MACE");
+				weapon.GetComponent<Animator>().SetTrigger("SwitchToMace");
+				break;
+			case 3:
+				GetComponent<ObjectEntity>().SetValue("WEAPON", "SHOTGUN");
+				weapon.GetComponent<Animator>().SetTrigger("SwitchToShotgun");
+				break;
+		}
 	}
 
 	private void OnDestroy()
@@ -139,24 +139,24 @@ public class GoblinController : MonoBehaviour
 		if (console)
 			console.RemoveOnSendCommand(SetAlive);
 		ResetOnGoblinDie();
-    }
+	}
 
-    private void HitBodyColor()
-    {
-        GetComponent<SpriteRenderer>().color = Color.Lerp(GetComponent<SpriteRenderer>().color, Color.white, Time.deltaTime * 5.0f);
-    }
+	private void HitBodyColor()
+	{
+		GetComponent<SpriteRenderer>().color = Color.Lerp(GetComponent<SpriteRenderer>().color, Color.white, Time.deltaTime * 5.0f);
+	}
 
 
-    private void Update()
-    {
-        HitBodyColor();
+	private void Update()
+	{
+		HitBodyColor();
 
-        if (isDead)
-        {
-            if (myRigidBody)
-                myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
-            return;
-        }
+		if (isDead)
+		{
+			if (myRigidBody)
+				myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
+			return;
+		}
 
 		Gravity();
 
@@ -210,6 +210,12 @@ public class GoblinController : MonoBehaviour
 			isMovingRight = true;
 			mySpriteRenderer.flipX = false;
 			weapon.GetComponent<SpriteRenderer>().flipX = false;
+
+			Vector3 moveDirection = weapon.transform.localPosition;
+			moveDirection.x = -Mathf.Abs(moveDirection.x);
+			weapon.transform.localPosition = moveDirection;
+
+
 			attackCollider.transform.localPosition = new Vector3(gapAtkCol, 0, 0);
 
 		}
@@ -219,6 +225,9 @@ public class GoblinController : MonoBehaviour
 			isMovingRight = false;
 			mySpriteRenderer.flipX = true;
 			weapon.GetComponent<SpriteRenderer>().flipX = true;
+			Vector3 moveDirection = weapon.transform.localPosition;
+			moveDirection.x = Mathf.Abs(moveDirection.x);
+			weapon.transform.localPosition = moveDirection;
 			attackCollider.transform.localPosition = new Vector3(-gapAtkCol, 0, 0);
 		}
 
