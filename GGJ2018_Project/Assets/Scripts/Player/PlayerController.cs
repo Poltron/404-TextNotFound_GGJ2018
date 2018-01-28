@@ -301,6 +301,7 @@ public class PlayerController : MonoBehaviour
 			StartCoroutine(WaitForFrame());
 			timerCooldown = cooldownAttack;
 			weapon.GetComponent<Animator>().SetTrigger("Attack");
+			weapon.GetComponent<PlayerWeapon>().Attack();
 			var PlayerWeapon = GetComponentInChildren<PlayerWeapon>();
 			if (PlayerWeapon.GetCurrentWeapon().code == 3)
 			{
@@ -451,6 +452,21 @@ public class PlayerController : MonoBehaviour
 		if (collision.gameObject.tag == "Attack")
 		{
 			--life;
+
+			life -= collision.transform.parent.GetComponent<GoblinController>().GetComponentInChildren<PlayerWeapon>().GetCurrentWeapon().damage;
+
+			AudioSource source = GetComponent<AudioSource>();
+			if (source == null)
+			{
+				source = gameObject.AddComponent<AudioSource>();
+			}
+			source.clip = collision.transform.parent.GetComponent<GoblinController>().GetComponentInChildren<PlayerWeapon>().GetCurrentWeapon().touch;
+			source.loop = false;
+			if (source.clip != null)
+				source.Play();
+
+
+
 			GetComponent<SpriteRenderer>().color = Color.red;
 		}
 

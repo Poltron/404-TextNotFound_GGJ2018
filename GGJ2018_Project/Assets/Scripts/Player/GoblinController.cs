@@ -111,24 +111,23 @@ public class GoblinController : MonoBehaviour
 
 		attackCollider.tag = "Attack";
 
-		int result = Random.Range(0, 4);
+		int result = Random.Range(0, 3);
 		switch (result)
 		{
 			case 0:
 				GetComponent<ObjectEntity>().SetValue("WEAPON", "FIST");
 				weapon.GetComponent<Animator>().SetTrigger("SwitchToFist");
+				GetComponentInChildren<PlayerWeapon>().SetWeapon(0);
 				break;
 			case 1:
 				GetComponent<ObjectEntity>().SetValue("WEAPON", "SWORD");
 				weapon.GetComponent<Animator>().SetTrigger("SwitchToSword");
+				GetComponentInChildren<PlayerWeapon>().SetWeapon(1);
 				break;
 			case 2:
 				GetComponent<ObjectEntity>().SetValue("WEAPON", "MACE");
 				weapon.GetComponent<Animator>().SetTrigger("SwitchToMace");
-				break;
-			case 3:
-				GetComponent<ObjectEntity>().SetValue("WEAPON", "SHOTGUN");
-				weapon.GetComponent<Animator>().SetTrigger("SwitchToShotgun");
+				GetComponentInChildren<PlayerWeapon>().SetWeapon(2);
 				break;
 		}
 	}
@@ -335,6 +334,16 @@ public class GoblinController : MonoBehaviour
 		if (collision.gameObject.tag == "Attack")
 		{
 			life -= collision.transform.parent.GetComponent<PlayerController>().GetComponentInChildren<PlayerWeapon>().GetCurrentWeapon().damage;
+
+			AudioSource source = GetComponent<AudioSource>();
+			if (source == null)
+			{
+				source = gameObject.AddComponent<AudioSource>();
+			}
+			source.clip = collision.transform.parent.GetComponent<PlayerController>().GetComponentInChildren<PlayerWeapon>().GetCurrentWeapon().touch;
+			source.loop = false;
+			if (source.clip != null)
+				source.Play();
 
 			int i = 0;
 			foreach (GameObject heart in hearts)
