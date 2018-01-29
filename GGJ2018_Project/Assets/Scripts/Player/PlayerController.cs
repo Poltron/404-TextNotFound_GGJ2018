@@ -104,8 +104,16 @@ public class PlayerController : MonoBehaviour
 
 	[SerializeField]
 	private float cooldownAttack;
-	private float timerCooldown;
+	private float timerAttackCooldown;
 
+	[Header("isInvincible")]
+	[SerializeField]
+	private float cooldownInvincibility;
+	private float timerInvincibilityCooldown;
+	[SerializeField]
+	private bool isInvincible;
+
+	[Header("FSX")]
 	[SerializeField]
 	private GameObject fx_death;
 	[SerializeField]
@@ -136,6 +144,7 @@ public class PlayerController : MonoBehaviour
 		fx_durth.Stop();
 
 		justGrounded = true;
+				timerInvincibilityCooldown = cooldownInvincibility;
 	}
 
 	private void OnDestroy()
@@ -153,13 +162,19 @@ public class PlayerController : MonoBehaviour
 	{
 		HitBodyColor();
 
-		if (timerCooldown > 0)
-			timerCooldown -= Time.deltaTime;
+		if (timerAttackCooldown > 0)
+			timerAttackCooldown -= Time.deltaTime;
+		if (isInvincible &&timerInvincibilityCooldown > 0.0f)
+			timerInvincibilityCooldown -= Time.deltaTime;
+
+		isInvincible = timerInvincibilityCooldown > 0.0f;
 
 		myHeartContainer.SetHeart(life);
 
 		if (isDead)
 		{
+			if (fx_durth.isPlaying)
+				fx_durth.Stop();
 			return;
 		}
 
@@ -299,11 +314,11 @@ public class PlayerController : MonoBehaviour
 
 	public void Attack()
 	{
-		if (isKeyAttack && timerCooldown <= 0)
+		if (isKeyAttack && timerAttackCooldown <= 0)
 		{
 			attackCollider.SetActive(true);
 			StartCoroutine(WaitForFrame());
-			timerCooldown = cooldownAttack;
+			timerAttackCooldown = cooldownAttack;
 			weapon.GetComponent<Animator>().SetTrigger("Attack");
 			weapon.GetComponent<PlayerWeapon>().Attack();
 			var PlayerWeapon = GetComponentInChildren<PlayerWeapon>();
@@ -454,37 +469,49 @@ public class PlayerController : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (collision.gameObject.tag == "Attack")
+		if (collision.gameObject.tag != "Attack" || isInvincible)
+			return;
+
+		isInvincible = false;
+		--life;
+
+		life -= collision.transform.parent.GetComponent<GoblinController>().GetComponentInChildren<PlayerWeapon>().GetCurrentWeapon().damage;
+
+		AudioSource source = GetComponent<AudioSource>();
+		if (source == null)
 		{
-			--life;
-
-			life -= collision.transform.parent.GetComponent<GoblinController>().GetComponentInChildren<PlayerWeapon>().GetCurrentWeapon().damage;
-
-			AudioSource source = GetComponent<AudioSource>();
-			if (source == null)
-			{
-				source = gameObject.AddComponent<AudioSource>();
-			}
-			source.clip = collision.transform.parent.GetComponent<GoblinController>().GetComponentInChildren<PlayerWeapon>().GetCurrentWeapon().touch;
-			source.loop = false;
-			source.volume = 0.1f;
-			if (source.clip != null)
-				source.Play();
-
-
-
-			GetComponent<SpriteRenderer>().color = Color.red;
+			source = gameObject.AddComponent<AudioSource>();
 		}
+		source.clip = collision.transform.parent.GetComponent<GoblinController>().GetComponentInChildren<PlayerWeapon>().GetCurrentWeapon().touch;
+		source.loop = false;
+		source.volume = 0.1f;
+		if (source.clip != null)
+			source.Play();
+
+
+
+		GetComponent<SpriteRenderer>().color = Color.red;
 
 		if (life <= 0)
 		{
 			isDead = true;
+			isInvincible = true;
 			myAnimator.SetTrigger("Death");
 			Instantiate(fx_death, transform.position, Quaternion.identity);
 			GetComponent<ObjectEntity>().SetValue("ISALIVE", "FALSE");
 		}
 		else
 			Instantiate(fx_hurth, transform.position, Quaternion.identity);
+	}
+
+	private IEnumerator FlashPlayer()
+	{
+		while (timerInvincibilityCooldown > 0.0f)
+		{
+			mySpriteRenderer.enabled = !mySpriteRenderer.enabled;
+			yield return new WaitForSeconds(0.25f);
+		}
+		mySpriteRenderer.enabled = true;
 	}
 
 	public void SetAlive(string cmd, string[] args)
@@ -494,7 +521,11 @@ public class PlayerController : MonoBehaviour
 		if (args[0] == "ISALIVE" && args[1] == "TRUE")
 		{
 			if (isDead)
+			{
+				timerInvincibilityCooldown = cooldownInvincibility;
+				StartCoroutine(FlashPlayer());
 				myAnimator.SetTrigger("Revive");
+			}
 			else
 				myAnimator.SetTrigger("Idle");
 			isDead = false;
@@ -519,12 +550,13 @@ public class PlayerController : MonoBehaviour
 		}
 		else if (args[0] == "WEAPON")
 		{
-			var PlayerWeapon = GetComponentInChildren<PlayerWeapon>();
-			foreach (Weapon w in PlayerWeapon.GetListWeapon())
+			var playerWeapon = GetComponentInChildren<PlayerWeapon>();
+			foreach (Weapon w in playerWeapon.GetListWeapon())
 			{
 				if (string.Equals(w.name, args[1], System.StringComparison.InvariantCultureIgnoreCase))
 				{
-					PlayerWeapon.GetComponent<Animator>().SetTrigger(w.trigger);
+					GetComponent<ObjectEntity>().SetValue("WEAPON", args[1]);
+					playerWeapon.GetComponent<Animator>().SetTrigger(w.trigger);
 				}
 			}
 		}

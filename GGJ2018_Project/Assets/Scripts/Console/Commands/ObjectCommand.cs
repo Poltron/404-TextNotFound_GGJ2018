@@ -15,14 +15,14 @@ public class ObjectCommand : MonoBehaviour
 	[SerializeField]
 	public List<ObjectEntity> visibleObjects;
 
-    [SerializeField]
-    private AudioSource objAdded;
-    [SerializeField]
-    private AudioSource objRemoved;
-    [SerializeField]
-    private AudioSource valueChanged;
+	[SerializeField]
+	private AudioSource objAdded;
+	[SerializeField]
+	private AudioSource objRemoved;
+	[SerializeField]
+	private AudioSource valueChanged;
 
-    [SerializeField]
+	[SerializeField]
 	private GameObject fxDisparition;
 	[SerializeField]
 	private GameObject fxApparition;
@@ -48,11 +48,11 @@ public class ObjectCommand : MonoBehaviour
 		{
 			console.InvokeOnErrorCommand(cmd);
 			return;
-        }
+		}
 
-        Instantiate(objAdded, Camera.main.transform.position, Quaternion.identity);
+		Instantiate(objAdded, Camera.main.transform.position, Quaternion.identity);
 
-        foreach (ObjectEntity obj in allObject)
+		foreach (ObjectEntity obj in allObject)
 		{
 			if (!string.Equals(obj.GetName(), args[0], System.StringComparison.InvariantCultureIgnoreCase))
 				continue;
@@ -71,8 +71,8 @@ public class ObjectCommand : MonoBehaviour
 			Instantiate(obj.gameObject, position, Quaternion.identity);
 			Instantiate(fxApparition, obj.transform.position, Quaternion.identity);
 			return;
-        }
-        console.InvokeOnErrorCommand(cmd);
+		}
+		console.InvokeOnErrorCommand(cmd);
 		return;
 	}
 
@@ -101,9 +101,9 @@ public class ObjectCommand : MonoBehaviour
 			obj.gameObject.SetActive(false);
 			Instantiate(fxDisparition, obj.transform.position, Quaternion.identity);
 			destroyed = true;
-        }
-        Instantiate(objRemoved, Camera.main.transform.position, Quaternion.identity);
-        if (!destroyed)
+		}
+		Instantiate(objRemoved, Camera.main.transform.position, Quaternion.identity);
+		if (!destroyed)
 			console.InvokeOnErrorCommand(cmd);
 		return;
 	}
@@ -118,6 +118,12 @@ public class ObjectCommand : MonoBehaviour
 			return;
 		}
 
+		if (args[0] == "WEAPON")
+		{
+			Instantiate(valueChanged, Camera.main.transform.position, Quaternion.identity);
+			return;
+		}
+
 		bool isSet = false;
 		foreach (ObjectEntity obj in visibleObjects)
 		{
@@ -129,7 +135,7 @@ public class ObjectCommand : MonoBehaviour
 				break;
 		}
 
-        Instantiate(valueChanged, Camera.main.transform.position, Quaternion.identity);
+		Instantiate(valueChanged, Camera.main.transform.position, Quaternion.identity);
 
 		if (!isSet)
 			console.InvokeOnErrorCommand(cmd);
@@ -149,6 +155,12 @@ public class ObjectCommand : MonoBehaviour
 		{
 			GameObject princess = GameObject.FindGameObjectWithTag("Princess");
 			if (princess == null)
+			{
+				console.InvokeOnErrorCommand(cmd);
+				return;
+			}
+			ObjectEntity entity = princess.GetComponent<ObjectEntity>();
+			if (!visibleObjects.Contains(entity))
 			{
 				console.InvokeOnErrorCommand(cmd);
 				return;
