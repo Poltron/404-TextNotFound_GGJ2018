@@ -14,7 +14,13 @@ public class ViewObjectKey : MonoBehaviour
 	[SerializeField]
 	private string[] viewKey;
 	[SerializeField]
+	private RectTransform content;
+	[SerializeField]
 	private Text textValue;
+
+	[SerializeField]
+	private int space;
+
 	private List<Viewer> allViewer;
 	private Viewer nameEntity;
 
@@ -33,16 +39,15 @@ public class ViewObjectKey : MonoBehaviour
 		transform.SetParent(contentViewer.transform);
 		gameObject.name = "view object : " + parentEntity.name;
 		trans = gameObject.GetComponent<RectTransform>();
-		trans.anchorMin = new Vector2(0.5f, 0.0f);
-		trans.anchorMax = new Vector2(0.5f, 1.0f);
 		trans.localScale = Vector3.one;
 		trans.pivot = new Vector2(0.5f, 1.0f);
 		trans.rotation = Quaternion.identity;
 
+
 		Viewer newViewer = new Viewer();
 		nameEntity = newViewer;
 		nameEntity.textContent = Instantiate(textValue);
-		nameEntity.textContent.transform.SetParent(transform);
+		nameEntity.textContent.transform.SetParent(content);
 		nameEntity.textContent.transform.localScale = Vector3.one;
 		nameEntity.textContent.text = parentEntity.GetName();
 		nameEntity.textContent.transform.rotation = Quaternion.identity;
@@ -54,7 +59,7 @@ public class ViewObjectKey : MonoBehaviour
 			if (string.IsNullOrEmpty(newViewer.key))
 				continue;
 			newViewer.textContent = Instantiate(textValue);
-			newViewer.textContent.transform.SetParent(transform);
+			newViewer.textContent.transform.SetParent(content);
 			newViewer.textContent.transform.localScale = Vector3.one;
 
 			allViewer.Add(newViewer);
@@ -69,21 +74,28 @@ public class ViewObjectKey : MonoBehaviour
 			v.textContent.gameObject.SetActive(parentEntity.gameObject.activeSelf);
 		}
 		nameEntity.textContent.gameObject.SetActive(parentEntity.gameObject.activeSelf);
-
 		nameEntity.textContent.text = parentEntity.GetName();
+		nameEntity.textContent.transform.rotation = Quaternion.identity;
+
+
+		Vector2 newRect = content.GetComponent<RectTransform>().sizeDelta;
+		newRect.x += space;
+		newRect.y += space;
+		trans.sizeDelta = newRect;
+		content.rotation = Quaternion.identity;
+
+		//Debug.Log(parentEntity.name + "   " + newRect);
+
 
 		Vector3 newPos;
-        if (parentEntity.GetComponent<KingGoblin>())
-            newPos = Camera.main.WorldToScreenPoint(parentEntity.transform.position - Vector3.up * 2.0f);
-        else if (parentEntity.GetName() == "BRIDGE")
-            newPos = Camera.main.WorldToScreenPoint(parentEntity.transform.position);
-        else
-            newPos = Camera.main.WorldToScreenPoint(parentEntity.transform.position - Vector3.up);
+		if (parentEntity.GetComponent<KingGoblin>())
+			newPos = Camera.main.WorldToScreenPoint(parentEntity.transform.position - Vector3.up * 2.0f);
+		else if (parentEntity.GetName() == "BRIDGE")
+			newPos = Camera.main.WorldToScreenPoint(parentEntity.transform.position);
+		else
+			newPos = Camera.main.WorldToScreenPoint(parentEntity.transform.position - Vector3.up);
 		transform.position = newPos;
 		transform.rotation = Quaternion.identity;
-
-		//trans.offsetMin = new Vector2(trans.offsetMin.x, 0.0f);
-		//trans.offsetMax = new Vector2(trans.offsetMax.x, 0.0f);
 
 		foreach (Viewer v in allViewer)
 		{
