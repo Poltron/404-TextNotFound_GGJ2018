@@ -60,7 +60,7 @@ public class KingGoblin : MonoBehaviour
 		Vector3 dir = GameManager.Instance.Player.transform.position - transform.position;
 		GetComponent<SpriteRenderer>().flipX = dir.x < 0.0f;
 
-		if (GameManager.Instance.Player.GetComponent<ObjectEntity>().GetValue("ISALIVE") == "TRUE")
+		if (GameManager.Instance.Player.GetComponent<ObjectEntity>().GetValue("ALIVE") == "TRUE")
 			currentTime -= Time.deltaTime;
 		else
 			currentTime = intervalSpawn;

@@ -362,7 +362,7 @@ public class GoblinController : MonoBehaviour
             Instantiate(goblinDeathSound, transform.position, Quaternion.identity);
 			isDead = true;
 			myAnimator.SetTrigger("Dead");
-			GetComponent<ObjectEntity>().SetValue("ISALIVE", "FALSE");
+			GetComponent<ObjectEntity>().SetValue("ALIVE", "FALSE");
 			GetComponent<Collider2D>().enabled = false;
 			InvokeOnGoblinDie();
 			Instantiate(fx_death, transform.position, Quaternion.identity);
@@ -394,7 +394,7 @@ public class GoblinController : MonoBehaviour
 	{
 		if (cmd != "SET" || args.Length != 2)
 			return;
-		if (args[0] == "ISALIVE" && args[1] == "TRUE")
+		if (args[0] == "ALIVE" && args[1] == "TRUE")
 		{
 			if (isFollowing)
 			{

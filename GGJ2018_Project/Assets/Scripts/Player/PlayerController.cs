@@ -498,7 +498,7 @@ public class PlayerController : MonoBehaviour
 			isInvincible = true;
 			myAnimator.SetTrigger("Death");
 			Instantiate(fx_death, transform.position, Quaternion.identity);
-			GetComponent<ObjectEntity>().SetValue("ISALIVE", "FALSE");
+			GetComponent<ObjectEntity>().SetValue("ALIVE", "FALSE");
 		}
 		else
 			Instantiate(fx_hurth, transform.position, Quaternion.identity);
@@ -518,7 +518,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if (cmd != "SET" || args.Length != 2)
 			return;
-		if (args[0] == "ISALIVE" && args[1] == "TRUE")
+		if (args[0] == "ALIVE" && args[1] == "TRUE")
 		{
 			if (isDead)
 			{
@@ -531,7 +531,7 @@ public class PlayerController : MonoBehaviour
 			isDead = false;
 			life = 5;
 		}
-		if (args[0] == "ISALIVE" && args[1] == "FALSE")
+		if (args[0] == "ALIVE" && args[1] == "FALSE")
 		{
 			isDead = true;
 			life = 0;
