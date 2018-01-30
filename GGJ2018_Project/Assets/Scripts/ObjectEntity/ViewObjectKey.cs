@@ -85,7 +85,8 @@ public class ViewObjectKey : MonoBehaviour
 		content.rotation = Quaternion.identity;
 
 		//Debug.Log(parentEntity.name + "   " + newRect);
-
+		if (parentEntity.GetName() == "HERO")
+			trans.SetAsLastSibling();
 
 		Vector3 newPos;
 		if (parentEntity.GetComponent<KingGoblin>())
