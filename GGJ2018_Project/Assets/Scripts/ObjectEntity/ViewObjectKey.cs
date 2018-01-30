@@ -69,6 +69,7 @@ public class ViewObjectKey : MonoBehaviour
 	private void Update()
 	{
 		GetComponent<Image>().enabled = parentEntity.gameObject.activeSelf;
+		content.GetComponent<Image>().enabled = parentEntity.gameObject.activeSelf;
 		foreach (Viewer v in allViewer)
 		{
 			v.textContent.gameObject.SetActive(parentEntity.gameObject.activeSelf);
