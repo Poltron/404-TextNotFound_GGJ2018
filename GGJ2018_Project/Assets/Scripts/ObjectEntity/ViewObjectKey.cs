@@ -78,13 +78,6 @@ public class ViewObjectKey : MonoBehaviour
 		nameEntity.textContent.text = parentEntity.GetName();
 		nameEntity.textContent.transform.rotation = Quaternion.identity;
 
-
-		Vector2 newRect = content.GetComponent<RectTransform>().sizeDelta;
-		newRect.x += space;
-		newRect.y += space;
-		trans.sizeDelta = newRect;
-		content.rotation = Quaternion.identity;
-
 		//Debug.Log(parentEntity.name + "   " + newRect);
 		if (parentEntity.GetName() == "HERO")
 			trans.SetAsLastSibling();
@@ -104,5 +97,12 @@ public class ViewObjectKey : MonoBehaviour
 			v.textContent.text = v.key + " : " + parentEntity.GetValue(v.key);
 			v.textContent.transform.rotation = Quaternion.identity;
 		}
+
+
+		Vector2 newRect = content.GetComponent<RectTransform>().sizeDelta;
+		newRect.x += space;
+		newRect.y += space;
+		trans.sizeDelta = newRect;
+		content.rotation = Quaternion.identity;
 	}
 }
