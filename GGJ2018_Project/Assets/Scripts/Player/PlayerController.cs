@@ -531,7 +531,7 @@ public class PlayerController : MonoBehaviour
 			isDead = false;
 			life = 5;
 		}
-		if (args[0] == "ALIVE" && args[1] == "FALSE")
+		else if (args[0] == "ALIVE" && args[1] == "FALSE")
 		{
 			isDead = true;
 			life = 0;

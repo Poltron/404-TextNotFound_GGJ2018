@@ -152,8 +152,6 @@ public class ConsoleWriter : MonoBehaviour
 			}
 			else
 			{
-				print("Finished Uploading Command");
-				Debug.Log("WTEXT = " + w.downloadHandler.text);
 			}
 		}
 	}
