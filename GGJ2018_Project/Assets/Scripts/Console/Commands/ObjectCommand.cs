@@ -231,7 +231,7 @@ public class ObjectCommand : MonoBehaviour
 	{
 		//if (!string.Equals(cmd, "ADD", System.StringComparison.InvariantCultureIgnoreCase))
 		//	return;
-		if (GameObject.FindGameObjectWithTag("Player").GetComponent<ObjectEntity>().GetValue("ISALIVE") == "FALSE")
+		if (GameObject.FindGameObjectWithTag("Player").GetComponent<ObjectEntity>().GetValue("ALIVE") == "FALSE")
 			return;
 
 		foreach (ObjectEntity obj in allObject)
