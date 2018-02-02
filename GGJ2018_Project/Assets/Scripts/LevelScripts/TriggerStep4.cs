@@ -34,7 +34,10 @@ public class TriggerStep4 : MonoBehaviour
 		foreach (GameObject goblin in goblins)
 		{
 			if (!goblin.GetComponent<GoblinController>().isDead)
+			{
 				isEnd = false;
+				break;
+			}
 		}
 
 		if (isEnd)
