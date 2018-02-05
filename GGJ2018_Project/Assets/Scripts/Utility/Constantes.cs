@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class Data
+public static class Constantes
 {
 	public static class Layer
 	{

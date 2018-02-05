@@ -8,9 +8,20 @@ namespace Paralaxe
 	{
 		[SerializeField]
 		private Trigger[] triggers;
+		[SerializeField]
+		private Data[] datas;
 
 		[SerializeField]
-		private int currentParalaxe;
+		private Data currentData;
+
+		#region Paralaxe gameobjects
+		[SerializeField]
+		private Entity left;
+		[SerializeField]
+		private Entity right;
+		[SerializeField]
+		private Entity center;
+		#endregion
 
 		private void Awake()
 		{
@@ -22,6 +33,18 @@ namespace Paralaxe
 			foreach (Trigger trigger in triggers)
 			{
 				trigger.AddOnExitEvent(SetParalaxe);
+			}
+			if (currentData != null)
+			{
+				SetParalaxe(currentData.Id);
+			}
+			else if (datas[0] != null)
+			{
+				SetParalaxe(datas[0].Id);
+			}
+			else
+			{
+				Debug.LogError("CROTTE il y a pas de paralaxe...prendre RDV avec le level designer");
 			}
 		}
 
@@ -35,8 +58,20 @@ namespace Paralaxe
 
 		private void SetParalaxe(int idParalaxe)
 		{
-			Debug.Log("New paralaxe : " + idParalaxe);
-			currentParalaxe = idParalaxe;
+			if (currentData != null && idParalaxe == currentData.Id)
+				return;
+
+			foreach (Data data in datas)
+			{
+				if (data.Id == idParalaxe)
+				{
+					left.SetLayers(data);
+					right.SetLayers(data);
+					center.SetLayers(data);
+					currentData = data; 
+					break;
+				}
+			}
 		}
 	}
 }

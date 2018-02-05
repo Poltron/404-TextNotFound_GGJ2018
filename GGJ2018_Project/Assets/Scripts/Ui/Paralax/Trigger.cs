@@ -11,7 +11,7 @@ namespace Paralaxe
 
 		private void OnTriggerExit2D(Collider2D collision)
 		{
-			if (collision.gameObject.layer != Data.Layer.Player)
+			if (collision.gameObject.layer != Constantes.Layer.Player)
 				return;
 
 			InvokeOnExitEvent(idParalaxe);
