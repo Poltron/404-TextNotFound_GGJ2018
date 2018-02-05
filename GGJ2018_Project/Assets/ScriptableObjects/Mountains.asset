@@ -13,15 +13,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layers:
   - name: Nuage
-    sprite: {fileID: 21300000, guid: c387ba0aaac15de4faa0855718f1bede, type: 3}
+    sprite: {fileID: 21300000, guid: 0a92f7a45393f00448098465c75e64f3, type: 3}
     speed: 0.25
-    sort: 0
   - name: Montagne
-    sprite: {fileID: 21300000, guid: ff331e37ee587cc4396e026c6bc39cbd, type: 3}
+    sprite: {fileID: 21300000, guid: 14fa5598587850e4393c0adebec2cb14, type: 3}
     speed: 0.5
-    sort: 1
   - name: Foret
-    sprite: {fileID: 21300000, guid: 73d50b294c478cf40bfbdfcefb8c2b39, type: 3}
+    sprite: {fileID: 21300000, guid: 2401a9b2f8ed5724b981c9b712925fbb, type: 3}
     speed: 1
-    sort: 2
-  _id: 0
+  _id: 2

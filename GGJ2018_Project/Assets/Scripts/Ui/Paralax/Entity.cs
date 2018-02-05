@@ -18,20 +18,34 @@ namespace Paralaxe
 			int nbLayers = 0;
 			for (nbLayers = 0; nbLayers < layers.Count; ++nbLayers)
 			{
-				Debug.Log(layers[nbLayers].name);
+
+				if (nbLayers >= data.LayerLenght)
+				{
+					layers[nbLayers].gameObject.SetActive(false);
+				}
+				else
+				{
+					layers[nbLayers].gameObject.SetActive(true);
+					layers[nbLayers].sprite = data.GetSprite(nbLayers);
+				}
 			}
 			for (; nbLayers < data.LayerLenght; nbLayers++)
 			{
-				Image tmp = CreatePoolObject();
-				Debug.Log(layers[nbLayers].name);
+				Image tmp = CreatePoolObject(data.GetSprite(nbLayers));
 			}
 		}
 
-		private Image CreatePoolObject()
+		private Image CreatePoolObject(Sprite sprite)
 		{
-			Image tmp = Instantiate(prefab, transform, true) as Image;
+			Image tmp = Instantiate(prefab, transform, false) as Image;
+			tmp.sprite = sprite;
 			layers.Add(tmp);
 			return tmp;
+		}
+
+		public void MoveEntity (float speed)
+		{
+
 		}
 	}
 }

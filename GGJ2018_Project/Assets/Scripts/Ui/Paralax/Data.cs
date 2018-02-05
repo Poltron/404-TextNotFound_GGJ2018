@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Paralaxe
 {
@@ -16,8 +17,6 @@ namespace Paralaxe
 			public Sprite sprite;
 			[SerializeField]
 			public float speed;
-			[SerializeField]
-			public int sort;
 		}
 
 		[SerializeField]
@@ -32,6 +31,11 @@ namespace Paralaxe
 			{
 				return _id;
 			}
+		}
+
+		public Sprite GetSprite (int index)
+		{
+			return layers[index].sprite;
 		}
 	}
 }

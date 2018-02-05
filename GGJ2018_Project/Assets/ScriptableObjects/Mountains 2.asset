@@ -13,15 +13,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layers:
   - name: Nuage
-    sprite: {fileID: 21300000, guid: 3db6e42fd7c7dc246bf0678c7445876f, type: 3}
+    sprite: {fileID: 21300000, guid: 4d54f2f6ac9b6b14aa1e7df1974f727d, type: 3}
     speed: 0.25
-    sort: 0
   - name: Montagne
-    sprite: {fileID: 21300000, guid: a3d3ce4d3644f604c897e47479f11bd6, type: 3}
+    sprite: {fileID: 21300000, guid: 2dbfe1fa9b496fa499173c18681ef549, type: 3}
     speed: 0.5
-    sort: 1
-  - name: Foret
-    sprite: {fileID: 21300000, guid: fa90d47d92ad3ef42acde97775dd0386, type: 3}
-    speed: 1
-    sort: 2
-  _id: 0
+  _id: 1

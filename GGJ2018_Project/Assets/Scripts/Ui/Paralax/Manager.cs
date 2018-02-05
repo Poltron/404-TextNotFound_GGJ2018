@@ -14,7 +14,12 @@ namespace Paralaxe
 		[SerializeField]
 		private Data currentData;
 
+		[SerializeField]
+		private bool disabled = false;
+
 		#region Paralaxe gameobjects
+		[SerializeField]
+		private RectTransform parentEntity;
 		[SerializeField]
 		private Entity left;
 		[SerializeField]
@@ -44,7 +49,8 @@ namespace Paralaxe
 			}
 			else
 			{
-				Debug.LogError("CROTTE il y a pas de paralaxe...prendre RDV avec le level designer");
+				Debug.LogError("No paralaxe in configuration. Paralaxe system disable.");
+				disabled = true;
 			}
 		}
 
@@ -72,6 +78,14 @@ namespace Paralaxe
 					break;
 				}
 			}
+		}
+
+		public void MoveParalaxe (float speed)
+		{
+			if (disabled)
+				return;
+
+			parentEntity.transform.Translate(new Vector2(1,0));
 		}
 	}
 }
